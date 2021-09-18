@@ -1,25 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, Fragment, useEffect, useState } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+function Monapp() {
+  return(
+    <div>
+      <h1> Bienvenue sur PERD'UPN </h1>
+      <h5> L'application qui va vous aider à retrouver vos objets perdus </h5>
+      <button> Merci </button>
+
     </div>
-  );
-}
 
-export default App;
+  )
+}
+export default Monapp;
