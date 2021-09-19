@@ -22,7 +22,8 @@ class App extends Component {
             </ul>)
         :
         null}
-      </div>
+        <br></br>
+      </div>      
     );
   }
   

@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import MyMap from "./MyMap";
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
+    <div><br></br></div>
+    <MyMap />
   </React.StrictMode>,
   document.getElementById('root')
 );
