@@ -1,4 +1,5 @@
 # perdUPN_front_end
+<img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/raphaelmeissonnier/perdUPN_front_end">
 <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/raphaelmeissonnier/perdUPN_front_end"> <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/raphaelmeissonnier/perdUPN_front_end">
 
 ##V0
