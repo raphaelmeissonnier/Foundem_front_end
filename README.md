@@ -1,6 +1,5 @@
 # perdUPN_front_end
-
-<img alt="Discord" src="https://img.shields.io/discord/884903305837437028?logo=Discord"> <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/raphaelmeissonnier/perdUPN_front_end"> <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/raphaelmeissonnier/perdUPN_front_end">
+<img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/w/raphaelmeissonnier/perdUPN_front_end"> <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/raphaelmeissonnier/perdUPN_front_end">
 
 ##V0
 * Verifier que node_modules est bien installer (sinon faire 'npm install')
