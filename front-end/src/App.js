@@ -1,31 +1,78 @@
+import { numberSafeCompareFunction } from "ol/array";
 import React, { Component, Text } from "react";
 
 
-class App extends Component {
-  state = { users: [], clicked: false }
+class App extends React.Component {
 
-  componentDidMount() {
-    fetch('/users')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      latitude: null,
+      longitude: null,
+      userAddress: null,
+    };
+
+    this.getLocation = this.getLocation.bind(this);
+    this.getCoordinates = this.getCoordinates.bind(this)
+  }
+
+  getLocation(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.getCoordinates);
+    }
+    else{
+      alert("La géolocalisation n'est pas supportée par votre navigateur");
+    }
   }
 
 
-  render(){
+  getCoordinates(position) {
+    this.setState({
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    })
+   
+  }
+
+  handleLocationError(error) {
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        alert("User denied the request for Geolocation.")
+        break;
+      case error.position_UNAVAILABLE:
+        alert("Location information is unavailable.")
+        break;
+      case error.TIMEOUT:
+        alert("The request to get user location timed out.")
+        break;
+      default:
+      alert("An unknow error occurred.")
+    }
+  }
+
+
+
+  render() {
     return (
       <div className="App">
-        <h1>Users</h1>
-        <button onClick={() => this.setState({clicked: true})}>Afficher les users</button>
-        {this.state.clicked ?
-            (<ul>
-                {this.state.users.map(user =><li key={user.id}>{user.username}</li>)}
-            </ul>)
-        :
-        null}
-        <br></br>
-      </div>      
-    );
+
+        <h2>
+          React Geolocation
+        </h2>
+
+        <button onClick={this.getLocation}> Obtenir coordonnées</button>
+        <h4>Coordonnées de l'utilisateur</h4>
+        <p>Latitude: {this.state.latitude}</p>
+        <p>Longitude: {this.state.longitude}</p>
+        <p>Adresse: {this.state.userAddress}</p>
+      </div>
+    )
   }
-  
+
+
 }
+
+
+
 export default App;
