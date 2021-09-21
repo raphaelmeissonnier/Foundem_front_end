@@ -9,7 +9,7 @@ ReactDOM.render(
   <React.StrictMode>
     <App />
     <div><br></br></div>
-    <MyMap />
+    <MyMap/>
   </React.StrictMode>,
   document.getElementById('root')
 );
