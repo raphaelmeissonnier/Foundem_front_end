@@ -21,7 +21,8 @@ class PublicMap extends Component {
 
     this.state = { 
         center: upn_loc,
-        zoom: 16 
+        zoom: 16,
+        objets : []
     };
 
     this.map = new OlMap({ //creation de la map
@@ -46,48 +47,70 @@ class PublicMap extends Component {
   componentDidMount() {
     this.map.setTarget("map");
     // Geometries
-    var point = new OlGeomPoint(
+    //Récupération des données dans le back qu'on va enrgistrer dans le tableau 'objets'
+    fetch('/objets')
+        .then(res => res.json())
+        .then((data) => {
+              this.setState({ objets: data })
+        });
+
+    //Boucle
+    if (this.state.objets.length > 0)
+    {
+        console.log("Tableau", this.state.objets);
+        for(var i = 0; i < this.state.objets.length; i++)
+        {
+            var point = new OlGeomPoint(
+                transform([this.state.objets[i].localisation.longitude, this.state.objets[i].localisation.latitude], 'EPSG:4326', 'EPSG:3857')
+                );
+            }
+
+            var circle = new OlGeomCircle(
+                  transform([2.21367,48.9036], 'EPSG:4326', 'EPSG:3857'),
+                  100
+                );
+
+            // Features
+            var pointFeature = new OlFeature(point);
+            var circleFeature = new OlFeature(circle);
+
+            // Source
+            var vectorSource = new OlSource.Vector({
+              projection: 'EPSG:4326'
+            });
+            vectorSource.addFeatures([pointFeature, circleFeature]);
+
+            var iconStyle = new OlStyle.Style({
+              image: new OlStyle.Icon(/** @type {olx.style.IconOptions} */ ({
+                anchor: [0.5, 0.5],
+                opacity: 0.75,
+                scale: 1,
+                src: marker
+              }))
+            });
+
+            // Vector layer
+            var vectorLayer = new OlLayer.Vector({
+            source: vectorSource,
+            style: iconStyle
+            });
+
+            // Add Vector layer to map
+            this.map.addLayer(vectorLayer);
+
+            // Listen to map changes
+            this.map.on("moveend", () => {
+              let center = this.map.getView().getCenter();
+              let zoom = this.map.getView().getZoom();
+              this.setState({ center, zoom });
+            });
+
+    }
+
+    /*var point = new OlGeomPoint(
       transform([2.21367,48.9036], 'EPSG:4326', 'EPSG:3857')
-    );
-    var circle = new OlGeomCircle(
-      transform([2.21367,48.9036], 'EPSG:4326', 'EPSG:3857'),
-      100
-    );
+    );*/
 
-    // Features
-    var pointFeature = new OlFeature(point);
-    var circleFeature = new OlFeature(circle);
-
-    // Source
-    var vectorSource = new OlSource.Vector({
-      projection: 'EPSG:4326'
-    });
-    vectorSource.addFeatures([pointFeature, circleFeature]);
-
-    var iconStyle = new OlStyle.Style({
-      image: new OlStyle.Icon(/** @type {olx.style.IconOptions} */ ({
-        anchor: [0.5, 0.5],
-        opacity: 0.75,
-        scale: 1,
-        src: marker
-      }))
-    });
-
-    // Vector layer
-    var vectorLayer = new OlLayer.Vector({
-    source: vectorSource,
-    style: iconStyle
-    });
-
-    // Add Vector layer to map
-    this.map.addLayer(vectorLayer);
-
-    // Listen to map changes
-    this.map.on("moveend", () => {
-      let center = this.map.getView().getCenter();
-      let zoom = this.map.getView().getZoom();
-      this.setState({ center, zoom });
-    });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
