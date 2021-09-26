@@ -14,6 +14,7 @@ import { fromLonLat } from 'ol/proj';
 import marker from './images/marker.svg';
 
 const upn_loc=fromLonLat([2.21367,48.9036]); //position de l'université de paris nanterre
+var pointsFeatures = []
 
 class PublicMap extends Component {
   constructor(props) {
@@ -42,43 +43,22 @@ class PublicMap extends Component {
   updateMap() { //mise à jour de la map
     this.map.getView().setCenter(this.state.center);
     this.map.getView().setZoom(this.state.zoom);
-  }
-
-  componentDidMount() {
-    this.map.setTarget("map");
-    // Geometries
-    //Récupération des données dans le back qu'on va enrgistrer dans le tableau 'objets'
-    fetch('/objets')
-        .then(res => res.json())
-        .then((data) => {
-              this.setState({ objets: data })
-        });
-
-    //Boucle
     if (this.state.objets.length > 0)
     {
-        console.log("Tableau", this.state.objets);
+        //console.log("Tableau", this.state.objets);
         for(var i = 0; i < this.state.objets.length; i++)
         {
-            var point = new OlGeomPoint(
-                transform([this.state.objets[i].localisation.longitude, this.state.objets[i].localisation.latitude], 'EPSG:4326', 'EPSG:3857')
-                );
-            }
-
-            var circle = new OlGeomCircle(
-                  transform([2.21367,48.9036], 'EPSG:4326', 'EPSG:3857'),
-                  100
-                );
 
             // Features
-            var pointFeature = new OlFeature(point);
-            var circleFeature = new OlFeature(circle);
+            pointsFeatures[i] = new OlFeature(new OlGeomPoint(
+              transform([this.state.objets[i].localisation.longitude, this.state.objets[i].localisation.latitude], 'EPSG:4326', 'EPSG:3857')
+              ));
 
             // Source
             var vectorSource = new OlSource.Vector({
               projection: 'EPSG:4326'
             });
-            vectorSource.addFeatures([pointFeature, circleFeature]);
+            vectorSource.addFeatures([pointsFeatures[i]]);
 
             var iconStyle = new OlStyle.Style({
               image: new OlStyle.Icon(/** @type {olx.style.IconOptions} */ ({
@@ -105,17 +85,36 @@ class PublicMap extends Component {
               this.setState({ center, zoom });
             });
 
-    }
+          }
 
-    /*var point = new OlGeomPoint(
-      transform([2.21367,48.9036], 'EPSG:4326', 'EPSG:3857')
-    );*/
+    }
+  }
+
+  componentDidMount() {
+    this.map.setTarget("map");
+    // Geometries
+    //Récupération des données dans le back qu'on va enrgistrer dans le tableau 'objets'
+    fetch('/objets')
+      .then(res => res.json())
+      .then((data) => this.setState({ objets : data }));
+
+    // Listen to map changes
+    this.map.on("moveend", () => {
+      let center = this.map.getView().getCenter();
+      let zoom = this.map.getView().getZoom();
+      this.setState({ center, zoom });
+    });
 
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     let center = this.map.getView().getCenter();
     let zoom = this.map.getView().getZoom();
+    if (this.state.objets.length > 0){
+      console.log("Tableau", this.state.objets);
+
+    }
+
     if (center === nextState.center && zoom === nextState.zoom) return false;
     return true;
   }
@@ -130,6 +129,5 @@ class PublicMap extends Component {
   }
   
 }
-
 
 export default PublicMap;
