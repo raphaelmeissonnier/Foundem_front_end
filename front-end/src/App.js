@@ -10,7 +10,6 @@ class App extends React.Component {
     this.state = {
       latitude: null,
       longitude: null,
-      userAddress: null,
     };
 
     this.getLocation = this.getLocation.bind(this);
@@ -65,7 +64,6 @@ class App extends React.Component {
         <h4>Coordonnées de l'utilisateur</h4>
         <p>Latitude: {this.state.latitude}</p>
         <p>Longitude: {this.state.longitude}</p>
-        <p>Adresse: {this.state.userAddress}</p>
       </div>
     )
   }
