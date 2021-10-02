@@ -69,7 +69,6 @@ const MyMap = () => {
   const [features, setFeatures] = useState(addMarkers(items2));
 
   
-
   return (
     <div>
       <Map center={fromLonLat(center)} zoom={zoom}>
