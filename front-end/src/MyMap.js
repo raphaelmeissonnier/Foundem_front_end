@@ -78,13 +78,6 @@ class PublicMap extends Component {
             // Add Vector layer to map
             this.map.addLayer(vectorLayer);
 
-            // Listen to map changes
-            this.map.on("moveend", () => {
-              let center = this.map.getView().getCenter();
-              let zoom = this.map.getView().getZoom();
-              this.setState({ center, zoom });
-            });
-
           }
 
     }
