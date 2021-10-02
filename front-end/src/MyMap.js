@@ -16,6 +16,8 @@ import "./App.css";
 
 function addMarkers(lonLatArray) {
   
+  console.log("Dans AddMarker",lonLatArray)
+
   var iconStyle = new Style({
     image: new Icon({
       anchorXUnits: "fraction",
@@ -38,20 +40,35 @@ const MyMap = () => {
   const [zoom, setZoom] = useState(16);
 
   let [items, setItems] = useState([]);
+  let [items2, setItems2] = useState([]);
+  var result= []
 
+  
   useEffect(() => {
-    fetch("/objets")
-      .then(response => response.json())
-      .then(data => setItems(data))
-  }, []);
+    async function fetchMyAPI() {
+      let response = await fetch('/objets')
+      response = await response.json()
+      setItems(response)
+    }
 
-  console.log("Tab,", items[0].localisation);
+    fetchMyAPI()
+  }, [])
+
 
   const [showMarker, setShowMarker] = useState(true);
+
   const markersLonLat = [mapConfig.kansasCityLonLat, mapConfig.blueSpringsLonLat];
 
+  for(var i=0; i<items.length;i++){
+    items2[i] = [items[i].localisation.longitude,items[i].localisation.latitude]
+  }
 
-  const [features, setFeatures] = useState(addMarkers(markersLonLat));
+  console.log("Items2", items2)
+  console.log("MarkerLonLat", markersLonLat)
+
+  const [features, setFeatures] = useState(addMarkers(items2));
+
+  
 
   return (
     <div>
