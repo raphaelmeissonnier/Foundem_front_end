@@ -14,7 +14,7 @@ import mapConfig from "./config.json";
 import "./App.css";
 
 
-function addMarkers(lonLatArray) {
+/*function addMarkers(lonLatArray) {
   
   console.log("Dans AddMarker",lonLatArray)
 
@@ -25,6 +25,7 @@ function addMarkers(lonLatArray) {
       src: mapConfig.markerImage32,
     }),
   });
+
   let features = lonLatArray.map((item) => {
     let feature = new Feature({
       geometry: new Point(fromLonLat(item)),
@@ -32,41 +33,69 @@ function addMarkers(lonLatArray) {
     feature.setStyle(iconStyle);
     return feature;
   });
+  console.log("Features", features);
   return features;
-}
+}*/
+
+/*function construireTableau(items)
+{
+    let items2 = new Array();
+
+    for(var i=0; i<items.length;i++)
+    {
+        items2[i] = [items[i].localisation.longitude, items[i].localisation.latitude]
+    }
+    console.log("Items 2", items2);
+    return items2;
+}*/
 
 const MyMap = () => {
   const [center, setCenter] = useState(mapConfig.center);
   const [zoom, setZoom] = useState(16);
 
-  let [items, setItems] = useState([]);
-  let [items2, setItems2] = useState([]);
-  var result= []
-
-  
-  useEffect(() => {
-    async function fetchMyAPI() {
-      let response = await fetch('/objets')
-      response = await response.json()
-      setItems(response)
-    }
-
-    fetchMyAPI()
-  }, [])
+  const [items, setItems] = useState([]);
+  const [items2, setItems2] = useState([]);
 
 
-  const [showMarker, setShowMarker] = useState(true);
+  var iconStyle = new Style({
+    image: new Icon({
+      anchorXUnits: "fraction",
+      anchorYUnits: "pixels",
+      src: mapConfig.markerImage32,
+    }),
+  });
 
-  const markersLonLat = [mapConfig.kansasCityLonLat, mapConfig.blueSpringsLonLat];
+  //On récupère les données depuis le back
+  useEffect(async () => {
+    let response = await fetch("/objets");
+    let data = await response.json();
+    setItems(data);
+  }, []);
 
-  for(var i=0; i<items.length;i++){
-    items2[i] = [items[i].localisation.longitude,items[i].localisation.latitude]
+  //On vérifie que les données soient bien récupérées
+    console.log("Items", items);
+
+  //On récupère les longitudes et latitudes des objets
+  for(var i=0; i<items.length;i++)
+  {
+    items2[i] = [items[i].localisation.longitude, items[i].localisation.latitude]
   }
 
-  console.log("Items2", items2)
-  console.log("MarkerLonLat", markersLonLat)
+  //On vérifie qu'on a bien que les long et lat
+  console.log("Items2", items2);
 
-  const [features, setFeatures] = useState(addMarkers(items2));
+  const [features, setFeatures] = useState([]);
+
+  for(var j=0; j<items2.length; j++)
+  {
+    features[j] = new Feature({
+        geometry: new Point(fromLonLat(items2[j])),
+    });
+    features[j].setStyle(iconStyle);
+  }
+  //Transformation du tableau en points
+
+  console.log("features", features);
 
   
   return (
@@ -74,7 +103,7 @@ const MyMap = () => {
       <Map center={fromLonLat(center)} zoom={zoom}>
         <Layers>
           <TileLayer source={osm()} zIndex={0} />
-          {showMarker && <VectorLayer source={vector({ features })} />}
+          {features.length>0 && <VectorLayer source={vector({ features })} />}
         </Layers>
         <Controls>
           <FullScreenControl />
