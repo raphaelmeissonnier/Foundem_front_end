@@ -9,47 +9,14 @@ import { fromLonLat, get } from "ol/proj";
 import GeoJSON from "ol/format/GeoJSON";
 import { Controls, FullScreenControl } from "./Controls";
 import FeatureStyles from "./Features/Styles";
+import {getLocation} from './App';
 
 import mapConfig from "./config.json";
 import "./App.css";
 
 
-/*function addMarkers(lonLatArray) {
-  
-  console.log("Dans AddMarker",lonLatArray)
-
-  var iconStyle = new Style({
-    image: new Icon({
-      anchorXUnits: "fraction",
-      anchorYUnits: "pixels",
-      src: mapConfig.markerImage32,
-    }),
-  });
-
-  let features = lonLatArray.map((item) => {
-    let feature = new Feature({
-      geometry: new Point(fromLonLat(item)),
-    });
-    feature.setStyle(iconStyle);
-    return feature;
-  });
-  console.log("Features", features);
-  return features;
-}*/
-
-/*function construireTableau(items)
-{
-    let items2 = new Array();
-
-    for(var i=0; i<items.length;i++)
-    {
-        items2[i] = [items[i].localisation.longitude, items[i].localisation.latitude]
-    }
-    console.log("Items 2", items2);
-    return items2;
-}*/
-
 const MyMap = () => {
+
   const [center, setCenter] = useState(mapConfig.center);
   const [zoom, setZoom] = useState(16);
 
@@ -86,6 +53,7 @@ const MyMap = () => {
 
   const [features, setFeatures] = useState([]);
 
+  //Transformation du tableau en points
   for(var j=0; j<items2.length; j++)
   {
     features[j] = new Feature({
@@ -93,7 +61,6 @@ const MyMap = () => {
     });
     features[j].setStyle(iconStyle);
   }
-  //Transformation du tableau en points
 
   console.log("features", features);
 

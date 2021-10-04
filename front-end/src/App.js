@@ -4,7 +4,6 @@ import React, { Component, Text } from "react";
 
 class App extends React.Component {
 
-
   constructor(props) {
     super(props);
     this.state = {
@@ -17,7 +16,7 @@ class App extends React.Component {
   }
 
   getLocation(){
-    if (navigator.geolocation) {
+    if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.getCoordinates);
     }
     else{
@@ -25,13 +24,12 @@ class App extends React.Component {
     }
   }
 
-
   getCoordinates(position) {
     this.setState({
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     })
-   
+
   }
 
   handleLocationError(error) {
@@ -50,27 +48,34 @@ class App extends React.Component {
     }
   }
 
+envoyerLocalisation = () =>
+{
+    if(!this.state) { return }
 
+    //console.log("Longitute", this.state.longitude);
+    //const {longitude} = this.state.longitude;
+
+    const requestOptions = {
+        port: 3001,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ longitude: this.state.longitude, latitude: this.state.latitude})
+    };
+    fetch('/localisation', requestOptions)
+        .then(response => response.json());
+}
 
   render() {
+  this.getLocation();
     return (
       <div className="App">
-
         <h2>
           React Geolocation
         </h2>
-
-        <button onClick={this.getLocation}> Obtenir coordonnées</button>
-        <h4>Coordonnées de l'utilisateur</h4>
-        <p>Latitude: {this.state.latitude}</p>
-        <p>Longitude: {this.state.longitude}</p>
+        <button onClick={this.envoyerLocalisation}>Centrer</button>
       </div>
     )
   }
-
-
 }
-
-
 
 export default App;
