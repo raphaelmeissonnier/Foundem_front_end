@@ -1,5 +1,6 @@
 import { numberSafeCompareFunction } from "ol/array";
 import React, { Component, Text } from "react";
+import MyMap from "./MyMap";
 
 
 class App extends React.Component {
@@ -64,6 +65,8 @@ envoyerLocalisation = () =>
     };
     fetch('/localisation', requestOptions)
         .then(response => response.json());
+
+    window.location.reload(false);
 }
 
   render() {
@@ -74,6 +77,7 @@ envoyerLocalisation = () =>
           React Geolocation
         </h2>
         <button onClick={this.envoyerLocalisation}>Centrer</button>
+        {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : null }
       </div>
     )
   }

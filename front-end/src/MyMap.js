@@ -16,9 +16,14 @@ import mapConfig from "./config.json";
 import "./App.css";
 
 
-const MyMap = () => {
+const MyMap = (props) => {
 
-  const [center, setCenter] = useState(mapConfig.center);
+  var longitude = props.longitude;
+  console.log("longitude", longitude);
+  var latitude = props.latitude;
+  console.log("latitude", latitude);
+
+  const [center, setCenter] = useState([longitude,latitude]);
   const [zoom, setZoom] = useState(16);
 
   const [items, setItems] = useState([]);
