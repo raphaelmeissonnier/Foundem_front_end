@@ -30,6 +30,7 @@ class App extends React.Component {
       longitude: position.coords.longitude
     })
 
+
   }
 
   handleLocationError(error) {
