@@ -40,9 +40,12 @@ const MyMap = (props) => {
 
   //On récupère les données depuis le back
   useEffect(async () => {
-    let response = await fetch("/objets");
-    let data = await response.json();
-    setItems(data);
+    if(longitude && latitude){
+      let response = await fetch("/objets/"+longitude+"/"+latitude);
+      let data = await response.json();
+      console.log("apres le fetch",data)
+      setItems(data);
+    }   
   }, []);
 
   //On vérifie que les données soient bien récupérées
@@ -51,7 +54,7 @@ const MyMap = (props) => {
   //On récupère les longitudes et latitudes des objets
   for(var i=0; i<items.length;i++)
   {
-    items2[i] = [items[i].localisation.longitude, items[i].localisation.latitude]
+    items2[i] = [items[i][0].localisation.position.longitude, items[i][0].localisation.position.latitude]
   }
 
   //On vérifie qu'on a bien que les long et lat
