@@ -1,31 +1,86 @@
+import { numberSafeCompareFunction } from "ol/array";
 import React, { Component, Text } from "react";
+import MyMap from "./MyMap";
 
 
-class App extends Component {
-  state = { users: [], clicked: false }
+class App extends React.Component {
 
-  componentDidMount() {
-    fetch('/users')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
+  constructor(props) {
+    super(props);
+    this.state = {
+      latitude: null,
+      longitude: null,
+    };
+
+    this.getLocation = this.getLocation.bind(this);
+    this.getCoordinates = this.getCoordinates.bind(this)
   }
 
+  getLocation(){
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.getCoordinates);
+    }
+    else{
+      alert("La géolocalisation n'est pas supportée par votre navigateur");
+    }
+  }
 
-  render(){
+  getCoordinates(position) {
+    this.setState({
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude
+    })
+
+
+  }
+
+  handleLocationError(error) {
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        alert("User denied the request for Geolocation.")
+        break;
+      case error.position_UNAVAILABLE:
+        alert("Location information is unavailable.")
+        break;
+      case error.TIMEOUT:
+        alert("The request to get user location timed out.")
+        break;
+      default:
+      alert("An unknow error occurred.")
+    }
+  }
+
+envoyerLocalisation = () =>
+{
+    if(!this.state) { return }
+
+    //console.log("Longitute", this.state.longitude);
+    //const {longitude} = this.state.longitude;
+
+    const requestOptions = {
+        port: 3001,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ longitude: this.state.longitude, latitude: this.state.latitude})
+    };
+    fetch('/localisation', requestOptions)
+        .then(response => response.json());
+
+    window.location.reload(false);
+}
+
+  render() {
+  this.getLocation();
     return (
       <div className="App">
-        <h1>Users</h1>
-        <button onClick={() => this.setState({clicked: true})}>Afficher les users</button>
-        {this.state.clicked ?
-            (<ul>
-                {this.state.users.map(user =><li key={user.id}>{user.username}</li>)}
-            </ul>)
-        :
-        null}
-        <br></br>
-      </div>      
-    );
+        <h2>
+          React Geolocation
+        </h2>
+        <button onClick={this.envoyerLocalisation}>Centrer</button>
+        {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : null }
+      </div>
+    )
   }
-  
 }
+
 export default App;
