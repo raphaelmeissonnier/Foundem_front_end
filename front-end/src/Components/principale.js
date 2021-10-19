@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Router } from "@material-ui/icons";
 import { AppBar, Box, Toolbar, Typography, IconButton, Button, Link } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import Ajout_objT from '../Components/ajout_objT';
+import Ajout_objT from "./ajout_objT";
 import App from "../App";
 
 
@@ -81,9 +81,13 @@ class Principale extends React.Component {
             <p>Latitude: {this.state.latitude}</p>
             <p>Longitude: {this.state.longitude}</p>
             <p>Adresse: {this.state.userAddress}</p>
-            <Link to ='/ajout_objT' > Ajouter </Link>
-
+            
+            
+            <Link role="button" to="/ajout_objT"> Vous avez trouvé un objet ?</Link> 
+          <Ajout_objT/>
           </div>
+
+        
        </div>
        
     )
