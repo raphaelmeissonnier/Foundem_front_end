@@ -1,133 +1,95 @@
-import React, { Component } from "react";
-import OlMap from "ol/Map";
-import OlView from "ol/View";
-import * as OlLayer from "ol/layer";
-import * as OlSource from "ol/source";
-import * as OlStyle from "ol/style";
-import OlGeomPoint from "ol/geom/Point";
-import OlGeomCircle from "ol/geom/Circle";
-import { transform } from "ol/proj"
-import OlFeature from "ol/Feature";
-import OlLayerTile from "ol/layer/Tile";
-import OlSourceOSM from "ol/source/OSM";
-import { fromLonLat } from 'ol/proj';
-import marker from './images/marker.svg';
+import React, { useState,useEffect } from "react";
+import Map from "./Map";
+import { Layers, TileLayer, VectorLayer } from "./Layers";
+import { Style, Icon } from "ol/style";
+import Feature from "ol/Feature";
+import Point from "ol/geom/Point";
+import { osm, vector,cluster } from "./Source";
+import { fromLonLat, get } from "ol/proj";
+import GeoJSON from "ol/format/GeoJSON";
+import { Controls, FullScreenControl } from "./Controls";
+import FeatureStyles from "./Features/Styles";
+import {getLocation} from './App';
+import App from "./App"
 
-const upn_loc=fromLonLat([2.21367,48.9036]); //position de l'université de paris nanterre
-var pointsFeatures = []
+import mapConfig from "./config.json";
+import "./App.css";
 
-class PublicMap extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = { 
-        center: upn_loc,
-        zoom: 16,
-        objets : []
-    };
+const MyMap = (props) => {
 
-    this.map = new OlMap({ //creation de la map
-      target: null,
-      layers: [
-        new OlLayerTile({
-          source: new OlSourceOSM()
-        })
-      ],
-      view: new OlView({
-        center: this.state.center,
-        zoom: this.state.zoom
-      })
+  var longitude = props.longitude;
+  console.log("longitude", longitude);
+  var latitude = props.latitude;
+  console.log("latitude", latitude);
+
+  const [center, setCenter] = useState([longitude,latitude]);
+  const [zoom, setZoom] = useState(16);
+
+  const [items, setItems] = useState([]);
+  const [items2, setItems2] = useState([]);
+
+
+  var iconStyle = new Style({
+    image: new Icon({
+      anchorXUnits: "fraction",
+      anchorYUnits: "pixels",
+      src: mapConfig.markerImage32,
+    }),
+  });
+
+  //On récupère les données depuis le back
+  useEffect(async () => {
+    if(longitude && latitude){
+      let response = await fetch("/objets/"+longitude+"/"+latitude);
+      let data = await response.json();
+      console.log("apres le fetch",data)
+      setItems(data);
+    }   
+  }, []);
+
+  //On vérifie que les données soient bien récupérées
+    console.log("Items", items);
+
+  //On récupère les longitudes et latitudes des objets
+  for(var i=0; i<items.length;i++)
+  {
+    items2[i] = [items[i][0].localisation.position.longitude, items[i][0].localisation.position.latitude]
+  }
+
+  //On vérifie qu'on a bien que les long et lat
+  console.log("Items2", items2);
+
+  const [features, setFeatures] = useState([]);
+
+  //Transformation du tableau en points
+  for(var j=0; j<items2.length; j++)
+  {
+    features[j] = new Feature({
+        geometry: new Point(fromLonLat(items2[j])),
     });
+    features[j].setStyle(iconStyle);
   }
 
-  updateMap() { //mise à jour de la map
-    this.map.getView().setCenter(this.state.center);
-    this.map.getView().setZoom(this.state.zoom);
-    if (this.state.objets.length > 0)
-    {
-        //console.log("Tableau", this.state.objets);
-        for(var i = 0; i < this.state.objets.length; i++)
-        {
+  console.log("features", features);
 
-            // Features
-            pointsFeatures[i] = new OlFeature(new OlGeomPoint(
-              transform([this.state.objets[i].localisation.longitude, this.state.objets[i].localisation.latitude], 'EPSG:4326', 'EPSG:3857')
-              ));
+  var test=vector({features});
+  console.log("tesssssss",test)
 
-            // Source
-            var vectorSource = new OlSource.Vector({
-              projection: 'EPSG:4326'
-            });
-            vectorSource.addFeatures([pointsFeatures[i]]);
-
-            var iconStyle = new OlStyle.Style({
-              image: new OlStyle.Icon(/** @type {olx.style.IconOptions} */ ({
-                anchor: [0.5, 0.5],
-                opacity: 0.75,
-                scale: 1,
-                src: marker
-              }))
-            });
-
-            // Vector layer
-            var vectorLayer = new OlLayer.Vector({
-            source: vectorSource,
-            style: iconStyle
-            });
-
-            // Add Vector layer to map
-            this.map.addLayer(vectorLayer);
-
-            // Listen to map changes
-            this.map.on("moveend", () => {
-              let center = this.map.getView().getCenter();
-              let zoom = this.map.getView().getZoom();
-              this.setState({ center, zoom });
-            });
-
-          }
-
-    }
-  }
-
-  componentDidMount() {
-    this.map.setTarget("map");
-    // Geometries
-    //Récupération des données dans le back qu'on va enrgistrer dans le tableau 'objets'
-    fetch('/objets')
-      .then(res => res.json())
-      .then((data) => this.setState({ objets : data }));
-
-    // Listen to map changes
-    this.map.on("moveend", () => {
-      let center = this.map.getView().getCenter();
-      let zoom = this.map.getView().getZoom();
-      this.setState({ center, zoom });
-    });
-
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    let center = this.map.getView().getCenter();
-    let zoom = this.map.getView().getZoom();
-    if (this.state.objets.length > 0){
-      console.log("Tableau", this.state.objets);
-
-    }
-
-    if (center === nextState.center && zoom === nextState.zoom) return false;
-    return true;
-  }
   
-  render() { //rendu de la map, taille etc...
-    this.updateMap(); // Update map on render?
-    return (
-    
-      <div id="map" style={{ width: "100%", height: "450px" }}> 
-      </div>
-    );
-  }
-  
-}
+  return (
+    <div>
+      <Map center={fromLonLat(center)} zoom={zoom}>
+        <Layers>
+          <TileLayer source={osm()} zIndex={0} />
+          {features.length>0 && <VectorLayer source={cluster(test)} />}
+        </Layers>
+        <Controls>
+          <FullScreenControl />
+        </Controls>
+      </Map>
+    </div>
+  );
+};
 
-export default PublicMap;
+export default MyMap;

@@ -7,9 +7,9 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-    <div> <br></br></div>
+    <App/>
     <MyMap/>
+    <div><br></br></div>
   </React.StrictMode>,
   document.getElementById('root')
 );
