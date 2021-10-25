@@ -57,7 +57,7 @@ const MyMap = (props) => {
   for(var i=0; i<items.length;i++)
   {
     items2[i] = [items[i][0].localisation.position.longitude, items[i][0].localisation.position.latitude];
-    itemsInfos[i] = items[i][0].categorie;
+    itemsInfos[i] = [items[i][0].categorie, items[i][0].intitule, items[i][0].description, items[i][0].date] ;
   }
 
   //On vérifie qu'on a bien que les long et lat

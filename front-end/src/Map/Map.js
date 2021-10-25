@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react"
+import React, { useRef, useState, useEffect, Text } from "react"
 import "./Map.css";
 import MapContext from "./MapContext";
 import * as ol from "ol";
@@ -6,7 +6,8 @@ import * as ol from "ol";
 const Map = ({ children, zoom, center }) => {
 	const mapRef = useRef();
 	const [map, setMap] = useState(null);
-    const [itemsInfos, setItemsInfos] = useState();
+    const [itemsInfos, setItemsInfos] = useState([]);
+    const [clicked, setCliked] = useState(false);
 
 	// on component mount
 	useEffect(() => {
@@ -25,7 +26,9 @@ const Map = ({ children, zoom, center }) => {
                 return feature;
               });
               if (feature) {
+                  setCliked(true);
                   setItemsInfos(feature.getProperties().features[0].values_.name);
+                  console.log("feature", feature.getProperties().features[0].values_.name)
               }
         });
 
@@ -53,9 +56,17 @@ const Map = ({ children, zoom, center }) => {
 			<div ref={mapRef} className="ol-map">
 				{children}
 			</div>
-			<div>
-			    {itemsInfos}
-			</div>
+			{clicked ? (
+			    <div>
+                    Catégorie: {itemsInfos[0]}
+                    <br></br>
+                    Intitulé: {itemsInfos[1]}
+                    <br></br>
+                    Description: {itemsInfos[2]}
+                </div>
+			    )
+			    :null
+			}
 		</MapContext.Provider>
 	)
 }
