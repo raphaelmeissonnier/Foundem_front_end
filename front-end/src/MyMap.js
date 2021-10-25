@@ -29,6 +29,7 @@ const MyMap = (props) => {
 
   const [items, setItems] = useState([]);
   const [items2, setItems2] = useState([]);
+  const [itemsInfos, setItemsInfos] = useState([]);
 
 
   var iconStyle = new Style({
@@ -55,11 +56,13 @@ const MyMap = (props) => {
   //On récupère les longitudes et latitudes des objets
   for(var i=0; i<items.length;i++)
   {
-    items2[i] = [items[i][0].localisation.position.longitude, items[i][0].localisation.position.latitude]
+    items2[i] = [items[i][0].localisation.position.longitude, items[i][0].localisation.position.latitude];
+    itemsInfos[i] = items[i][0].categorie;
   }
 
   //On vérifie qu'on a bien que les long et lat
   console.log("Items2", items2);
+  console.log("ItemsInfos", itemsInfos);
 
   const [features, setFeatures] = useState([]);
 
@@ -68,6 +71,8 @@ const MyMap = (props) => {
   {
     features[j] = new Feature({
         geometry: new Point(fromLonLat(items2[j])),
+        name: itemsInfos[j],
+        properties:items2[j],
     });
     features[j].setStyle(iconStyle);
   }

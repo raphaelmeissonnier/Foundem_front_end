@@ -6,8 +6,13 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@types/jquery": "^3.5.8",
+    "bootstrap": "^3.4.1",
+    "jquery": "^3.6.0",
     "ol": "^6.7.0",
+    "popover": "^2.4.1",
     "react": "^17.0.2",
+    "react-bootstrap": "^2.0.0",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.2"
@@ -16,7 +21,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "jquery": "node_modules/jquery/dist/jquery.min.js",
+    "bootstrap": "node_modules/bootstrap/dist/js/bootstrap.min.js"
   },
   "proxy": "http://localhost:3001",
   "eslintConfig": {

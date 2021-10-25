@@ -6,6 +6,7 @@ import * as ol from "ol";
 const Map = ({ children, zoom, center }) => {
 	const mapRef = useRef();
 	const [map, setMap] = useState(null);
+    const [itemsInfos, setItemsInfos] = useState();
 
 	// on component mount
 	useEffect(() => {
@@ -18,6 +19,16 @@ const Map = ({ children, zoom, center }) => {
 
 		let mapObject = new ol.Map(options);
 		mapObject.setTarget(mapRef.current);
+
+        mapObject.on('click', (event) => {
+              const feature = mapObject.forEachFeatureAtPixel(event.pixel, (feature) => {
+                return feature;
+              });
+              if (feature) {
+                  setItemsInfos(feature.getProperties().features[0].values_.name);
+              }
+        });
+
 		setMap(mapObject);
 
 		return () => mapObject.setTarget(undefined);
@@ -41,6 +52,9 @@ const Map = ({ children, zoom, center }) => {
 		<MapContext.Provider value={{ map }}>
 			<div ref={mapRef} className="ol-map">
 				{children}
+			</div>
+			<div>
+			    {itemsInfos}
 			</div>
 		</MapContext.Provider>
 	)
