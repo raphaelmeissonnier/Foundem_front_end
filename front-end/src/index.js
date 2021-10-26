@@ -2,15 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import MyMap from "./MyMap";
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from "./Routes/Routes";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App/>
-    <MyMap/>
-    <div><br></br></div>
-  </React.StrictMode>,
+    <Router>
+        <Routes/>
+    </Router>,
   document.getElementById('root')
 );
 

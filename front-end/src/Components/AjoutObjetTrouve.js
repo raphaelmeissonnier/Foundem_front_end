@@ -8,9 +8,6 @@ import Accueil from '../Components/Accueil';
 import Header from './Header';
 
 
-
-
-
 function AjoutObjetTrouve() {
 
 const Item = styled(Paper)(({ theme }) => ({
