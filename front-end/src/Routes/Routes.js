@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Router, Switch, Route } from "react-router-dom";
 
-import Coucou from "../Components/Coucou";
 import App from "../App";
 import history from './History';
 import AjoutObjetTrouve from '../Components/AjoutObjetTrouve';

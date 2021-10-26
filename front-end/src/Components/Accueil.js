@@ -11,6 +11,10 @@ import Header from './Header';
 import history from '../Routes/History'
 
 class Accueil extends React.Component {
+  rediriger = () => {
+    history.push('/AjoutObjetTrouve');
+    console.log("J'ai cliqué");
+  }
   render() {
     return (
       <div className="Accueil">
@@ -21,8 +25,8 @@ class Accueil extends React.Component {
             <h5> Vous avez perdu ou trouvé un objet ? Déclarez-le et la communauté
             se met en mouvement pour vous aider à retrouver votre objet </h5>
             <box direction="row" spacing={2}>
-                <Button variant="contained" endIcon={<AddIcon />} onClick={() => history.push('/AjoutObjetTrouve')}>
-                    Jai trouvé un objet
+                <Button variant="contained" endIcon={<AddIcon />} onClick={this.rediriger}>
+                    J'ai trouvé un objet
                 </Button>
             </box>
           </div>
