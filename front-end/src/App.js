@@ -1,7 +1,8 @@
 import { numberSafeCompareFunction } from "ol/array";
 import React, { Component, Text } from "react";
 import MyMap from "./MyMap";
-
+import history from "./Routes/History"
+import Accueil from "./Components/Accueil"
 
 class App extends React.Component {
 
@@ -30,8 +31,6 @@ class App extends React.Component {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     })
-
-
   }
 
   handleLocationError(error) {
@@ -73,9 +72,7 @@ envoyerLocalisation = () =>
   this.getLocation();
     return (
       <div className="App">
-        <h2>
-          React Geolocation
-        </h2>
+        <Accueil/>
         <button onClick={this.envoyerLocalisation}>Centrer</button>
         {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : null }
       </div>
