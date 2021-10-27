@@ -19,14 +19,16 @@ const AjoutObjetTrouve = () => {
   const [categorie, setCategorie] = useState("");
 
   function envoyerInformations() {
+    if(!intitule || !description || !date || !longitude || !latitude || !adresseMail || !categorie){console.log("intitule:", intitule); return}
+    console.log("type of longitude", typeof(longitude));
     const requestOptions = {
         port: 3001,
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ intitule: intitule, description: description, date: date, longitude: longitude, latitude: latitude, adresseMail: adresseMail, categorie: categorie})
+        body: JSON.stringify({ intitule: intitule, description: description, date: date, longitude: parseInt(longitude), latitude: parseInt(latitude), adresseMail: adresseMail, categorie: categorie})
     };
-        fetch('/ajoutObjetTrouve', requestOptions)
-            .then(response => response.json());
+    fetch('/ajoutObjetTrouve', requestOptions)
+        .then(response => response.json());
   }
 
   function _handleIntituleChange(e){
@@ -108,17 +110,18 @@ const classes = useStyles();
         <br></br>
         Catégorie: <input type="text" onChange={_handleCategorieChange}/>
         <br></br>
-        Date: <input type="date" onChange={_handleDateChange}/>
+        Date: <input type="text" onChange={_handleDateChange}/>
         <br></br>
         Longitude: <input type="number" onChange={_handleLongitudeChange}/>
         <br></br>
         Latitude: <input type="number" onChange={_handleLatitudeChange}/>
         <br></br>
-        Adresse mail: <input type="email" onChange={_handleAdresseMailChange}/>
+        Adresse mail: <input type="text" onChange={_handleAdresseMailChange}/>
         <br></br>
         <Button onClick={envoyerInformations}>Ajouter</Button>
     </div>
   )
+  //Attention ce morceau de code doit être mis dans la fonction return
   /*<FormControl>
   <Grid container spacing={2}>
    <Grid className={classes.grid} item xs={4}>
