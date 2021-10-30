@@ -5,9 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from "./Routes/Routes";
+import Header from "./Components/Header";
+
 
 ReactDOM.render(
     <Router>
+        {/*Rendu du Header et Footer*/}
+        <Header />
         <Routes/>
     </Router>,
   document.getElementById('root')
