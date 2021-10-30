@@ -4,8 +4,6 @@ import {InputLabel, Paper, CssBaseline, Container, TextField, Select, Box, Butto
 FormControl, FormControlLabel, FormLabel, Fab} from '@material-ui/core';
 import { makeStyles, styled } from '@material-ui/core/styles';
 import NavigationIcon from '@material-ui/icons/Navigation';
-import Accueil from '../Components/Accueil';
-import Header from './Header';
 
 
 const AjoutObjetTrouve = () => {
