@@ -1,4 +1,4 @@
-import React, {useState, useRef, Label} from 'react';
+import React, {useState, useRef, Label, useEffect} from 'react';
 import { Route, BrowserRouter as Router, Link, Switch } from "react-router-dom";
 import {InputLabel, Paper, CssBaseline, Container, TextField, Select, Box, Button, IconButton, Grid, Radio, RadioGroup,
 FormControl, FormControlLabel, FormLabel, Fab} from '@material-ui/core';
@@ -19,8 +19,15 @@ const AjoutObjetTrouve = () => {
   const [categorie, setCategorie] = useState("");
 
   function envoyerInformations() {
+    console.log("intitulé envoyé: ", intitule);
+    console.log("description envoyé: ", description);
+    console.log("date envoyé: ", date);
+    console.log("longitude envoyé: ", longitude);
+    console.log("latitude envoyé: ", latitude);
+    console.log("adresseMail envoyé: ", adresseMail);
+    console.log("categorie envoyé: ", categorie);
+
     if(!intitule || !description || !date || !longitude || !latitude || !adresseMail || !categorie){console.log("intitule:", intitule); return}
-    console.log("type of longitude", typeof(longitude));
     const requestOptions = {
         port: 3001,
         method: 'POST',
@@ -33,37 +40,37 @@ const AjoutObjetTrouve = () => {
 
   function _handleIntituleChange(e){
     setIntitule(e.target.value);
-    console.log(intitule);
+    //console.log(e.target.value);
   }
 
   function _handleDescriptionChange(e){
     setDescription(e.target.value);
-    console.log("description", description);
+    //console.log("description", description);
   }
 
   function _handleDateChange(e){
     setDate(e.target.value);
-    console.log("date", date);
+    //console.log("date", date);
   }
 
   function _handleLongitudeChange(e){
     setLongitude(e.target.value);
-    console.log("longitude", longitude);
+    //console.log("longitude", longitude);
   }
 
   function _handleLatitudeChange(e){
     setLatitude(e.target.value);
-    console.log("latitude", latitude);
+    //console.log("latitude", latitude);
   }
 
   function _handleAdresseMailChange(e){
     setAdresseMail(e.target.value);
-    console.log("adresse mail", adresseMail);
+    //console.log("adresse mail", adresseMail);
   }
 
   function _handleCategorieChange(e){
     setCategorie(e.target.value);
-    console.log("categorie", categorie);
+    //console.log("categorie", categorie);
   }
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -100,7 +107,6 @@ const useStyles = makeStyles((theme) => ({
 const classes = useStyles();
   return(
     <div className={classes.div}>
-        <Header/>
         <br></br><br></br><br></br><br></br><br></br>
         <h1 className={classes.title}> Ajouter un objet trouvé </h1>
         <br></br>
@@ -108,64 +114,73 @@ const classes = useStyles();
         <br></br>
         Description: <input type="text" onChange={_handleDescriptionChange}/>
         <br></br>
-        Catégorie: <input type="text" onChange={_handleCategorieChange}/>
-        <br></br>
-        Date: <input type="text" onChange={_handleDateChange}/>
+        <div onChange={_handleCategorieChange}>
+            <input type="radio" value="hightech" /> High-Tech
+            <input type="radio" value="livres" /> Livres
+            <input type="radio" value="beaute_sante" /> Beauté et santé
+            <input type="radio" value="garde_robe" /> Garde-robe
+            <input type="radio" value="cartes" /> Cartes
+            <input type="radio" value="autres" /> Autres
+        </div>
+        Date: <input type="date" onChange={_handleDateChange}/>
         <br></br>
         Longitude: <input type="number" onChange={_handleLongitudeChange}/>
         <br></br>
         Latitude: <input type="number" onChange={_handleLatitudeChange}/>
         <br></br>
-        Adresse mail: <input type="text" onChange={_handleAdresseMailChange}/>
+        Adresse mail: <input type="email" onChange={_handleAdresseMailChange}/>
         <br></br>
         <Button onClick={envoyerInformations}>Ajouter</Button>
     </div>
   )
   //Attention ce morceau de code doit être mis dans la fonction return
-  /*<FormControl>
-  <Grid container spacing={2}>
-   <Grid className={classes.grid} item xs={4}>
-      <Item>
-      <input type="text" onChange={_handleIntituleChange}/>
-      <TextField required id="intitule" label="Intitule" InputLabelProps={{ shrink: true,}} variant="standard" inputRef={intituleRef}/>
-      </Item>
-      <Item>
-      <TextField required id="description" label="Description" InputLabelProps={{ shrink: true,}} variant="standard" onChange={_handleDescriptionChange}/>
-      </Item>
-      <Item>
-       <FormLabel component="legend">Categorie</FormLabel>
-            <RadioGroup row aria-label="categorie" name="categorie">
-              <FormControlLabel value="hightech" control={<Radio />} label="High Tech" />
-              <FormControlLabel value="livres" control={<Radio />} label="Livres" />
-              <FormControlLabel value="four_bur" control={<Radio />} label="Fournitures de bureau" />
-              <FormControlLabel value="garde_robe" control={<Radio />} label="Garde-robe" />
-              <FormControlLabel value="beaute_sante" control={<Radio />} label="Beauté et santé" />
-              <FormControlLabel value="cartes" control={<Radio />} label="Cartes" />
-              <FormControlLabel value="autres" control={<Radio />} label="Autres" />
-            </RadioGroup>
-      </Item>
-      <Item>
-      <TextField required id="date" label="Date" InputLabelProps={{ shrink: true,}} type="date" variant="standard" onChange={_handleDateChange}/>
-      </Item>
-      <Item>
-      <TextField required id="longitude" label="longitude" InputLabelProps={{ shrink: true,}} variant="standard" onChange={_handleLongitudeChange}/>
-      </Item>
-      <Item>
-      <TextField required id="latitude" label="latitude" InputLabelProps={{ shrink: true,}} variant="standard" onChange={_handleLatitudeChange}/>
-      </Item>
-       <Item>
-       <TextField required id="email" label="Adresse email" InputLabelProps={{ shrink: true,}} variant="standard" onChange={_handleAdresseMailChange}/>
-       <TextField id="telephone" label="Numéro de téléphone" InputLabelProps={{ shrink: true,}} variant="standard"/>
-       </Item>
-      <Item>
-      <Fab variant="extended" color="#5fa082" aria-label="add">
-              <NavigationIcon sx={{ mr: 1 }} />
-              <Button onClick={envoyerInformations}>Ajouter</Button>
-            </Fab>
-      </Item>
-   </Grid>
-    </Grid>
-   </FormControl>*/
+/*
+    <div className={classes.div}>
+      <br></br><br></br><br></br><br></br><br></br>
+      <h1 className={classes.title}> Ajouter un objet trouvé </h1>
+      <FormControl>
+        <Grid container spacing={2}>
+            <Grid className={classes.grid} item xs={4}>
+                <Item>
+                    <TextField required id="intitule" label="Intitule" InputLabelProps={{ shrink: true,}} variant="standard" onChange={_handleIntituleChange}/>
+                </Item>
+                <Item>
+                    <TextField required id="description" label="Description" InputLabelProps={{ shrink: true,}} variant="standard" onChange={_handleDescriptionChange}/>
+                </Item>
+                <Item>
+                    <FormLabel component="legend">Categorie</FormLabel>
+                    <RadioGroup row aria-label="categorie" name="categorie" onChange={_handleCategorieChange}>
+                        <FormControlLabel value="hightech" control={<Radio />} label="High Tech" />
+                        <FormControlLabel value="livres" control={<Radio />} label="Livres" />
+                        <FormControlLabel value="four_bur" control={<Radio />} label="Fournitures de bureau" />
+                        <FormControlLabel value="garde_robe" control={<Radio />} label="Garde-robe" />
+                        <FormControlLabel value="beaute_sante" control={<Radio />} label="Beauté et santé" />
+                        <FormControlLabel value="cartes" control={<Radio />} label="Cartes" />
+                        <FormControlLabel value="autres" control={<Radio />} label="Autres" />
+                    </RadioGroup>
+                </Item>
+                <Item>
+                    <TextField required id="date" label="Date" InputLabelProps={{ shrink: true,}} type="date" variant="standard" onChange={_handleDateChange}/>
+                </Item>
+                <Item>
+                    <TextField required id="longitude" label="longitude" InputLabelProps={{ shrink: true,}} variant="standard" onChange={_handleLongitudeChange}/>
+                </Item>
+                <Item>
+                    <TextField required id="latitude" label="latitude" InputLabelProps={{ shrink: true,}} variant="standard" onChange={_handleLatitudeChange}/>
+                </Item>
+                <Item>
+                    <TextField required id="email" label="Adresse email" InputLabelProps={{ shrink: true,}} variant="standard" onChange={_handleAdresseMailChange}/>
+                </Item>
+                <Item>
+                    <Fab variant="extended" color="#5fa082" aria-label="add">
+                        <NavigationIcon sx={{ mr: 1 }} />
+                            <Button onClick={envoyerInformations}>Ajouter</Button>
+                    </Fab>
+                </Item>
+            </Grid>
+        </Grid>
+      </FormControl>
+    </div>*/
 
 }
 

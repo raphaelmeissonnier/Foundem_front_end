@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Router, Switch, Route } from "react-router-dom";
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 
 import App from "../App";
 import AjoutObjetTrouve from '../Components/AjoutObjetTrouve';
