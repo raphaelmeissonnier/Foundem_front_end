@@ -27,6 +27,7 @@ const AjoutObjetTrouve = () => {
   const [adresse, setAdresse] = useState("");
   const [resultat,setResultat]=useState("");
   const [viewport,setViewport]=useState("");
+  const [item,setItem]=useState("Adresse");
 
   function envoyerInformations() {
     console.log("intitulé envoyé: ", intitule);
@@ -136,7 +137,11 @@ const useStyles = makeStyles((theme) => ({
 
 function onSelected(viewport, item){
   setViewport(viewport)
-  console.log("item", item)
+  console.log("Item",item.place_name)
+  console.log("Item",item)
+  setLongitude(item.center[0])
+  setLatitude(item.center[1])
+  console.log("Item long",item.center[0])
 }
 
 const viewport2 = {
@@ -164,10 +169,6 @@ const classes = useStyles();
         </div>
         Date: <input type="date" onChange={_handleDateChange}/>
         <br></br>
-        Longitude: <input type="number" onChange={_handleLongitudeChange}/>
-        <br></br>
-        Latitude: <input type="number" onChange={_handleLatitudeChange}/>
-        <br></br>
         Adresse mail: <input type="email" onChange={_handleAdresseMailChange}/>
         <br></br>
         Adresse: <Geocoder                
@@ -175,10 +176,11 @@ const classes = useStyles();
           hideOnSelect={true} 
           onSelected={onSelected} 
           viewport={viewport2} 
-          initialInputValue=' '
-          updateInputOnSelect={false}                       
+          updateInputOnSelect={true}
+          initialInputValue=" "                    
           queryParams={params}            
         />
+        <br></br>
         <Button onClick={envoyerInformations}>Ajouter</Button>
     </div>
   )
