@@ -11,7 +11,7 @@ import { Controls, FullScreenControl } from "./Controls";
 import FeatureStyles from "./Features/Styles";
 import {getLocation} from './App';
 import App from "./App"
-import marker from "images/marker.svg"
+import marker from "./images/marker.svg"
 
 import "./App.css";
 

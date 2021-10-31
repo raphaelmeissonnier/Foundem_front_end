@@ -7,6 +7,7 @@ import NavigationIcon from '@material-ui/icons/Navigation';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import Geocoder from "react-mapbox-gl-geocoder"
+const {config} = require('../config');
 
 const mapboxApiKey = config.MY_API_TOKEN;
 
@@ -25,7 +26,7 @@ const AjoutObjetTrouve = () => {
   const [categorie, setCategorie] = useState("");
   const [adresse, setAdresse] = useState("");
   const [resultat,setResultat]=useState("");
-  const [viewport,setViewport]=useState('');
+  const [viewport,setViewport]=useState("");
 
   function envoyerInformations() {
     console.log("intitulé envoyé: ", intitule);
@@ -134,10 +135,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function onSelected(viewport, item){
-  //setViewport(viewport)
+  setViewport(viewport)
   console.log("item", item)
 }
 
+const viewport2 = {
+  width: 400,
+  height: 400
+};
 
 const classes = useStyles();
   return(
@@ -169,8 +174,9 @@ const classes = useStyles();
           mapboxApiAccessToken={mapboxApiKey}                                             
           hideOnSelect={true} 
           onSelected={onSelected} 
-          viewport={null}           
-          value=""                
+          viewport={viewport2} 
+          initialInputValue=' '
+          updateInputOnSelect={false}                       
           queryParams={params}            
         />
         <Button onClick={envoyerInformations}>Ajouter</Button>

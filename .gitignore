@@ -105,3 +105,4 @@ dist
 
 #Config API
 config.js
+.env

@@ -1,6 +1,15 @@
 import { useContext, useEffect } from "react";
 import MapContext from "../Map/MapContext";
 import OLVectorLayer from "ol/layer/Vector";
+import { Style, Icon } from "ol/style";
+import marker from "../images/marker.svg"
+var test = new Style({
+	image: new Icon({
+	  anchorXUnits: "fraction",
+	  anchorYUnits: "pixels",
+	  src: marker,
+	}),
+})
 
 const VectorLayer = ({ source, style, zIndex = 0 }) => {
 	const { map } = useContext(MapContext);
@@ -10,7 +19,7 @@ const VectorLayer = ({ source, style, zIndex = 0 }) => {
 
 		let vectorLayer = new OLVectorLayer({
 			source,
-			style
+			style: test
 		});
 
 		map.addLayer(vectorLayer);
