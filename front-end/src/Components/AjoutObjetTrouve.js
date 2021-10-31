@@ -43,7 +43,7 @@ const AjoutObjetTrouve = () => {
         port: 3001,
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ intitule: intitule, description: description, date: date, longitude: parseInt(longitude), latitude: parseInt(latitude), adresseMail: adresseMail, categorie: categorie})
+        body: JSON.stringify({ intitule: intitule, description: description, date: date, longitude: longitude, latitude: latitude, adresseMail: adresseMail, categorie: categorie})
     };
     fetch('/ajoutObjetTrouve', requestOptions)
         .then(response => response.json());
@@ -141,7 +141,7 @@ function onSelected(viewport, item){
   console.log("Item",item)
   setLongitude(item.center[0])
   setLatitude(item.center[1])
-  console.log("Item long",item.center[0])
+  console.log("Item long",typeof(item.center[0]))
 }
 
 const viewport2 = {
