@@ -11,8 +11,8 @@ import { Controls, FullScreenControl } from "./Controls";
 import FeatureStyles from "./Features/Styles";
 import {getLocation} from './App';
 import App from "./App"
+import marker from "images/marker.svg"
 
-import mapConfig from "./config.json";
 import "./App.css";
 
 
@@ -34,7 +34,7 @@ const MyMap = (props) => {
     image: new Icon({
       anchorXUnits: "fraction",
       anchorYUnits: "pixels",
-      src: mapConfig.markerImage32,
+      src: marker,
     }),
   });
 

@@ -4,7 +4,15 @@ import {InputLabel, Paper, CssBaseline, Container, TextField, Select, Box, Butto
 FormControl, FormControlLabel, FormLabel, Fab} from '@material-ui/core';
 import { makeStyles, styled } from '@material-ui/core/styles';
 import NavigationIcon from '@material-ui/icons/Navigation';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import Geocoder from "react-mapbox-gl-geocoder"
 
+const mapboxApiKey = config.MY_API_TOKEN;
+
+const params = {
+  country: "fr"
+}
 
 const AjoutObjetTrouve = () => {
 
@@ -15,6 +23,9 @@ const AjoutObjetTrouve = () => {
   const [latitude, setLatitude] = useState("");
   const [adresseMail, setAdresseMail] = useState("");
   const [categorie, setCategorie] = useState("");
+  const [adresse, setAdresse] = useState("");
+  const [resultat,setResultat]=useState("");
+  const [viewport,setViewport]=useState('');
 
   function envoyerInformations() {
     console.log("intitulé envoyé: ", intitule);
@@ -71,6 +82,18 @@ const AjoutObjetTrouve = () => {
     //console.log("categorie", categorie);
   }
 
+  /*function _handleAdresseChange(e){
+    geocoder.addTo(classes.geocoder);
+    const results = document.getElementById('result');
+    
+    geocoder.on('result', (d) => {
+      results.innerText = JSON.stringify(d.result, null, 2);
+    })
+    geocoder.on('clear', () => {
+      results.innerText = '';
+    });
+  }*/
+
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -100,8 +123,22 @@ const useStyles = makeStyles((theme) => ({
           textAlign: 'center',
 
         },
+    geocoder: {
+          zIndex: 1,
+          margin: '20px',
+      },
+    mapboxglctrlgeocoder: {
+          minWidth: '100%',
+      }
 
 }));
+
+function onSelected(viewport, item){
+  //setViewport(viewport)
+  console.log("item", item)
+}
+
+
 const classes = useStyles();
   return(
     <div className={classes.div}>
@@ -128,6 +165,14 @@ const classes = useStyles();
         <br></br>
         Adresse mail: <input type="email" onChange={_handleAdresseMailChange}/>
         <br></br>
+        Adresse: <Geocoder                
+          mapboxApiAccessToken={mapboxApiKey}                                             
+          hideOnSelect={true} 
+          onSelected={onSelected} 
+          viewport={null}           
+          value=""                
+          queryParams={params}            
+        />
         <Button onClick={envoyerInformations}>Ajouter</Button>
     </div>
   )
