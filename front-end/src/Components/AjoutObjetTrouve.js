@@ -6,6 +6,7 @@ import { makeStyles, styled } from '@material-ui/core/styles';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import './ajoutObjetTrouve.css'
 import Geocoder from "react-mapbox-gl-geocoder"
 const {config} = require('../config');
 
@@ -178,7 +179,7 @@ const classes = useStyles();
           viewport={viewport2} 
           updateInputOnSelect={true}
           initialInputValue=" "                    
-          queryParams={params}            
+          queryParams={params}         
         />
         <br></br>
         <Button onClick={envoyerInformations}>Ajouter</Button>
