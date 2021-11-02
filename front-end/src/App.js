@@ -1,7 +1,6 @@
 import { numberSafeCompareFunction } from "ol/array";
 import React, { Component, Text } from "react";
 import MyMap from "./MyMap";
-import history from "./Routes/History"
 import Accueil from "./Components/Accueil"
 
 class App extends React.Component {
