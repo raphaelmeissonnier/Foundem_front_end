@@ -25,8 +25,9 @@ const ChercherObjetPerdu = () => {
     console.log("avant fetch envoyerInfos")
     let response= fetch('/chercherObjetPerdu/'+intitule+'/'+categorie+'/'+date)
         .then(response => response.json());
-    let data = response.json();
+    /*let data = response.json();
     setItems(data);
+    */
   }
 
   function _handleIntituleChange(e){
