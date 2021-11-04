@@ -18,8 +18,22 @@ const Accueil = () => {
             <h5> Vous avez perdu ou trouvé un objet ? Déclarez-le et la communauté
             se met en mouvement pour vous aider à retrouver votre objet </h5>
             <box direction="row" spacing={2}>
-                <Link to="/AjoutObjetTrouve"><button>J''AI TROUVE UN OBJET</button></Link>
-                <Link to="/ChercherObjetPerdu"><button>RECHERCHER UN OBJET</button></Link>
+            <Link to="/AjoutObjetTrouve"><Button variant="outlined"  style={{
+        borderRadius: 2,
+        backgroundColor: "#5fa082",
+        padding: "5px 20px",
+        fontSize: "15px"
+    }}
+    variant="contained">J'ai trouvé un objet</Button></Link>
+
+    <Link to="/ChercherObjetPerdu"><Button variant="outlined"  style={{
+        borderRadius: 2,
+        backgroundColor: "#6eba97",
+        padding: "5px 20px",
+        fontSize: "15px"
+    }}
+    variant="contained">Je recherche un objet</Button></Link>
+  
             </box>
           </div>
       </div>
