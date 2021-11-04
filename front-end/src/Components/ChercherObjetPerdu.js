@@ -6,7 +6,15 @@ import { makeStyles, styled } from '@material-ui/core/styles';
 import NavigationIcon from '@material-ui/icons/Navigation';
 import Accueil from '../Components/Accueil';
 import Header from './Header';
+import Geocoder from "react-mapbox-gl-geocoder"
 
+const {config} = require('../config');
+
+const mapboxApiKey = config.MY_API_TOKEN;
+
+const params = {
+  country: "fr"
+}
 
 const ChercherObjetPerdu = () => {
 
@@ -18,12 +26,13 @@ const ChercherObjetPerdu = () => {
   const [adresseMail, setAdresseMail] = useState("");
   const [categorie, setCategorie] = useState("");
   const [items, setItems] = useState([]);
+  const [viewport,setViewport]=useState("");
 
 
   function envoyerInformations() {
     //if(!intitule || !description || !date || !categorie){console.log("Envoyer Infos categorie:", categorie); return}
     console.log("avant fetch envoyerInfos")
-    let response= fetch('/chercherObjetPerdu/'+intitule+'/'+categorie+'/'+date)
+    let response= fetch('/chercherObjetPerdu/'+intitule+'/'+categorie+'/'+date+'/'+longitude+'/'+latitude)
         .then(response => response.json());
     /*let data = response.json();
     setItems(data);
@@ -86,6 +95,21 @@ const useStyles = makeStyles((theme) => ({
         },
 
 }));
+
+function onSelected(viewport, item){
+  setViewport(viewport)
+  console.log("Item",item.place_name)
+  console.log("Item",item)
+  setLongitude(item.center[0])
+  setLatitude(item.center[1])
+  console.log("Item long",typeof(item.center[0]))
+}
+
+const viewport2 = {
+  width: 400,
+  height: 400
+};
+
 const classes = useStyles();
   return(
     <div className={classes.div}>
@@ -98,15 +122,26 @@ const classes = useStyles();
         Intitulé: <input type="text" onChange={_handleIntituleChange}/>
         <br></br>
         <div onChange={_handleCategorieChange}>
-            <input type="radio" value="hightech" /> High-Tech
-            <input type="radio" value="livres" /> Livres
-            <input type="radio" value="beaute_sante" /> Beauté et santé
-            <input type="radio" value="garde_robe" /> Garde-robe
-            <input type="radio" value="cartes" /> Cartes
-            <input type="radio" value="autres" /> Autres
+            <input type="radio" value="High-Tech" /> High-Tech
+            <input type="radio" value="Livres" /> Livres
+            <input type="radio" value="Beaute-Sante" /> Beauté et santé
+            <input type="radio" value="Garde-Robe" /> Garde-robe
+            <input type="radio" value="Cartes" /> Cartes
+            <input type="radio" value="Autres" /> Autres
         </div>
         <br></br>
         Date: <input type="date" onChange={_handleDateChange}/>
+        <br></br>
+        <br></br>
+        Adresse: <Geocoder                
+          mapboxApiAccessToken={mapboxApiKey}                                             
+          hideOnSelect={true} 
+          onSelected={onSelected} 
+          viewport={viewport2} 
+          updateInputOnSelect={true}
+          initialInputValue=" "                    
+          queryParams={params}         
+        />
         <br></br>
         <Button onClick={envoyerInformations}>RECHERCHER</Button>
         <div>
