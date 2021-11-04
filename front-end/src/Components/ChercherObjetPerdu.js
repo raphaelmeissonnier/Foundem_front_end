@@ -12,7 +12,15 @@ import Garderobe from  '../images/Garderobe.png';
 import Cartes from  '../images/Cartes.png';
 import Beauteetsante from  '../images/Beauteetsante.png';
 import Autres from  '../images/Autres.png';
+import Geocoder from "react-mapbox-gl-geocoder"
 
+const {config} = require('../config');
+
+const mapboxApiKey = config.MY_API_TOKEN;
+
+const params = {
+  country: "fr"
+}
 
 const ChercherObjetPerdu = () => {
 
@@ -24,12 +32,13 @@ const ChercherObjetPerdu = () => {
   const [adresseMail, setAdresseMail] = useState("");
   const [categorie, setCategorie] = useState("");
   const [items, setItems] = useState([]);
+  const [viewport,setViewport]=useState("");
 
 
   function envoyerInformations() {
     //if(!intitule || !description || !date || !categorie){console.log("Envoyer Infos categorie:", categorie); return}
     console.log("avant fetch envoyerInfos")
-    let response= fetch('/chercherObjetPerdu/'+intitule+'/'+categorie+'/'+date)
+    let response= fetch('/chercherObjetPerdu/'+intitule+'/'+categorie+'/'+date+'/'+longitude+'/'+latitude)
         .then(response => response.json());
     /*let data = response.json();
     setItems(data);
@@ -95,6 +104,21 @@ const useStyles = makeStyles((theme) => ({
 
 
 }));
+
+function onSelected(viewport, item){
+  setViewport(viewport)
+  console.log("Item",item.place_name)
+  console.log("Item",item)
+  setLongitude(item.center[0])
+  setLatitude(item.center[1])
+  console.log("Item long",typeof(item.center[0]))
+}
+
+const viewport2 = {
+  width: 400,
+  height: 400
+};
+
 const classes = useStyles();
   return(
     <div className={classes.div}  >
@@ -128,6 +152,7 @@ const classes = useStyles();
            <img src={Garderobe} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Garderobe"/> 
            <img src={Cartes} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Cartes"/>
            <img src={Autres} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Autres"/>
+          
         </div>
         <br></br>
         Date: <input type="date" onChange={_handleDateChange}/>
@@ -162,6 +187,7 @@ const classes = useStyles();
     <br></br>
        
        <center>
+        <Button onClick={envoyerInformations}>RECHERCHER</Button>
         <div>
           <table>
             <thead>
