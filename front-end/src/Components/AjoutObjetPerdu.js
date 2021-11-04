@@ -86,7 +86,7 @@ const AjoutObjetPerdu = () => {
   }
 
   //Récupération de la longitude et latitude à partir de l'adresse
-  function onSelected(item){
+  function onSelected(viewport, item){
     console.log("Item",item.place_name)
     console.log("Item",item)
     setLongitude(item.center[0])
