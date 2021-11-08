@@ -1,10 +1,16 @@
 pipeline {
     agent any
+    triggers 
+    {
+        githubPush()
+    }
     stages {
         stage('Build') {
             steps {
-                bat 'cd front-end'
-                bat 'npm install'
+                dir('front-end')
+                {
+                    bat 'npm install'
+                }
             }
         }
     }
