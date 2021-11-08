@@ -12,6 +12,7 @@ import FeatureStyles from "./Features/Styles";
 import {getLocation} from './App';
 import App from "./App"
 import marker from "./images/marker.svg"
+import mapConfig from "./config.json";
 
 import "./App.css";
 
@@ -28,6 +29,7 @@ const MyMap = (props) => {
 
   const [items, setItems] = useState([]);
   const [items2, setItems2] = useState([]);
+  const [itemsInfos, setItemsInfos] = useState([]);
 
 
   var iconStyle = new Style({
@@ -54,11 +56,13 @@ const MyMap = (props) => {
   //On récupère les longitudes et latitudes des objets
   for(var i=0; i<items.length;i++)
   {
-    items2[i] = [items[i][0].localisation.position.longitude, items[i][0].localisation.position.latitude]
+    items2[i] = [items[i][0].localisation.position.longitude, items[i][0].localisation.position.latitude];
+    itemsInfos[i] = [items[i][0].categorie, items[i][0].intitule, items[i][0].description, items[i][0].date] ;
   }
 
   //On vérifie qu'on a bien que les long et lat
   console.log("Items2", items2);
+  console.log("ItemsInfos", itemsInfos);
 
   const [features, setFeatures] = useState([]);
 
@@ -67,6 +71,8 @@ const MyMap = (props) => {
   {
     features[j] = new Feature({
         geometry: new Point(fromLonLat(items2[j])),
+        name: itemsInfos[j],
+        properties:items2[j],
     });
     features[j].setStyle(iconStyle);
   }
@@ -74,8 +80,6 @@ const MyMap = (props) => {
   console.log("features", features);
 
   var test=vector({features});
-  console.log("tesssssss",test)
-
   
   return (
     <div>
