@@ -25,7 +25,6 @@ const params = {
 const ChercherObjetPerdu = () => {
 
   const [intitule, setIntitule] = useState("");
-  const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [longitude, setLongitude] = useState("");
   const [latitude, setLatitude] = useState("");
@@ -36,7 +35,7 @@ const ChercherObjetPerdu = () => {
 
 
   function envoyerInformations() {
-    //if(!intitule || !description || !date || !categorie){console.log("Envoyer Infos categorie:", categorie); return}
+    if(!intitule  || !date || !categorie){console.log("Envoyer Infos categorie:", categorie); return}
     console.log("avant fetch envoyerInfos")
     let response= fetch('/chercherObjetPerdu/'+intitule+'/'+categorie+'/'+date+'/'+longitude+'/'+latitude)
         .then(response => response.json());
@@ -48,11 +47,6 @@ const ChercherObjetPerdu = () => {
   function _handleIntituleChange(e){
     setIntitule(e.target.value);
     console.log(intitule);
-  }
-
-  function _handleDescriptionChange(e){
-    setDescription(e.target.value);
-    console.log("description", description);
   }
 
   function _handleDateChange(e){
@@ -144,15 +138,29 @@ const classes = useStyles();
     
         <br></br>
         <div onChange={_handleCategorieChange}>
-          
-    
-           <img src={Hightech} width="70" height="70"  style={{marginLeft: "50px", fontSize:"10px"}}alt="" input type="img" value="Hightech"/>
-           <img src={Beauteetsante} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Beauteetsante"/>
-           <img src={Livres} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Livres"/>
-           <img src={Garderobe} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Garderobe"/> 
-           <img src={Cartes} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Cartes"/>
-           <img src={Autres} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Autres"/>
-          
+                    <input type="radio" value="High-Tech"/> High-Tech
+                    <input type="radio" value="livres" /> Livres
+                    <input type="radio" value="beaute_sante" /> Beauté et santé
+                    <input type="radio" value="Garde-Robe" /> Garde-robe
+                    <input type="radio" value="cartes" /> Cartes
+                    <input type="radio" value="Autres" /> Autres
+        {/*<input type="radio" value="hightech" />
+        <img src={Hightech} width="70" height="70"  style={{marginLeft: "50px", fontSize:"10px"}}/>
+
+        <input type="radio" value="livres" />
+        <img src={Hightech} width="70" height="70"  style={{marginLeft: "50px", fontSize:"10px"}}/>
+
+        <input type="radio" value="beaute_sante" />
+        <img src={Beauteetsante} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Beauteetsante"/>
+
+        <input type="radio" value="garde_robe" />
+        <img src={Garderobe} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Garderobe"/>
+
+        <input type="radio" value="cartes" />
+        <img src={Cartes} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Cartes"/>
+
+        <input type="radio" value="autres" />
+        <img src={Autres} width="70" height="70" alt="" input type="img" style={{marginLeft: "20px"}} value="Autres"/>*/}
         </div>
         <br></br>
         Date: <input type="date" onChange={_handleDateChange}/>
