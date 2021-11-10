@@ -6,6 +6,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
 import AjoutObjetTrouve from './AjoutObjetTrouve';
+
 import {Link} from "react-router-dom";
 
 
@@ -33,7 +34,8 @@ const Accueil = () => {
         fontSize: "15px"
     }}
     variant="contained">Je recherche un objet</Button></Link>
-  
+ 
+                <Link to="/AjoutObjetPerdu"><button>J'AI PERDU UN OBJET</button></Link>
             </box>
           </div>
       </div>
