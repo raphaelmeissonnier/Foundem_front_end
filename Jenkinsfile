@@ -9,7 +9,7 @@ pipeline {
             steps {
                 dir('front-end')
                 {
-                    bat 'npm install'
+                    sh 'npm install'
                 }
             }
         }
