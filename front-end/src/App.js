@@ -2,6 +2,7 @@ import { numberSafeCompareFunction } from "ol/array";
 import React, { Component, Text } from "react";
 import MyMap from "./MyMap";
 import Accueil from "./Components/Accueil"
+import SuggestionObjetPerdu from "./Components/SuggestionObjetPerdu";
 
 class App extends React.Component {
 
@@ -74,6 +75,8 @@ envoyerLocalisation = () =>
         <Accueil/>
         <button onClick={this.envoyerLocalisation}>Centrer</button>
         {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : null }
+        <br></br>
+        {this.state.longitude > 0 && this.state.latitude > 0 ? (<SuggestionObjetPerdu longitude={this.state.longitude} latitude={this.state.latitude}/> ) : null }
       </div>
     )
   }

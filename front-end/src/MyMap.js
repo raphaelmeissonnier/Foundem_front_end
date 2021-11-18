@@ -12,7 +12,6 @@ import FeatureStyles from "./Features/Styles";
 import {getLocation} from './App';
 import App from "./App"
 import marker from "./images/marker.svg"
-import mapConfig from "./config.json";
 
 import "./App.css";
 
