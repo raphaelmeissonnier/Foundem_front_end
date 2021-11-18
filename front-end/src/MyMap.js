@@ -12,7 +12,6 @@ import FeatureStyles from "./Features/Styles";
 import {getLocation} from './App';
 import App from "./App"
 import marker from "./images/marker.svg"
-import mapConfig from "./config.json";
 
 import "./App.css";
 
@@ -30,7 +29,7 @@ const MyMap = (props) => {
   const [items, setItems] = useState([]);
   const [items2, setItems2] = useState([]);
   const [itemsInfos, setItemsInfos] = useState([]);
-
+  const [rayon, setRayon] = useState(20);
 
   var iconStyle = new Style({
     image: new Icon({
@@ -42,8 +41,8 @@ const MyMap = (props) => {
 
   //On récupère les données depuis le back
   useEffect(async () => {
-    if(longitude && latitude){
-      let response = await fetch("/objets/"+longitude+"/"+latitude);
+    if(longitude && latitude && rayon){
+      let response = await fetch("/objets/"+longitude+"/"+latitude+"/"+rayon);
       let data = await response.json();
       console.log("apres le fetch",data)
       setItems(data);
@@ -51,7 +50,7 @@ const MyMap = (props) => {
   }, []);
 
   //On vérifie que les données soient bien récupérées
-    console.log("Items", items);
+  console.log("Items", items);
 
   //On récupère les longitudes et latitudes des objets
   for(var i=0; i<items.length;i++)
@@ -80,7 +79,11 @@ const MyMap = (props) => {
   console.log("features", features);
 
   var test=vector({features});
-  
+  function _handleRayonChange(e)
+  {
+    setRayon(e.target.value);
+  }
+
   return (
     <div>
       <Map center={fromLonLat(center)} zoom={zoom}>
@@ -91,6 +94,14 @@ const MyMap = (props) => {
         <Controls>
           <FullScreenControl />
         </Controls>
+
+        Dans un rayon de:
+            <div onChange={_handleRayonChange}>
+                <input type="radio" name="rayon" value="5" /> 5km
+                <input type="radio" name="rayon" value="10" /> 10km
+                <input type="radio" name="rayon" value="15" /> 15km
+                <input type="radio" name="rayon" value="20" checked/> 20km
+            </div>
       </Map>
     </div>
   );
