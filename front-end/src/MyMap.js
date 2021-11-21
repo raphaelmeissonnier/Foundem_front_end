@@ -30,7 +30,8 @@ const MyMap = (props) => {
   const [items, setItems] = useState([]);
   const [items2, setItems2] = useState([]);
   const [itemsInfos, setItemsInfos] = useState([]);
-  const [rayon, setRayon] = useState(20);
+  const [rayon, setRayon] = useState(100);
+  const [features, setFeatures] = useState([]);
 
 
   var iconStyle = new Style({
@@ -49,37 +50,41 @@ const MyMap = (props) => {
       let data = await response.json();
       console.log("apres le fetch dans MYMAP",data)
       setItems(data);
+
     }
   }, [rayon]);
-
 
   //On vérifie que les données soient bien récupérées
   console.log("Items", items);
 
-  //On récupère les longitudes et latitudes des objets
-  for(var i=0; i<items.length;i++)
-  {
-    items2[i] = [items[i][0].localisation.position.longitude, items[i][0].localisation.position.latitude];
-    itemsInfos[i] = [items[i][0].categorie, items[i][0].intitule, items[i][0].description, items[i][0].date] ;
-  }
+  useEffect( () =>{
+      if(items.length <=0)
+      {
+        setItems2([]);
+        setItemsInfos([]);
+        setFeatures([])
+      }
+      else
+      {
+          for(var i=0; i<items.length;i++)
+          {
+            items2[i] = [items[i][0].localisation.position.longitude, items[i][0].localisation.position.latitude];
+            itemsInfos[i] = [items[i][0].categorie, items[i][0].intitule, items[i][0].description, items[i][0].date] ;
+          }
+          for(var j=0; j<items2.length; j++)
+          {
+            features[j] = new Feature({
+                geometry: new Point(fromLonLat(items2[j])),
+                name: itemsInfos[j],
+                properties:items2[j],
+            });
+            features[j].setStyle(iconStyle);
+          }
+      }
+  }, [items])
 
-  //On vérifie qu'on a bien que les long et lat
   console.log("Items2", items2);
   console.log("ItemsInfos", itemsInfos);
-
-  const [features, setFeatures] = useState([]);
-
-  //Transformation du tableau en points
-  for(var j=0; j<items2.length; j++)
-  {
-    features[j] = new Feature({
-        geometry: new Point(fromLonLat(items2[j])),
-        name: itemsInfos[j],
-        properties:items2[j],
-    });
-    features[j].setStyle(iconStyle);
-  }
-
   console.log("features", features);
 
   var test=vector({features});
