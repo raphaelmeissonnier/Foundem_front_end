@@ -27,7 +27,6 @@ const MyMap = (props) => {
   const [zoom, setZoom] = useState(16);
 
   const [items, setItems] = useState([]);
-  const [itemsLength, setItemsLength] = useState(null);
   const [items2, setItems2] = useState([]);
   const [itemsInfos, setItemsInfos] = useState([]);
   const [rayon, setRayon] = useState(20);
@@ -42,22 +41,17 @@ const MyMap = (props) => {
 
   //Au chargement de la page, on récupère les données depuis le back
   useEffect(async () => {
-  console.log("On fetch !");
-  //recuperationObjets(longitude, latitude, rayon);
-
     if(longitude && latitude && rayon){
     console.log("rayon envoyé", rayon)
       let response = await fetch("/objets/"+longitude+"/"+latitude+"/"+rayon);
       let data = await response.json();
       console.log("apres le fetch",data)
       setItems(data);
-      //recuperationObjets(longitude, latitude, rayon);
     }
   }, [rayon]);
-  console.log("Items", items);
-  //console.log("Items", items[i][0].localisation.position.longitude);
 
   //On vérifie que les données soient bien récupérées
+  console.log("Items", items);
 
   //On récupère les longitudes et latitudes des objets
   for(var i=0; i<items.length;i++)
@@ -87,30 +81,10 @@ const MyMap = (props) => {
 
   var test=vector({features});
 
-  /*function recuperationObjets(longitude, latitude, rayon)
-  {
-    if(longitude && latitude && rayon)
-    {
-        console.log("On entre dans la fct");
-        let response = fetch("/objets/"+longitude+"/"+latitude+"/"+rayon).then(response => response.json());;
-        //let data = response.json();
-        //console.log("apres le fetch",data)
-        setItems(response);
-        //setItemsLength(items.length());
-        console.log("Taille items:", items.length)
-        //console.log("Items", items);
-    }
-    else
-    {
-        console.log("Parameters required");
-    }
-  }*/
-
   function _handleRayonChange(e)
   {
     setRayon(e.target.value);
     console.log("Rayon:", rayon);
-    //recuperationObjets(longitude, latitude, rayon)
   }
 
   return (
@@ -123,7 +97,7 @@ const MyMap = (props) => {
         <Controls>
           <FullScreenControl />
         </Controls>
-        <h3>Résultats: {itemsLength}</h3>
+        <h3>Résultats: {items.length} objets proches de votre localisation</h3>
         Dans un rayon de:
             <div onChange={_handleRayonChange}>
                 <input type="radio" name="rayon" value="5" /> 5km
