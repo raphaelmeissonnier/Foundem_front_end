@@ -30,6 +30,7 @@ const MyMap = (props) => {
   const [items, setItems] = useState([]);
   const [items2, setItems2] = useState([]);
   const [itemsInfos, setItemsInfos] = useState([]);
+  const [itemsSugg, setItemsSugg] = useState([]);
 
 
   var iconStyle = new Style({
@@ -42,11 +43,12 @@ const MyMap = (props) => {
 
   //On récupère les données depuis le back
   useEffect(async () => {
-    if(longitude && latitude){
-      let response = await fetch("/objets/"+longitude+"/"+latitude);
-      let data = await response.json();
-      console.log("apres le fetch",data)
-      setItems(data);
+    if(longitude && latitude ){
+
+      let responseSugg = await fetch("/objets/"+longitude+"/"+latitude);
+      let dataSugg = await responseSugg.json();
+      console.log("apres le fetch",dataSugg)
+      setItemsSugg(dataSugg);
     }   
   }, [longitude,latitude]);
 
@@ -80,6 +82,7 @@ const MyMap = (props) => {
   console.log("features", features);
 
   var test=vector({features});
+
   
   return (
     <div>
@@ -93,7 +96,7 @@ const MyMap = (props) => {
         </Controls>
       </Map>
       <br></br>
-      {longitude > 0 && latitude > 0 && items.length > 0 ? (<SuggestionObjetPerdu longitude={longitude} latitude={latitude} items={items} /> ) : null }
+      {longitude > 0 && latitude > 0 && itemsSugg.length > 0 ? (<SuggestionObjetPerdu longitude={longitude} latitude={latitude} items={itemsSugg} /> ) : null }
     </div>
   );
 };
