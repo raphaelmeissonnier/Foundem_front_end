@@ -13,25 +13,28 @@ const SuggestionObjetPerdu = (props) => {
     const [items2, setItems2] = useState([]);
 
     
-    var items = props.items;
-    console.log("TAb ITEMS :",items);
     var longitude = props.longitude;
     console.log("longitude", longitude);
     var latitude = props.latitude;
     console.log("latitude", latitude);
 
     useEffect(async () => {
-        if(items.length >0){
-            for(var i=0; i<items.length;i++){
-                var addr = await fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+items[i][0].localisation.position.longitude+","+items[i][0].localisation.position.latitude+".json?access_token="+mapboxApiKey)
+        let responseSugg = await fetch("/objets/"+longitude+"/"+latitude);
+        let dataSugg = await responseSugg.json();
+        console.log("apres le fetch",dataSugg)
+    
+        if(dataSugg.length >0){
+
+            for(var i=0; i<dataSugg.length;i++){
+                var addr = await fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+dataSugg[i][0].localisation.position.longitude+","+dataSugg[i][0].localisation.position.latitude+".json?access_token="+mapboxApiKey)
                 var repAddr = await addr.json();
                 console.log("ADRESSE",repAddr);
-                items2[i]=[items[i],repAddr.features[2].place_name]    
-            }
+                items2[i]=[dataSugg[i],repAddr.features[2].place_name]    
+            }     
         }   
     }, [longitude,latitude]);
       
-    console.log("Taille items",items.length)
+
     console.log("ITEMS2", items2)
 
     return(
