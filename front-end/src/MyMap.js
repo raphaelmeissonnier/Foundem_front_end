@@ -14,6 +14,7 @@ import App from "./App"
 import marker from "./images/marker.svg"
 
 import "./App.css";
+import SuggestionObjetPerdu from "./Components/SuggestionObjetPerdu";
 
 
 const MyMap = (props) => {
@@ -29,7 +30,9 @@ const MyMap = (props) => {
   const [items, setItems] = useState([]);
   const [items2, setItems2] = useState([]);
   const [itemsInfos, setItemsInfos] = useState([]);
+  const [itemsSugg, setItemsSugg] = useState([]);
   const [rayon, setRayon] = useState(20);
+
 
   var iconStyle = new Style({
     image: new Icon({
@@ -47,8 +50,14 @@ const MyMap = (props) => {
       let data = await response.json();
       console.log("apres le fetch",data)
       setItems(data);
+      
+      let responseSugg = await fetch("/objets/"+longitude+"/"+latitude);
+      let dataSugg = await responseSugg.json();
+      console.log("apres le fetch",dataSugg)
+      setItemsSugg(dataSugg);
     }
-  }, [rayon]);
+  }, [rayon,longitude,latitude]);
+
 
   //On vérifie que les données soient bien récupérées
   console.log("Items", items);
@@ -106,6 +115,8 @@ const MyMap = (props) => {
                 <input type="radio" name="rayon" value="20" /> 20km
             </div>
       </Map>
+      <br></br>
+      {longitude > 0 && latitude > 0 && itemsSugg.length > 0 ? (<SuggestionObjetPerdu longitude={longitude} latitude={latitude} items={itemsSugg} /> ) : null }
     </div>
   );
 };
