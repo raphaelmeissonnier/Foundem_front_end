@@ -14,6 +14,7 @@ import App from "./App"
 import marker from "./images/marker.svg"
 
 import "./App.css";
+import SuggestionObjetPerdu from "./Components/SuggestionObjetPerdu";
 
 
 const MyMap = (props) => {
@@ -47,7 +48,7 @@ const MyMap = (props) => {
       console.log("apres le fetch",data)
       setItems(data);
     }   
-  }, []);
+  }, [longitude,latitude]);
 
   //On vérifie que les données soient bien récupérées
     console.log("Items", items);
@@ -91,6 +92,8 @@ const MyMap = (props) => {
           <FullScreenControl />
         </Controls>
       </Map>
+      <br></br>
+      {longitude > 0 && latitude > 0 && items.length > 0 ? (<SuggestionObjetPerdu longitude={longitude} latitude={latitude} items={items} /> ) : null }
     </div>
   );
 };

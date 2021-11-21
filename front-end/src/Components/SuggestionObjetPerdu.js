@@ -1,4 +1,5 @@
 import React, { useState,useEffect } from "react";
+const moment = require('moment')
 const {config} = require('../config');
 
 
@@ -6,54 +7,50 @@ const {config} = require('../config');
 const SuggestionObjetPerdu = (props) => {
 
     const mapboxApiKey = config.MY_API_TOKEN;
-
     const params = {
         country: "fr"
-    }
+    }    
+    const [items2, setItems2] = useState([]);
 
-    const [items, setItems] = useState([]);
-    const [date, setDate] = useState([]);
-    const [adresse, setAdresse] = useState([]);
     
-
+    var items = props.items;
+    console.log("TAb ITEMS :",items);
     var longitude = props.longitude;
     console.log("longitude", longitude);
     var latitude = props.latitude;
     console.log("latitude", latitude);
 
     useEffect(async () => {
-        if(longitude && latitude){
-          let response = await fetch("/objets/"+longitude+"/"+latitude);
-          let data = await response.json();
-          console.log("apres le fetch",data)
-          setItems(data);
+        if(items.length >0){
+            for(var i=0; i<items.length;i++){
+                var addr = await fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+items[i][0].localisation.position.longitude+","+items[i][0].localisation.position.latitude+".json?access_token="+mapboxApiKey)
+                var repAddr = await addr.json();
+                console.log("ADRESSE",repAddr);
+                items2[i]=[items[i],repAddr.features[2].place_name]    
+            }
         }   
-    }, []);
-
-    var reverseGeocoding = async function ( long,lat) {
-        var addr = await fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+long+","+lat+".json?access_token="+mapboxApiKey)
-        var repAddr = await addr.json();
-        console.log("ADRESSE",typeof(repAddr.features[3].text));
-        setAdresse(repAddr.features[3].text)
-    }
-
-    reverseGeocoding(2.1100964,48.8708216)
+    }, [longitude,latitude]);
+      
+    console.log("Taille items",items.length)
+    console.log("ITEMS2", items2)
 
     return(
         <div id="listArticle">
-            <ui>
-                <li>
-                    <article>
-                        <div id="item">
-                            <h3 id="titre_item">{items.length>0 ? (items[0][0].intitule) : null }</h3>
-                            <div><p>{items.length>0 ? (items[0][0].description) : null }</p></div>
-                            <div><p>{items.length>0 ? (items[0][0].date) : null }</p></div>
-                            <div><p>{items.length>0 ? (adresse) : null }</p></div>
-                            <br></br>
-                        </div>
-                    </article>
+            <ul>
+                <li id="elt_sugg">
+                    {items2.length>0 ? items2.map(item =>{
+                    return  <article key={item}>
+                                <div >
+                                    <h3 id="titre_item">{(item[0][0].intitule)}</h3>
+                                    <div><p>{(item[0][0].description) }</p></div>
+                                    <div><p>{ (moment(item[0][0].date).format('DD/MM/YYYY'))}</p></div>
+                                    <div><p>{(item[1]) }</p></div>
+                                    <br></br>
+                                </div>
+                            </article>    
+                    }): null } 
                 </li>
-            </ui>    
+            </ul>
         </div>
       )
 }
