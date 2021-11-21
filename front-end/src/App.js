@@ -1,5 +1,5 @@
 import { numberSafeCompareFunction } from "ol/array";
-import React, { Component, Text } from "react";
+import React from "react";
 import MyMap from "./MyMap";
 import Accueil from "./Components/Accueil"
 import SuggestionObjetPerdu from "./Components/SuggestionObjetPerdu";
@@ -52,9 +52,6 @@ class App extends React.Component {
 envoyerLocalisation = () =>
 {
     if(!this.state) { return }
-
-    //console.log("Longitute", this.state.longitude);
-    //const {longitude} = this.state.longitude;
 
     const requestOptions = {
         port: 3001,

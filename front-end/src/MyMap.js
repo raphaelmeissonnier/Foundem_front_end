@@ -31,6 +31,7 @@ const MyMap = (props) => {
   const [items2, setItems2] = useState([]);
   const [itemsInfos, setItemsInfos] = useState([]);
   const [itemsSugg, setItemsSugg] = useState([]);
+  const [rayon, setRayon] = useState(20);
 
 
   var iconStyle = new Style({
@@ -41,19 +42,25 @@ const MyMap = (props) => {
     }),
   });
 
-  //On récupère les données depuis le back
+  //Au chargement de la page, on récupère les données depuis le back
   useEffect(async () => {
-    if(longitude && latitude ){
-
+    if(longitude && latitude && rayon){
+    console.log("rayon envoyé", rayon)
+      let response = await fetch("/objets/"+longitude+"/"+latitude+"/"+rayon);
+      let data = await response.json();
+      console.log("apres le fetch",data)
+      setItems(data);
+      
       let responseSugg = await fetch("/objets/"+longitude+"/"+latitude);
       let dataSugg = await responseSugg.json();
       console.log("apres le fetch",dataSugg)
       setItemsSugg(dataSugg);
-    }   
-  }, [longitude,latitude]);
+    }
+  }, [rayon,longitude,latitude]);
+
 
   //On vérifie que les données soient bien récupérées
-    console.log("Items", items);
+  console.log("Items", items);
 
   //On récupère les longitudes et latitudes des objets
   for(var i=0; i<items.length;i++)
@@ -83,7 +90,12 @@ const MyMap = (props) => {
 
   var test=vector({features});
 
-  
+  function _handleRayonChange(e)
+  {
+    setRayon(e.target.value);
+    console.log("Rayon:", rayon);
+  }
+
   return (
     <div>
       <Map center={fromLonLat(center)} zoom={zoom}>
@@ -94,6 +106,14 @@ const MyMap = (props) => {
         <Controls>
           <FullScreenControl />
         </Controls>
+        <h3>Résultats: {items.length} objets proches de votre localisation</h3>
+        Dans un rayon de:
+            <div onChange={_handleRayonChange}>
+                <input type="radio" name="rayon" value="5" /> 5km
+                <input type="radio" name="rayon" value="10" /> 10km
+                <input type="radio" name="rayon" value="15" /> 15km
+                <input type="radio" name="rayon" value="20" /> 20km
+            </div>
       </Map>
       <br></br>
       {longitude > 0 && latitude > 0 && itemsSugg.length > 0 ? (<SuggestionObjetPerdu longitude={longitude} latitude={latitude} items={itemsSugg} /> ) : null }
