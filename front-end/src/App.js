@@ -1,9 +1,10 @@
 import { numberSafeCompareFunction } from "ol/array";
-import React, { Component, Text } from "react";
-
+import React from "react";
+import MyMap from "./MyMap";
+import Accueil from "./Components/Accueil"
+import SuggestionObjetPerdu from "./Components/SuggestionObjetPerdu";
 
 class App extends React.Component {
-
 
   constructor(props) {
     super(props);
@@ -17,7 +18,7 @@ class App extends React.Component {
   }
 
   getLocation(){
-    if (navigator.geolocation) {
+    if(navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(this.getCoordinates);
     }
     else{
@@ -25,13 +26,11 @@ class App extends React.Component {
     }
   }
 
-
   getCoordinates(position) {
     this.setState({
       latitude: position.coords.latitude,
       longitude: position.coords.longitude
     })
-   
   }
 
   handleLocationError(error) {
@@ -50,27 +49,33 @@ class App extends React.Component {
     }
   }
 
+envoyerLocalisation = () =>
+{
+    if(!this.state) { return }
 
+    const requestOptions = {
+        port: 3001,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ longitude: this.state.longitude, latitude: this.state.latitude})
+    };
+    fetch('/localisation', requestOptions)
+        .then(response => response.json());
+
+    window.location.reload(false);
+}
 
   render() {
+  this.getLocation();
     return (
       <div className="App">
-
-        <h2>
-          React Geolocation
-        </h2>
-
-        <button onClick={this.getLocation}> Obtenir coordonnées</button>
-        <h4>Coordonnées de l'utilisateur</h4>
-        <p>Latitude: {this.state.latitude}</p>
-        <p>Longitude: {this.state.longitude}</p>
+        <Accueil/>
+        <button onClick={this.envoyerLocalisation}>Centrer</button>
+        {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : null }
+       
       </div>
     )
   }
-
-
 }
-
-
 
 export default App;

@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import MyMap from "./MyMap";
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from "./Routes/Routes";
+import Header from "./Components/Header";
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-    <div><br></br></div>
-    <MyMap/>
-  </React.StrictMode>,
+    <Router>
+        {/*Rendu du Header et Footer*/}
+        <Header />
+        <Routes/>
+    </Router>,
   document.getElementById('root')
 );
 
