@@ -46,10 +46,16 @@ const MyMap = (props) => {
   useEffect(async () => {
     if(longitude && latitude && rayon){
       console.log("rayon envoyé", rayon)
-      let response = await fetch("/objets/"+longitude+"/"+latitude+"/"+rayon);
-      let data = await response.json();
-      console.log("apres le fetch dans MYMAP",data)
-      setItems(data);
+      let response_perdu = await fetch("/objetsperdus/"+longitude+"/"+latitude+"/900");
+      //let response_perdu = await fetch("/objetsperdus/"+longitude+"/"+latitude+"/"+rayon);
+      let data_perdu = await response_perdu.json();
+      let response_trouve = await fetch("/objetstrouves/"+longitude+"/"+latitude+"/900");
+      //let response_trouve = await fetch("/objetstrouves/"+longitude+"/"+latitude+"/"+rayon);
+      let data_trouve = await response_trouve.json();
+      console.log("apres le fetch perdu dans MYMAP",data_perdu)
+      console.log("####################################################")
+      console.log("apres le fetch trouve dans MYMAP",data_trouve)
+      setItems(data_perdu => [...data_perdu, ...data_trouve]);
 
     }
   }, [rayon]);
