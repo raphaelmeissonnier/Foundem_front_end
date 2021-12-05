@@ -34,7 +34,7 @@ const ChercherObjetPerdu = () => {
   const [viewport,setViewport]=useState("");
 
 
-  function envoyerInformations() {
+  async function envoyerInformations() {
     if(!intitule || !date || !longitude || !latitude || !categorie){console.log("intitule:", intitule); return}
     const requestOptions = {
         port: 3001,
@@ -42,11 +42,31 @@ const ChercherObjetPerdu = () => {
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({ intitule: intitule, date: date, longitude: longitude, latitude: latitude, categorie: categorie})
     };
-    fetch('/objetstrouves/recherche', requestOptions)
-        .then(response => response.json());
+    let response = await fetch('/objetstrouves/recherche', requestOptions);
+    let data = await response.json();
+    setItems(data);
   }
 
-  
+  function afficher()
+  {
+      var renderObjets = [];
+      for(var i =0; i < items.length; i++){
+          renderObjets.push(
+              <div className="list-item" key={items[i][0].id}>
+                  <li>{items[i][0].intitule}</li>
+                  <li>{items[i][0].description}</li>
+                  <li>{items[i][0].categorie}</li>
+                  <li>{items[i][0].date}</li>
+                  <button>C'est mon objet</button>
+              </div>
+          );
+      }
+      return renderObjets;
+  }
+
+  console.log("Items dans front: ", items);
+  if(items.length > 0)
+    console.log("Items dans front: ", items[0][0].date);
 
   function _handleIntituleChange(e){
     setIntitule(e.target.value);
@@ -221,6 +241,18 @@ const classes = useStyles();
           </table>
         </div>
         </center>
+
+        <div>
+            {items.length ? afficher() : null}
+            {/*{items[0][0].date}*/}
+            {/*{items.map(station => <div key={station}> {station} </div>)}*/}
+        </div>
+
+        {/*{[...items.keys()].map(k => (
+            <li key={k}>items.get(k)</li>
+        ))}*/}
+
+        {/*{items.map((obj) => <li>{obj}</li>)}*/}
     </div>
 
   )
