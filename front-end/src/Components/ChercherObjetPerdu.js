@@ -35,14 +35,18 @@ const ChercherObjetPerdu = () => {
 
 
   function envoyerInformations() {
-    if(!intitule  || !date || !categorie){console.log("Envoyer Infos categorie:", categorie); return}
-    console.log("avant fetch envoyerInfos")
-    let response= fetch('/chercherObjetPerdu/'+intitule+'/'+categorie+'/'+date+'/'+longitude+'/'+latitude)
+    if(!intitule || !date || !longitude || !latitude || !categorie){console.log("intitule:", intitule); return}
+    const requestOptions = {
+        port: 3001,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ intitule: intitule, date: date, longitude: longitude, latitude: latitude, categorie: categorie})
+    };
+    fetch('/objetstrouves/recherche', requestOptions)
         .then(response => response.json());
-    /*let data = response.json();
-    setItems(data);
-    */
   }
+
+  
 
   function _handleIntituleChange(e){
     setIntitule(e.target.value);
