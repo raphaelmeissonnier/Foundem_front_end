@@ -1,36 +1,79 @@
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
-import { AuthContext } from "../helpers/AuthContext";
+import React, {useState, useRef, Label, useEffect} from 'react';
+import { Route, BrowserRouter as Router, Link, Switch } from "react-router-dom";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { Redirect } from "react-router-dom";
+import { Grid, Paper } from '@material-ui/core';
+import { makeStyles, styled } from '@material-ui/core/styles';
+import Geocoder from "react-mapbox-gl-geocoder";
+import Header from './Header';
 
-function Login() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { setAuthState } = useContext(AuthContext);
+const {config} = require('../config');
 
-  let history = useHistory();
 
-  
-  return (
-    <div className="loginContainer">
-      <label>Username:</label>
-      <input
-        type="text"
-        onChange={(event) => {
-          setUsername(event.target.value);
-        }}
-      />
-      <label>Password:</label>
-      <input
-        type="password"
-        onChange={(event) => {
-          setPassword(event.target.value);
-        }}
-      />
+const Login =() =>{
 
-      <button onClick={Login}> Login </button>
-    </div>
-  );
-}
+   const [iscreated, setcreated] = useState(false);
+
+   const initialValues = {
+          username: "",
+          password: "",
+      };
+
+
+
+  function onSubmit(values){
+          if(!values.username || !values.password){
+          console.log("username:", values.username); return}
+          const requestOptions = {
+              port: 3001,
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json'},
+              body: JSON.stringify({ username: values.username, password: values.password})
+          };
+          fetch('/login', requestOptions)
+              .then(response => response.json());
+          setcreated(true);
+  }
+
+    return (
+
+        <div>
+            <Formik
+             initialValues={initialValues}
+             onSubmit={onSubmit}
+            >
+                <Form className="formContainer">
+                    <label>Username:</label>
+                    <ErrorMessage name="username" component="span" />
+                    <Field
+                    autoComplete="off"
+                    id="inputCreatePost"
+                    name="username"
+                    placeholder="Votre pseudo"
+                    />
+
+
+                    <label> Password:</label>
+                    <ErrorMessage name="password" component="span" />
+                    <Field
+                    autoComplete="off"
+                    type="password"
+                    id="inputCreatePost"
+                    name="password"
+                    placeholder="Votre mot de passe"
+                    />
+
+                    <button type="submit"> Se connecter</button>
+                </Form>
+            </Formik>
+
+            {iscreated ? <Redirect to = "/"/> : console.log("not redirect")}
+
+        </div>
+
+    );
+
+    }
 
 export default Login;
