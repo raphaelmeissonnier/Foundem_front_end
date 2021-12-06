@@ -46,7 +46,7 @@ const AjoutObjetTrouve = () => {
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({ intitule: intitule, description: description, date: date, longitude: longitude, latitude: latitude, adresseMail: adresseMail, categorie: categorie})
     };
-    fetch('/ajoutObjetTrouve', requestOptions)
+    fetch('/objetstrouves', requestOptions)
         .then(response => response.json());
   }
 

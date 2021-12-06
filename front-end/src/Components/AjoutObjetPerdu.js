@@ -53,7 +53,7 @@ const AjoutObjetPerdu = () => {
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({intitule: sanitizeHtml(intitule), description: sanitizeHtml(description), date: sanitizeHtml(date), longitude: sanitizeHtml(longitude), latitude: sanitizeHtml(latitude), adresseMail: sanitizeHtml(adresseMail), categorie: sanitizeHtml(categorie), rayon: sanitizeHtml(parseInt(rayon))})
     };
-    fetch('/ajoutObjetPerdu', requestOptions)
+    fetch('/objetsperdus', requestOptions)
         .then(response => response.json());
   }
 
