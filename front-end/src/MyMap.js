@@ -46,12 +46,12 @@ const MyMap = (props) => {
     if(longitude && latitude && rayon){
       console.log("rayon envoyé", rayon)
       //On récupère les objets perdus
-      let response_perdu = await fetch("/objetsperdus/"+longitude+"/"+latitude+"/900");
-      //let response_perdu = await fetch("/objetsperdus/"+longitude+"/"+latitude+"/"+rayon);
+      //let response_perdu = await fetch("/objetsperdus/"+longitude+"/"+latitude+"/900");
+      let response_perdu = await fetch("/objetsperdus/"+longitude+"/"+latitude+"/"+rayon);
       let data_perdu = await response_perdu.json();
       //On récupère les objets trouvés
-      let response_trouve = await fetch("/objetstrouves/"+longitude+"/"+latitude+"/900");
-      //let response_trouve = await fetch("/objetstrouves/"+longitude+"/"+latitude+"/"+rayon);
+      //let response_trouve = await fetch("/objetstrouves/"+longitude+"/"+latitude+"/900");
+      let response_trouve = await fetch("/objetstrouves/"+longitude+"/"+latitude+"/"+rayon);
       let data_trouve = await response_trouve.json();
       console.log("apres le fetch perdu dans MYMAP",data_perdu)
       console.log("####################################################")
