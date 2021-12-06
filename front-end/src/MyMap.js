@@ -46,7 +46,7 @@ const MyMap = (props) => {
   useEffect(async () => {
     if(longitude && latitude && rayon){
       console.log("rayon envoyé", rayon)
-      let response = await fetch("/objets/"+longitude+"/"+latitude+"/"+rayon);
+      let response = await fetch("/objetsperdus/"+longitude+"/"+latitude+"/"+rayon);
       let data = await response.json();
       console.log("apres le fetch dans MYMAP",data)
       setItems(data);

@@ -32,6 +32,7 @@ const ChercherObjetPerdu = () => {
   const [categorie, setCategorie] = useState("");
   const [items, setItems] = useState([]);
   const [viewport,setViewport]=useState("");
+  const [idObjet, setIdObjet]=useState(null);
 
 
   async function envoyerInformations() {
@@ -57,16 +58,21 @@ const ChercherObjetPerdu = () => {
                   <li>{items[i][0].description}</li>
                   <li>{items[i][0].categorie}</li>
                   <li>{items[i][0].date}</li>
-                  <button>C'est mon objet</button>
+                  {/*<button onClick={() => console.log("Id depuis button: ", items[i][0].id)}>C'est mon objet</button>{/*TOUS LES ID DE PRIS */}
+                  <Link to="/ObjetsMatche"><button onClick={handleRemove} value={items[i][0].id}>Remove</button></Link>
               </div>
           );
       }
       return renderObjets;
   }
 
-  console.log("Items dans front: ", items);
-  if(items.length > 0)
-    console.log("Items dans front: ", items[0][0].date);
+  function handleRemove(e)
+  {
+      if(e)
+      {
+          setIdObjet(e.target.value);
+      }
+  }
 
   function _handleIntituleChange(e){
     setIntitule(e.target.value);
@@ -148,7 +154,7 @@ const classes = useStyles();
         <p>Merci de renseigner un maximum de champs pour pouvoir vous afficher les articles les plus proches de votre description !</p>
         </center>
         <br></br>
-        
+
         <TextField type="text" onChange={_handleIntituleChange}
          helperText="Pour trouver votre objet, il nous faut son intitulé !"
          id="demo-helper-text-aligned"
@@ -159,7 +165,7 @@ const classes = useStyles();
         label="Intitulé"/>
 
         <br></br>
-    
+
         <br></br>
         <div onChange={_handleCategorieChange}>
                     <input type="radio" value="High-Tech"/> High-Tech
@@ -190,19 +196,19 @@ const classes = useStyles();
         Date: <input type="date" onChange={_handleDateChange}/>
         <br></br>
         <br></br>
-        Adresse: <Geocoder                
-          mapboxApiAccessToken={mapboxApiKey}                                             
-          hideOnSelect={true} 
-          onSelected={onSelected} 
-          viewport={viewport2} 
+        Adresse: <Geocoder
+          mapboxApiAccessToken={mapboxApiKey}
+          hideOnSelect={true}
+          onSelected={onSelected}
+          viewport={viewport2}
           updateInputOnSelect={true}
-          initialInputValue=" "                    
-          queryParams={params}         
+          initialInputValue=" "
+          queryParams={params}
         />
         <br></br>
 
         <br></br>
-      
+
     <center>
     <Button onClick={envoyerInformations}
     style={{
@@ -217,7 +223,7 @@ const classes = useStyles();
     </Button>
     </center>
     <br></br>
-       
+
        <center>
         <Button onClick={envoyerInformations}>RECHERCHER</Button>
         <div>

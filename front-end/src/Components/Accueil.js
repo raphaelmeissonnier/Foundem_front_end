@@ -36,6 +36,7 @@ const Accueil = () => {
     variant="contained">Je recherche un objet</Button></Link>
  
                 <Link to="/AjoutObjetPerdu"><button>J'AI PERDU UN OBJET</button></Link>
+                <Link to="/ObjetsMatche"><button>Matche objet</button></Link>
             </box>
           </div>
       </div>
