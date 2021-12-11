@@ -20,8 +20,6 @@ const Login =() =>{
           password: "",
       };
 
-
-
   function onSubmit(values){
           if(!values.username || !values.password){
           console.log("username:", values.username); return}
@@ -31,14 +29,14 @@ const Login =() =>{
               headers: { 'Content-Type': 'application/json'},
               body: JSON.stringify({ username: values.username, password: values.password})
           };
-          fetch('/login', requestOptions)
+          fetch('/users/login', requestOptions)
               .then(response => response.json());
           setcreated(true);
   }
 
     return (
-
         <div>
+            <br></br><br></br><br></br><br></br><br></br>
             <Formik
              initialValues={initialValues}
              onSubmit={onSubmit}
@@ -52,7 +50,6 @@ const Login =() =>{
                     name="username"
                     placeholder="Votre pseudo"
                     />
-
 
                     <label> Password:</label>
                     <ErrorMessage name="password" component="span" />
@@ -68,7 +65,7 @@ const Login =() =>{
                 </Form>
             </Formik>
 
-            {iscreated ? <Redirect to = "/"/> : console.log("not redirect")}
+            {iscreated ? console.log("bravo logged") : console.log("not redirect")}
 
         </div>
 

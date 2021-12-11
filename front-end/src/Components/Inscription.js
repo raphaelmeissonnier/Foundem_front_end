@@ -1,13 +1,8 @@
-import React, {useState, useRef, Label, useEffect} from 'react';
-import { Route, BrowserRouter as Router, Link, Switch } from "react-router-dom";
-import {InputLabel, Paper, CssBaseline, Container, TextField, Select, Box, Button, IconButton, Grid, Radio, RadioGroup,
-FormControl, FormControlLabel, FormLabel, Fab} from '@material-ui/core';
+import React, {useState, useEffect} from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
-import { makeStyles, styled } from '@material-ui/core/styles';
-import Geocoder from "react-mapbox-gl-geocoder"
-const {config} = require('../config');
+import {TextField} from "@material-ui/core";
 
 
 const params = {
@@ -29,6 +24,10 @@ const Inscription = () => {
         password: Yup.string().min(4).max(20).required(),
     })
 
+    useEffect( () => {
+        console.log("On est dans Inscription.js");
+    },[]);
+
     function onSubmit(values){
         if(!values.username || !values.email || !values.password){
         console.log("username:", values.username); return}
@@ -43,13 +42,11 @@ const Inscription = () => {
 
         window.alert("Votre compte a bien été créé!");
         setcreated(true);
-
-
-
     }
 
     return (
         <div>
+            <br></br><br></br><br></br><br></br><br></br>
             <Formik
             initialValues={initialValues}
             onSubmit={onSubmit}

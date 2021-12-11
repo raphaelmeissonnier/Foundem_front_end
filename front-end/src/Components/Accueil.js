@@ -17,43 +17,67 @@ const Accueil = () => {
             <h1> Un objet perdu se transforme souvent en objet trouvé ! </h1>
             <h5> Vous avez perdu ou trouvé un objet ? Déclarez-le et la communauté
             se met en mouvement pour vous aider à retrouver votre objet </h5>
-            <box direction="row" spacing={2}>
-            <Link to="/AjoutObjetTrouve"><Button variant="outlined"  style={{
-        borderRadius: 2,
-        backgroundColor: "#5fa082",
-        padding: "5px 20px",
-        fontSize: "15px"
-    }}
-    variant="contained">J'ai trouvé un objet</Button></Link>
 
-    <Link to="/ChercherObjetPerdu"><Button variant="outlined"  style={{
-        borderRadius: 2,
-        backgroundColor: "#6eba97",
-        padding: "5px 20px",
-        fontSize: "15px"
-    }}
+            <box direction="row" spacing={4}>
+                <Link to="/AjoutObjetTrouve">
+                    <Button
+                        variant="outlined"
+                        style={{
+                            borderRadius: 2,
+                            backgroundColor: "#5fa082",
+                            padding: "5px 20px",
+                            fontSize: "15px"
+                        }}
+                        variant="contained"
+                    >
+                        J'ai trouvé un objet
+                    </Button>
+                </Link>
 
-    variant="contained">Je recherche un objet</Button></Link>
+                <Link to="/ChercherObjetPerdu">
+                    <Button
+                        variant="outlined"
+                        style={{
+                        borderRadius: 2,
+                        backgroundColor: "#6eba97",
+                        padding: "5px 20px",
+                        fontSize: "15px"
+                        }}
+                        variant="contained"
+                    >
+                        Je recherche un objet
+                    </Button>
+                </Link>
 
-     <Link to="/Inscription"><Button variant="outlined"  style={{
-            borderRadius: 2,
-            backgroundColor: "#6eba97",
-            padding: "5px 20px",
-            fontSize: "15px"
-        }}
+                <Link to="/Inscription">
+                    <Button
+                        variant="outlined"
+                        style={{
+                            borderRadius: 2,
+                            backgroundColor: "#6eba97",
+                            padding: "5px 20px",
+                            fontSize: "15px"
+                        }}
+                        variant="contained"
+                    >
+                        Inscription
+                    </Button>
+                </Link>
 
-        variant="contained">Inscription</Button></Link>
-
-
-         <Link to="/Login"><Button variant="outlined"  style={{
-                    borderRadius: 2,
-                    backgroundColor: "#6eba97",
-                    padding: "5px 20px",
-                    fontSize: "15px"
-                }}
-
-                variant="contained">Connexion</Button></Link>
-  
+                 <Link to="/Login">
+                     <Button
+                         variant="outlined"
+                         style={{
+                            borderRadius: 2,
+                            backgroundColor: "#6eba97",
+                            padding: "5px 20px",
+                            fontSize: "15px"
+                        }}
+                        variant="contained"
+                     >
+                         Connexion
+                     </Button>
+                 </Link>
             </box>
           </div>
       </div>

@@ -16,9 +16,6 @@ const Routes = () =>{
                 <Route exact path="/ChercherObjetPerdu" component={ChercherObjetPerdu} />
                 <Route exact path="/Inscription" component={Inscription} />
                 <Route exact path="/Login" component={Login} />
-
-
-
             </Switch>
         </div>
     )
