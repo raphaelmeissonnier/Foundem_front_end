@@ -7,6 +7,7 @@ import AjoutObjetPerdu from '../Components/AjoutObjetPerdu';
 import ChercherObjetPerdu from "../Components/ChercherObjetPerdu";
 import Login from "../Components/Login";
 import Inscription from "../Components/Inscription";
+import Logout from "../Components/Logout";
 
 const Routes = () =>{
     return(
@@ -18,6 +19,7 @@ const Routes = () =>{
                 <Route exact path="/ChercherObjetPerdu" component={ChercherObjetPerdu} />
                 <Route exact path="/Inscription" component={Inscription} />
                 <Route exact path="/Login" component={Login} />
+                <Route exact path="/Logout" component={Logout} />
             </Switch>
         </div>
     )

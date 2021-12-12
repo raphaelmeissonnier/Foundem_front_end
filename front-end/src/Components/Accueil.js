@@ -97,6 +97,21 @@ const Accueil = () => {
                          Connexion
                      </Button>
                  </Link>
+
+                 <Link to="/Logout">
+                     <Button
+                         variant="outlined"
+                         style={{
+                            borderRadius: 2,
+                            backgroundColor: "#6eba97",
+                            padding: "5px 20px",
+                            fontSize: "15px"
+                        }}
+                        variant="contained"
+                     >
+                         Deconnexion
+                     </Button>
+                 </Link>
             </box>
           </div>
       </div>
