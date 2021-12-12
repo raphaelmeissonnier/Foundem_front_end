@@ -10,9 +10,8 @@ const Auth = () => {
     const dispatch = useDispatch();
 
     useEffect(async () => {
-        const myInit = {method: 'GET'};
         console.log("On est dans Auth.js");
-        let response = await fetch('/authId', myInit);
+        let response = await fetch('/authId');
         console.log("On a fait le fetch: ", response);
         let data = await response.json();
         setUserId(data.id);
@@ -46,6 +45,17 @@ const Auth = () => {
             dispatch(getPostTrend(uid));
         }*/
     }, [userId]);
+
+    /*useEffect( () =>{
+        async function authentication()
+        {
+            console.log("On est dans Auth.js");
+            let response = await fetch("/authId");
+            let data = await response.json;
+            console.log("Fetch terminé - data: ", data);
+            setUserId(data.id);
+        }
+    }, [userId])*/
     console.log("userId: ", userId);
 
     return (

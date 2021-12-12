@@ -1,11 +1,16 @@
 export const GET_USER = "GET_USER";
 
 export const getUser = (uid) => {
-    return (dispatch) => {
-        return fetch('users/${uid}')
-            .then((res) => {
-                dispatch({ type: GET_USER, payload: res.data });
-            })
-            .catch((err) => console.log(err));
+    return async (dispatch) => {
+        try{
+            let response = await fetch('users/'+uid);
+            let data = await response.json();
+            console.log("UserAction - data: ", data);
+            dispatch({type: GET_USER, payload: data});
+        }
+        catch (e)
+        {
+            alert(e);
+        }
     };
 };
