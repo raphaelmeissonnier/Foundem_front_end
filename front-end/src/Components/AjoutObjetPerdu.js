@@ -6,7 +6,6 @@ import './ajoutObjetTrouve.css'
 import Geocoder from "react-mapbox-gl-geocoder"
 const {config} = require('../config');
 
-var sanitizeHtml = require('sanitize-html');
 
 const mapboxApiKey = config.MY_API_TOKEN;
 
@@ -51,10 +50,11 @@ const AjoutObjetPerdu = () => {
         port: 3001,
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({intitule: sanitizeHtml(intitule), description: sanitizeHtml(description), date: sanitizeHtml(date), longitude: sanitizeHtml(longitude), latitude: sanitizeHtml(latitude), adresseMail: sanitizeHtml(adresseMail), categorie: sanitizeHtml(categorie), rayon: sanitizeHtml(parseInt(rayon))})
+        body: JSON.stringify({intitule: intitule, description: description, date: date, longitude: longitude, latitude: latitude, adresseMail: adresseMail, categorie: categorie, rayon: parseInt(rayon)})
     };
     fetch('/objetsperdus', requestOptions)
         .then(response => response.json());
+    console.log("AjoutObjetPerdu: ", )
   }
 
   //Récupération de valeur du champs 'Intitulé'
