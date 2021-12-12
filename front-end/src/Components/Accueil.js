@@ -7,9 +7,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddIcon from '@material-ui/icons/Add';
 import AjoutObjetTrouve from './AjoutObjetTrouve';
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import UserReducer from "../reducers/UserReducer";
 
 
 const Accueil = () => {
+
+
     return (
       <div className="Accueil">
           <div>
@@ -31,6 +35,21 @@ const Accueil = () => {
                         variant="contained"
                     >
                         J'ai trouvé un objet
+                    </Button>
+                </Link>
+
+                <Link to="/AjoutObjetPerdu">
+                    <Button
+                        variant="outlined"
+                        style={{
+                            borderRadius: 2,
+                            backgroundColor: "#5fa082",
+                            padding: "5px 20px",
+                            fontSize: "15px"
+                        }}
+                        variant="contained"
+                    >
+                        J'ai perdu un objet
                     </Button>
                 </Link>
 
