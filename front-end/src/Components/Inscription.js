@@ -4,10 +4,6 @@ import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
 
 
-const params = {
-  country: "fr"
-}
-
 const Inscription = () => {
     const initialValues = {
         username: "",
@@ -23,13 +19,14 @@ const Inscription = () => {
         password: Yup.string().min(4).max(20).required(),
     })
 
-    useEffect( () => {
-        console.log("On est dans Inscription.js");
-    },[]);
-
     function onSubmit(values){
+        console.log("On entre dans la fonction onSubmit")
+        //Si au moins un des champs n'est pas saisi
         if(!values.username || !values.email || !values.password){
-        console.log("username:", values.username); return}
+            console.log("Inscription.js - Parameters required");
+            return;
+        }
+        console.log("On va lancer le fetch");
         const requestOptions = {
             port: 3001,
             method: 'POST',
@@ -37,10 +34,12 @@ const Inscription = () => {
             body: JSON.stringify({ username: values.username, email: values.email, password: values.password})
         };
         fetch('/users', requestOptions)
-            .then(response => response.json());
-
-        window.alert("Votre compte a bien été créé!");
-        setcreated(true);
+            //Je récupère la réponse émise par le back
+            .then(response => response.json()
+                /*Je regarde l'attribut 'result' de la variable 'response'(qui contient la réponse émise par le back)
+                  Si l'attribut 'result'==0 alors je ne fais rien sinon je redirige l'user vers l'accueil + message
+                */
+                .then(data => data.result ? (window.alert(data.msg), setcreated(true)) : window.alert(data.msg)));
     }
 
     return (
@@ -85,8 +84,6 @@ const Inscription = () => {
             </Formik>
              {iscreated ? <Redirect to = "/"/> : console.log("not redirect")}
         </div>
-
     );
-
 }
 export default Inscription;
