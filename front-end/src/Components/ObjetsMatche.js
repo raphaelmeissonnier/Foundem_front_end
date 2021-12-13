@@ -8,7 +8,7 @@ const ObjetsMatche = () => {
     useEffect(async () => {
         console.log("On entre dans le useEffect");
         console.log('await');
-        let response = await fetch("/objets/2.344/48.8987/2");
+        let response = await fetch("/objetsperdus/user/1");
         console.log('await: ', await fetch("/objetsperdus/user/1"));
         //let response = await fetch("/objetsperdus/user/1");
         console.log("Response: ", response);
@@ -23,9 +23,9 @@ const ObjetsMatche = () => {
     return(
         <div>
         <br></br>
-    <br></br>
-    <br></br>
-    <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
         <h1>BIENVENUE</h1>
         </div>
     )
