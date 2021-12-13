@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState,useContext} from 'react';
 import { Paper, Select, Button } from '@material-ui/core';
 import { makeStyles, styled } from '@material-ui/core/styles';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './ajoutObjetTrouve.css'
 import Geocoder from "react-mapbox-gl-geocoder"
+import {UserContext} from "./UserContext";
 const {config} = require('../config');
 
 
@@ -20,9 +21,10 @@ const AjoutObjetPerdu = () => {
   const [date, setDate] = useState();
   const [longitude, setLongitude] = useState();
   const [latitude, setLatitude] = useState();
-  const [adresseMail, setAdresseMail] = useState();
   const [categorie, setCategorie] = useState();
   const [rayon, setRayon]=useState();
+
+  const userId = useContext(UserContext);
 
   /* Cette fonction envoyer les infos du formulaire au back
   */
@@ -33,14 +35,13 @@ const AjoutObjetPerdu = () => {
     console.log("date envoyé: ", date);
     console.log("longitude envoyé: ", longitude);
     console.log("latitude envoyé: ", latitude);
-    console.log("adresseMail envoyé: ", adresseMail);
     console.log("categorie envoyé: ", categorie);
     console.log("rayon envoyé: ", rayon);
 
     /*Si un des champs n'a pas été saisi,
     l'utlisateur est averti par une pop-up
     */
-    if(!intitule || !description || !date || !longitude || !latitude || !adresseMail || !categorie || !rayon)
+    if(!intitule || !description || !date || !longitude || !latitude || !categorie || !rayon)
     {
         window.alert("Veuillez saisir tous les champs du formulaire !");
         return;
@@ -50,7 +51,7 @@ const AjoutObjetPerdu = () => {
         port: 3001,
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({intitule: intitule, description: description, date: date, longitude: longitude, latitude: latitude, adresseMail: adresseMail, categorie: categorie, rayon: parseInt(rayon)})
+        body: JSON.stringify({intitule: intitule, description: description, date: date, longitude: longitude, latitude: latitude, categorie: categorie, rayon: parseInt(rayon), user_id: parseInt(userId)})
     };
     fetch('/objetsperdus', requestOptions)
         .then(response => response.json());
@@ -70,11 +71,6 @@ const AjoutObjetPerdu = () => {
   //Récupération de valeur du champs 'Date'
   function _handleDateChange(e){
     setDate(e.target.value);
-  }
-
-  //Récupération de valeur du champs 'Adresse mail'
-  function _handleAdresseMailChange(e){
-    setAdresseMail(e.target.value);
   }
 
   //Récupération de valeur du champs 'Date'
@@ -159,8 +155,6 @@ const classes = useStyles();
             <input type="radio" value="autres" /> Autres
         </div>
         Date: <input type="date" onChange={_handleDateChange}/>
-        <br></br>
-        Adresse mail: <input type="email" onChange={_handleAdresseMailChange}/>
         <br></br>
         Adresse: <Geocoder
           mapboxApiAccessToken={mapboxApiKey}
