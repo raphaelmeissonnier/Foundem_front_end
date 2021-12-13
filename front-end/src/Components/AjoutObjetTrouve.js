@@ -8,8 +8,9 @@ import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './ajoutObjetTrouve.css'
 import Geocoder from "react-mapbox-gl-geocoder"
+import {useSelector} from "react-redux";
+import UserReducer from "../reducers/UserReducer";
 const {config} = require('../config');
-
 const mapboxApiKey = config.MY_API_TOKEN;
 
 const params = {
@@ -17,6 +18,9 @@ const params = {
 }
 
 const AjoutObjetTrouve = () => {
+
+  const userData = useSelector((state) => state.UserReducer);
+  console.log("AjoutObjetTrouve.js - Userdata: ", userData);
 
   const [intitule, setIntitule] = useState("");
   const [description, setDescription] = useState("");
