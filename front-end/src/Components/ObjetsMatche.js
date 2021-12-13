@@ -58,28 +58,34 @@ const ObjetsMatche = (props) => {
       if(e)
       {
           console.log("Dans le if",e.target.value)
-          setIdObjetP(e.target.value);
+          createMatch(e.target.value);
       }
       if(idObjetP){
         console.log("Id Objet P",idObjetP)
         console.log("Id Objet T",idObjetT)
-        createMatch();
+        
       }
   }
 
-  async function createMatch() {
-    const requestOptions = {
-        port: 3001,
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ idObjetT: parseInt(idObjetT), idObjetP: parseInt(idObjetP) })
-    };
-    await fetch('/objetsmatche', requestOptions)
-            .then(response => response.json()
-            /*Je regarde l'attribut 'result' de la variable 'response'(qui contient la réponse émise par le back)
-                Si l'attribut 'result'==0 alors je ne fais rien sinon je redirige l'user vers l'accueil + message
-            */
-            .then(data => data.result ? (window.alert(data.msg), setcreated(true)) : window.alert(data.msg)));
+  async function createMatch(id_objet_p) {
+      if(id_objet_p){
+        console.log("Id Objet P",id_objet_p)
+        const requestOptions = {
+            port: 3001,
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({ idObjetT: parseInt(idObjetT), idObjetP: parseInt(id_objet_p) })
+        };
+        await fetch('/objetsmatche', requestOptions)
+                .then(response => response.json()
+                /*Je regarde l'attribut 'result' de la variable 'response'(qui contient la réponse émise par le back)
+                    Si l'attribut 'result'==0 alors je ne fais rien sinon je redirige l'user vers l'accueil + message
+                */
+                .then(data => data.result ? (window.alert(data.msg), setcreated(true)) : window.alert(data.msg)));
+    
+      }
+        
+    
 }
 
     console.log("Items perdus de l'user: ", items);
