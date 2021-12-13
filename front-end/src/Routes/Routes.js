@@ -17,7 +17,7 @@ const Routes = () =>{
                 <Route exact path="/" component={App} />
                 <Route exact path="/AjoutObjetTrouve" component={AjoutObjetTrouve} />
                 <Route exact path="/AjoutObjetPerdu" component={AjoutObjetPerdu} />
-                <Route exact path="/ObjetsMatche" component={ObjetsMatche} />
+                <Route exact path="/ObjetsMatche/:idObjet" component={ObjetsMatche} />
                 <Route exact path="/ChercherObjetPerdu" component={ChercherObjetPerdu} />
                 <Route exact path="/Inscription" component={Inscription} />
                 <Route exact path="/Login" component={Login} />

@@ -59,7 +59,7 @@ const ChercherObjetPerdu = () => {
                   <li>{items[i][0].categorie}</li>
                   <li>{items[i][0].date}</li>
                   {/*<button onClick={() => console.log("Id depuis button: ", items[i][0].id)}>C'est mon objet</button>{/*TOUS LES ID DE PRIS */}
-                  <Link to={{pathname: '/ObjetsMatche/', state: {idObjetTrouve: idObjet} }}><button onClick={handleRemove} value={items[i][0].id}>Remove</button></Link>
+                  <Link to={{pathname: '/ObjetsMatche/'+items[i][0].id }}><button >Remove</button></Link>
               </div>
           );
       }
