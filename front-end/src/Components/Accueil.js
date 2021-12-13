@@ -1,18 +1,14 @@
-import { numberSafeCompareFunction } from "ol/array";
-import React, { Component, Text } from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Box, Toolbar, Typography, IconButton, Button } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import AddIcon from '@material-ui/icons/Add';
-import AjoutObjetTrouve from './AjoutObjetTrouve';
+import React from "react";
+import { Box, Button } from '@material-ui/core';
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
-import UserReducer from "../reducers/UserReducer";
-
+var _ = require('lodash');
 
 const Accueil = () => {
 
+    //On récupère les informations de l'utilisateur
+    const userData = useSelector((state) => state.UserReducer);
+    console.log("Accueil.js - userData: ", userData);
 
     return (
       <div className="Accueil">
@@ -22,97 +18,105 @@ const Accueil = () => {
             <h5> Vous avez perdu ou trouvé un objet ? Déclarez-le et la communauté
             se met en mouvement pour vous aider à retrouver votre objet </h5>
 
-            <box direction="row" spacing={4}>
-                <Link to="/AjoutObjetTrouve">
-                    <Button
-                        variant="outlined"
-                        style={{
-                            borderRadius: 2,
-                            backgroundColor: "#5fa082",
-                            padding: "5px 20px",
-                            fontSize: "15px"
-                        }}
-                        variant="contained"
-                    >
-                        J'ai trouvé un objet
-                    </Button>
-                </Link>
+              {/* Si l'utilisateur est connecté il aura accès à toutes les rubriques sauf 'Connexion' et 'Inscription
+                  Si l'utilisateur n'est pas connecté il n'aura accès qu'aux rubriques 'Connexion' et 'Inscription'
+              */}
 
-                <Link to="/AjoutObjetPerdu">
-                    <Button
-                        variant="outlined"
-                        style={{
-                            borderRadius: 2,
-                            backgroundColor: "#5fa082",
-                            padding: "5px 20px",
-                            fontSize: "15px"
-                        }}
-                        variant="contained"
-                    >
-                        J'ai perdu un objet
-                    </Button>
-                </Link>
+              {!_.isEmpty(userData) ?
+                  <Box direction="row" spacing={4}>
+                      <Link to="/AjoutObjetTrouve">
+                          <Button
+                              variant="outlined"
+                              style={{
+                                  borderRadius: 2,
+                                  backgroundColor: "#5fa082",
+                                  padding: "5px 20px",
+                                  fontSize: "15px"
+                              }}
+                              variant="contained"
+                          >
+                              J'ai trouvé un objet
+                          </Button>
+                      </Link>
 
-                <Link to="/ChercherObjetPerdu">
-                    <Button
-                        variant="outlined"
-                        style={{
-                        borderRadius: 2,
-                        backgroundColor: "#6eba97",
-                        padding: "5px 20px",
-                        fontSize: "15px"
-                        }}
-                        variant="contained"
-                    >
-                        Je recherche un objet
-                    </Button>
-                </Link>
+                      <Link to="/AjoutObjetPerdu">
+                          <Button
+                              variant="outlined"
+                              style={{
+                                  borderRadius: 2,
+                                  backgroundColor: "#5fa082",
+                                  padding: "5px 20px",
+                                  fontSize: "15px"
+                              }}
+                              variant="contained"
+                          >
+                              J'ai perdu un objet
+                          </Button>
+                      </Link>
 
-                <Link to="/Inscription">
-                    <Button
-                        variant="outlined"
-                        style={{
-                            borderRadius: 2,
-                            backgroundColor: "#6eba97",
-                            padding: "5px 20px",
-                            fontSize: "15px"
-                        }}
-                        variant="contained"
-                    >
-                        Inscription
-                    </Button>
-                </Link>
+                      <Link to="/ChercherObjetPerdu">
+                          <Button
+                              variant="outlined"
+                              style={{
+                                  borderRadius: 2,
+                                  backgroundColor: "#6eba97",
+                                  padding: "5px 20px",
+                                  fontSize: "15px"
+                              }}
+                              variant="contained"
+                          >
+                              Je recherche un objet
+                          </Button>
+                      </Link>
 
-                 <Link to="/Login">
-                     <Button
-                         variant="outlined"
-                         style={{
-                            borderRadius: 2,
-                            backgroundColor: "#6eba97",
-                            padding: "5px 20px",
-                            fontSize: "15px"
-                        }}
-                        variant="contained"
-                     >
-                         Connexion
-                     </Button>
-                 </Link>
+                      <Link to="/Logout">
+                          <Button
+                              variant="outlined"
+                              style={{
+                                  borderRadius: 2,
+                                  backgroundColor: "#6eba97",
+                                  padding: "5px 20px",
+                                  fontSize: "15px"
+                              }}
+                              variant="contained"
+                          >
+                              Deconnexion
+                          </Button>
+                      </Link>
+                  </Box>
+              :
+                  <Box direction="row" spacing={2}>
+                      <Link to="/Inscription">
+                          <Button
+                              variant="outlined"
+                              style={{
+                                  borderRadius: 2,
+                                  backgroundColor: "#6eba97",
+                                  padding: "5px 20px",
+                                  fontSize: "15px"
+                              }}
+                              variant="contained"
+                          >
+                              Inscription
+                          </Button>
+                      </Link>
 
-                 <Link to="/Logout">
-                     <Button
-                         variant="outlined"
-                         style={{
-                            borderRadius: 2,
-                            backgroundColor: "#6eba97",
-                            padding: "5px 20px",
-                            fontSize: "15px"
-                        }}
-                        variant="contained"
-                     >
-                         Deconnexion
-                     </Button>
-                 </Link>
-            </box>
+                      <Link to="/Login">
+                          <Button
+                              variant="outlined"
+                              style={{
+                                  borderRadius: 2,
+                                  backgroundColor: "#6eba97",
+                                  padding: "5px 20px",
+                                  fontSize: "15px"
+                              }}
+                              variant="contained"
+                          >
+                              Connexion
+                          </Button>
+                      </Link>
+                  </Box>
+              }
           </div>
       </div>
     )
