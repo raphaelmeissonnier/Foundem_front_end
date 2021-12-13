@@ -1,14 +1,24 @@
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { Box, Button } from '@material-ui/core';
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {UserContext} from "./UserContext";
+import {getUser} from "../Actions/UserAction";
+
 var _ = require('lodash');
 
-const Accueil = () => {
+const Accueil = (props) => {
 
     //On récupère les informations de l'utilisateur
+    //const userId = useContext(UserContext);
+    //const dispatch = useDispatch();
     const userData = useSelector((state) => state.UserReducer);
-    console.log("Accueil.js - userData: ", userData);
+
+    useEffect(() => {
+        //let userData = dispatch(getUser(userId));
+        console.log("Accueil.js - userData: ", userData);
+    }, [props])
+    //console.log("Accueil.js - userData: ", userId);
 
     return (
       <div className="Accueil">

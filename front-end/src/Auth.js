@@ -29,7 +29,7 @@ const Auth = () => {
 
     return (
         <UserContext.Provider value={userId}>
-            <Router>
+            <Router forceRefresh={true}>
                 <Routes />
             </Router>
         </UserContext.Provider>

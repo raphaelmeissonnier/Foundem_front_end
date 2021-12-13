@@ -15,7 +15,7 @@ const Inscription = () => {
 
     const validationSchema = Yup.object().shape({
         username: Yup.string().min(3).max(15).required(),
-        email: Yup.string().min(3).max(15).required(),
+        email: Yup.string().email(),
         password: Yup.string().min(4).max(20).required(),
     })
 
@@ -60,7 +60,7 @@ const Inscription = () => {
                     placeholder="Votre pseudo"
                     />
                     
-                    <label>email:</label>
+                    <label>Email:</label>
                     <ErrorMessage name="email" component="span" />
                     <Field
                     autoComplete="off"
