@@ -32,7 +32,7 @@ const Login =() =>{
               /*Je regarde l'attribut 'result' de la variable 'response'(qui contient la réponse émise par le back)
                 Si l'attribut 'result'==0 alors je ne fais rien sinon je redirige l'user vers l'accueil
               */
-              .then(data => data.result ? setcreated(true): null));
+              .then(data => data.result ? setcreated(true): window.alert(data.msg)));
   }
 
     return (
