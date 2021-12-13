@@ -1,14 +1,6 @@
-import React, {useState, useRef, Label, useEffect} from 'react';
-import { Route, BrowserRouter as Router, Link, Switch } from "react-router-dom";
+import React, {useState} from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
-import { Grid, Paper } from '@material-ui/core';
-import { makeStyles, styled } from '@material-ui/core/styles';
-import Geocoder from "react-mapbox-gl-geocoder";
-import Header from './Header';
-
-const {config} = require('../config');
 
 
 const Login =() =>{
@@ -21,17 +13,26 @@ const Login =() =>{
       };
 
   function onSubmit(values){
-          if(!values.username || !values.password){
-          console.log("username:", values.username); return}
-          const requestOptions = {
-              port: 3001,
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json'},
-              body: JSON.stringify({ username: values.username, password: values.password})
-          };
-          fetch('/users/login', requestOptions)
-              .then(response => response.json());
-          setcreated(true);
+      //Si au moins un des champs n'est pas saisi
+      if(!values.username || !values.password)
+      {
+          console.log("Login.js - Parameters required");
+          return;
+      }
+      const requestOptions = {
+          port: 3001,
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json'},
+          body: JSON.stringify({ username: values.username, password: values.password})
+      };
+      //J'envoie le username et le password au back-end : vérification matching username/password
+      fetch('/users/login', requestOptions)
+          //Je récupère la réponse émise par le back
+          .then(response => response.json()
+              /*Je regarde l'attribut 'result' de la variable 'response'(qui contient la réponse émise par le back)
+                Si l'attribut 'result'==0 alors je ne fais rien sinon je redirige l'user vers l'accueil
+              */
+              .then(data => data.result ? setcreated(true): null));
   }
 
     return (
@@ -65,7 +66,7 @@ const Login =() =>{
                 </Form>
             </Formik>
 
-            {iscreated ? console.log("bravo logged") : console.log("not redirect")}
+            {iscreated ? <Redirect to = "/"/> : console.log("User not logged")}
 
         </div>
 
