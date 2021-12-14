@@ -3,6 +3,7 @@ import React from "react";
 import MyMap from "./MyMap";
 import Accueil from "./Components/Accueil"
 import SuggestionObjetPerdu from "./Components/SuggestionObjetPerdu";
+import {CircularProgress} from '@material-ui/core';
 
 class App extends React.Component {
 
@@ -71,7 +72,9 @@ envoyerLocalisation = () =>
       <div className="App">
         <Accueil/>
         <button onClick={this.envoyerLocalisation}>Centrer</button>
-        {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : null }
+        <br></br>
+        <br></br>
+        {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : <CircularProgress /> }
        
       </div>
     )
