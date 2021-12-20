@@ -1,36 +1,37 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {useSelector} from 'react-redux';
-import { Route, BrowserRouter as Router, Link, Switch } from "react-router-dom";
-
+import { Redirect, Link } from "react-router-dom";
+import {UserContext} from "./UserContext";
 
 
 const ObjetsMatche = (props) => {
 
     const [items, setItems] = useState([]);
-    const userData = useSelector((state)=> state.UserReducer);
 
-    const [idUser, setIdUser]=useState(null);
-    const [idObjetP, setIdObjetP]=useState(null);
-    const [idObjetT, setIdObjetT]=useState(null);
+    const [idObjetT,setIdObjetT] = useState();
+    const [idObjetP,setIdObjetP] = useState();
 
-    console.log("User Data",userData.id);
-    console.log("ID Objet T",props.match.params.idObjet)
+    const [iscreated, setcreated] = useState(false);
 
-    useEffect(async () => {
-        console.log("On entre dans le useEffect");
-        setIdUser(userData.id)
+    const userId = useContext(UserContext);
+    console.log("ObjetsMatch.js - UserContextId: ", userId);
+
+    //RECUPERER LES MESSAGES D'ERREURS DEPUIS LE BACK
+    useEffect( async () =>{
         setIdObjetT(props.match.params.idObjet)
-        console.log('await');
-        if(idUser ){
-            let response = await fetch("/objetsperdus/user/"+idUser);
-            console.log('await: ', await fetch("/objetsperdus/user/"+idUser));
-            //let response = await fetch("/objetsperdus/user/1");
-            console.log("Response: ", response);
+        if(userId)
+        {
+            let response = await fetch("/objetsperdus/user/"+userId);
             let data = await response.json();
-            console.log("Objets perdus de l'utlisateur 1",data)
             setItems(data);
+            console.log("ObjetsMatche.js - items: ", items);
         }
-    }, []);
+        else
+        {
+            console.log("ObjetsMatch.js - User empty");
+            return;
+        }
+    }, [userId])
 
     function afficher()
   {
@@ -43,7 +44,9 @@ const ObjetsMatche = (props) => {
                   <li>{items[i].categorie}</li>
                   <li>{items[i].date}</li>
                   {/*<button onClick={() => console.log("Id depuis button: ", items[i][0].id)}>C'est mon objet</button>{/*TOUS LES ID DE PRIS */}
-                  <Link to={{pathname: '/' }}><button onClick={handleMatch} >Matcher</button></Link>
+                  <button onClick={handleMatch} value={items[i].id} >Matcher</button>
+                  { iscreated ? <Redirect to = "/" /> : console.log("not redirect")}
+                  <br></br>
               </div>
           );
       }
@@ -55,18 +58,38 @@ const ObjetsMatche = (props) => {
       if(e)
       {
           console.log("Dans le if",e.target.value)
-          setIdObjetP(e.target.value);
+          createMatch(e.target.value);
+      }
+      if(idObjetP){
+        console.log("Id Objet P",idObjetP)
+        console.log("Id Objet T",idObjetT)
+        
       }
   }
 
+  async function createMatch(id_objet_p) {
+      if(id_objet_p){
+        console.log("Id Objet P",id_objet_p)
+        const requestOptions = {
+            port: 3001,
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({ idObjetT: parseInt(idObjetT), idObjetP: parseInt(id_objet_p) })
+        };
+        await fetch('/objetsmatche', requestOptions)
+                .then(response => response.json()
+                /*Je regarde l'attribut 'result' de la variable 'response'(qui contient la réponse émise par le back)
+                    Si l'attribut 'result'==0 alors je ne fais rien sinon je redirige l'user vers l'accueil + message
+                */
+                .then(data => data.result ? (window.alert(data.msg), setcreated(true)) : window.alert(data.msg)));
+    
+      }
+        
+    
+}
+
     console.log("Items perdus de l'user: ", items);
     //ON RECUPERE LES OBJETS PERDUS DE L'UTILISATEUR
-
-    
-    
-
-    
-
 
     return(
         <div>

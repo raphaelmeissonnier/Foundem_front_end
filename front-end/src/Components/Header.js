@@ -2,7 +2,8 @@ import React, { Component, Fragment, useState } from 'react';
 import clsx from 'clsx';
 import { Route, BrowserRouter as Router, Link, Switch } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import {AppBar, Box, Toolbar, Typography, Button, IconButton} from '@material-ui/core';
+import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, 
+  Button, IconButton, Avatar} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 
 function Header() {
@@ -54,6 +55,21 @@ const handleDrawerClose = () => {
         setOuvrir(false);
 };
 
+const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleChange = (event) => {
+    //setAuth(event.target.checked);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
 
 
   return(
@@ -72,10 +88,42 @@ const handleDrawerClose = () => {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Found'em
+                <a  href="/">Found'em</a>
               </Typography>
             </Toolbar>
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <Avatar alt="Toto" src="../images/Cartes.png"/>
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}>My account</MenuItem>
+              </Menu>
+            </div>
+            
     </AppBar>
+    
     </Box>
   )
 }
