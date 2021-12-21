@@ -9,6 +9,7 @@ import Login from "../Components/Login";
 import Inscription from "../Components/Inscription";
 import Logout from "../Components/Logout";
 import ObjetsMatche from '../Components/ObjetsMatche';
+import MesObjets from '../Components/MesObjets';
 
 const Routes = () =>{
     return(
@@ -22,6 +23,7 @@ const Routes = () =>{
                 <Route exact path="/Inscription" component={Inscription} />
                 <Route exact path="/Login" component={Login} />
                 <Route exact path="/Logout" component={Logout} />
+                <Route exact path="/MesObjets" component={MesObjets} />
             </Switch>
         </div>
     )

@@ -69,6 +69,21 @@ const Accueil = () => {
                           </Button>
                       </Link>
 
+                      <Link to="/MesObjets">
+                          <Button
+                              variant="outlined"
+                              style={{
+                                  borderRadius: 2,
+                                  backgroundColor: "#6eba97",
+                                  padding: "5px 20px",
+                                  fontSize: "15px"
+                              }}
+                              variant="contained"
+                          >
+                              Mes Objets
+                          </Button>
+                      </Link>
+
                       <Link to="/Logout">
                           <Button
                               variant="outlined"
