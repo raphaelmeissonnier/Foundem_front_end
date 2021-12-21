@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {useSelector} from 'react-redux';
 import { Redirect, Link } from "react-router-dom";
 import {UserContext} from "./UserContext";
+import _ from "lodash";
+import * as moment from "moment";
 
 
 const ObjetsMatche = (props) => {
@@ -34,40 +35,85 @@ const ObjetsMatche = (props) => {
     }, [userId])
 
     function afficher()
-  {
-      var renderObjets = [];
-      for(var i =0; i < items.length; i++){
-          renderObjets.push(
-              <div className="list-item" key={items[i].id}>
-                  <li>{items[i].intitule}</li>
-                  <li>{items[i].description}</li>
-                  <li>{items[i].categorie}</li>
-                  <li>{items[i].date}</li>
-                  {/*<button onClick={() => console.log("Id depuis button: ", items[i][0].id)}>C'est mon objet</button>{/*TOUS LES ID DE PRIS */}
-                  <button onClick={handleMatch} value={items[i].id} >Matcher</button>
-                  { iscreated ? <Redirect to = "/" /> : console.log("not redirect")}
-                  <br></br>
-              </div>
-          );
-      }
-      return renderObjets;
-  }
+    {
+        return(
+            <div>
+                <table style={tableStyle}>
+                    <thead>
+                    <tr style={trHoverStyle}>
+                        <th style={thStyle}>Intitulé</th>
+                        <th style={thStyle}>Description</th>
+                        <th style={thStyle}>Catégorie</th>
+                        <th style={thStyle}>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {items.map(item => {
+                        return(
+                            <tr style={trChildStyle} key={item.id}>
+                                <td style={tdStyle}>{_.capitalize(item.intitule)}</td>
+                                <td style={tdStyle}>{_.capitalize(item.description)}</td>
+                                <td style={tdStyle}>{_.capitalize(item.categorie)}</td>
+                                <td style={tdStyle}>{moment(item.date).format("L")}</td>
+                                <td style={tdStyle}><button onClick={handleMatch} value={item.id}>Matcher</button></td>
+                                { iscreated ? <Redirect to = "/" /> : console.log("not redirect")}
+                            </tr>
+                        );
+                    })}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
 
-  function handleMatch(e)
-  {
-      if(e)
-      {
-          console.log("Dans le if",e.target.value)
-          createMatch(e.target.value);
-      }
-      if(idObjetP){
-        console.log("Id Objet P",idObjetP)
-        console.log("Id Objet T",idObjetT)
-        
-      }
-  }
+    function handleMatch(e)
+    {
+        if(e)
+        {
+            console.log("Dans le if",e.target.value)
+            createMatch(e.target.value);
+        }
+        if(idObjetP){
+            console.log("Id Objet P",idObjetP)
+            console.log("Id Objet T",idObjetT)
+        }
+    }
 
-  async function createMatch(id_objet_p) {
+    /*Some style*/
+    const tableStyle = {
+        fontFamily: "Arial, Helvetica, sans-serif",
+        borderCollapse: "collapse",
+        width: "90%",
+        marginTop: "10px",
+        //center
+        marginLeft: "auto",
+        marginRight: "auto"
+    }
+
+    const tdStyle = {
+        border: "1px solid #ddd",
+        padding: "8px"
+    }
+
+    const thStyle = {
+        paddingTop: "12px",
+        paddingBottom: "12px",
+        textAlign: "left",
+        backgroundColor: "#04AA6D",
+        color: "white",
+        border: "1px solid #ddd",
+        padding: "8px",
+    }
+
+    const trHoverStyle = {
+        backgroundColor: "#ddd"
+    }
+
+    const trChildStyle = {
+        backgroundColor: "#f2f2f2"
+    }
+
+    async function createMatch(id_objet_p) {
       if(id_objet_p){
         console.log("Id Objet P",id_objet_p)
         const requestOptions = {
@@ -84,12 +130,9 @@ const ObjetsMatche = (props) => {
                 .then(data => data.result ? (window.alert(data.msg), setcreated(true)) : window.alert(data.msg)));
     
       }
-        
-    
-}
+    }
 
     console.log("Items perdus de l'user: ", items);
-    //ON RECUPERE LES OBJETS PERDUS DE L'UTILISATEUR
 
     return(
         <div>
@@ -103,7 +146,6 @@ const ObjetsMatche = (props) => {
         {items.length ? afficher() : null}
         </div>
     )
-
 }
 
 export default ObjetsMatche;
