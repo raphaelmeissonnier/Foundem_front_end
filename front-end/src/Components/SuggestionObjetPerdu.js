@@ -13,7 +13,6 @@ const SuggestionObjetPerdu = (props) => {
     const [items2, setItems2] = useState([]);
 
     const userId = useContext(UserContext);
-    //const userId = useSelector((state) => state.UserReducer)
 
     var longitude = props.longitude;
     console.log("longitude", longitude);
@@ -21,7 +20,7 @@ const SuggestionObjetPerdu = (props) => {
     console.log("latitude", latitude);
 
     useEffect(async () => {
-        let responseSugg = await fetch("/objetsperdus/"+userId);
+        let responseSugg = await fetch("/objetsperdus/notUser/"+userId);
         let dataSugg = await responseSugg.json();
         console.log("apres le fetch",dataSugg)
 
