@@ -142,7 +142,7 @@ const ChercherObjetPerdu =() =>{
             console.log("ChercherObjetPerdu.js - userId empty");
         }
     }
-    console.log("ChercherObjetsPerdus.js - items: ", items);
+    console.log("ChercherObjetsPerdus.js - items: ", items[0]);
 
     const useStyles = makeStyles((theme) => ({
         root: {
