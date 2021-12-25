@@ -116,7 +116,6 @@ const viewport2 = {
 const classes = useStyles();
   return(
     <div className={classes.div}  >
-        <Header/>
         <br></br><br></br><br></br><br></br><br></br>
         <h1 className={classes.title} > Rechercher un objet perdu </h1>
         <br></br>

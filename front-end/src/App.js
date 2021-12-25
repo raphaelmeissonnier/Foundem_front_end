@@ -3,6 +3,7 @@ import React from "react";
 import MyMap from "./MyMap";
 import Accueil from "./Components/Accueil"
 import SuggestionObjetPerdu from "./Components/SuggestionObjetPerdu";
+import {Button} from '@material-ui/core';
 
 class App extends React.Component {
 
@@ -70,7 +71,8 @@ envoyerLocalisation = () =>
     return (
       <div className="App">
         <Accueil/>
-        <button onClick={this.envoyerLocalisation}>Centrer</button>
+        <br/>
+        <Button variant="contained" style={{ backgroundColor: '#009688'}} onClick={this.envoyerLocalisation}>Centrer</Button>
         {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : null }
        
       </div>

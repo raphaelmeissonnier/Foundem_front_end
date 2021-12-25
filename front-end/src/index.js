@@ -4,7 +4,9 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from "./Routes/Routes";
-import Header from "./Components/Header";
+import Header from "./Components/Header2";
+import Footer from "./Components/Footer";
+
 
 
 ReactDOM.render(
@@ -12,6 +14,7 @@ ReactDOM.render(
         {/*Rendu du Header et Footer*/}
         <Header />
         <Routes/>
+        <Footer />
     </Router>,
   document.getElementById('root')
 );

@@ -5,6 +5,7 @@ import App from "../App";
 import AjoutObjetTrouve from '../Components/AjoutObjetTrouve';
 import ChercherObjetPerdu from "../Components/ChercherObjetPerdu";
 import AjoutObjetPerdu from '../Components/AjoutObjetPerdu';
+import SuggestionObjetPerdu from '../Components/SuggestionObjetPerdu';
 
 
 const Routes = () =>{
@@ -15,6 +16,8 @@ const Routes = () =>{
                 <Route exact path="/AjoutObjetTrouve" component={AjoutObjetTrouve} />
                 <Route exact path="/ChercherObjetPerdu" component={ChercherObjetPerdu} />
                 <Route exact path="/AjoutObjetPerdu" component={AjoutObjetPerdu} />
+                <Route exact path="/SuggestionObjetPerdu" component={SuggestionObjetPerdu} />
+
             </Switch>
         </div>
     )
