@@ -7,11 +7,7 @@ const {config} = require('../config');
 const SuggestionObjetPerdu = (props) => {
 
     const mapboxApiKey = config.MY_API_TOKEN;
-    const params = {
-        country: "fr"
-    }    
     const [items2, setItems2] = useState([]);
-
     const userId = useContext(UserContext);
 
     var longitude = props.longitude;
@@ -22,7 +18,7 @@ const SuggestionObjetPerdu = (props) => {
     useEffect(async () => {
         let responseSugg = await fetch("/objetsperdus/notUser/"+userId);
         let dataSugg = await responseSugg.json();
-        console.log("apres le fetch",dataSugg)
+        console.log("SuggestionObjetPerdu - apres le fetch: ",dataSugg)
 
         if(dataSugg.length >0 && userId){
             for(var i=0; i<dataSugg.length;i++){
@@ -44,7 +40,7 @@ const SuggestionObjetPerdu = (props) => {
             <ul>
                 <li id="elt_sugg">
                     {items2.length>0 ? items2.map(item =>{
-                    return  <article key={item}>
+                    return  (<article key={item}>
                                 <div >
                                     <h3 id="titre_item">{(item[0].intitule)}</h3>
                                     <div><p>{(item[0].description) }</p></div>
@@ -52,9 +48,9 @@ const SuggestionObjetPerdu = (props) => {
                                     <div><p>{(item[1]) }</p></div>
                                     <br></br>
                                 </div>
-                            </article>    
-                    }): null } 
-                </li>
+                            </article> )
+                    }): null }
+                }</li>
             </ul>
         </div>
       )

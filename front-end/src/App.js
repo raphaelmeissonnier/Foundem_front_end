@@ -1,10 +1,7 @@
-import { numberSafeCompareFunction } from "ol/array";
 import React from "react";
 import MyMap from "./MyMap";
 import Accueil from "./Components/Accueil"
-import SuggestionObjetPerdu from "./Components/SuggestionObjetPerdu";
-import {CircularProgress} from '@material-ui/core';
-import {Button} from '@material-ui/core';
+import {CircularProgress, Button} from '@material-ui/core';
 
 class App extends React.Component {
 
@@ -72,11 +69,11 @@ envoyerLocalisation = () =>
     return (
       <div className="App">
         <Accueil/>
-        <button onClick={this.envoyerLocalisation}>Centrer</button>
+        <br></br>
         <br></br>
         <br></br>
           <Button variant="contained" style={{ backgroundColor: '#009688'}} onClick={this.envoyerLocalisation}>Centrer</Button>
-          {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : <CircularProgress /> }
+          {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : <div style={{marginLeft:'auto', marginRight:'auto'}}><CircularProgress /></div> }
       </div>
     )
   }

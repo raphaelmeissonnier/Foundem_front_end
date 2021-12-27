@@ -20,7 +20,6 @@ import AjoutObjetTrouve from './AjoutObjetTrouve';
 import AjoutObjetPerdu from './AjoutObjetPerdu';
 import ChercherObjetPerdu from './ChercherObjetPerdu';
 import Accueil from './Accueil';
-import SuggestionObjetPerdu from './SuggestionObjetPerdu';
 
 import logo from '../images/logo.jpg';
 
@@ -60,24 +59,24 @@ const drawerWidth = 240;
 return (
 <div>
  <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar><Link to="/" className={classes.link}>
+        <Toolbar>{/*<Link to="/" className={classes.link}>
           <Typography variant="h6" noWrap component="div">
             <img src={logo} alt="this is logo image" />
           </Typography>
-          </Link>
+          </Link>*/}
 
          <Grid container spacing={2} className={classes.grid}>
                 <Grid item xs={3}>
-                  <Item><Link to="/AjoutObjetTrouve" className={classes.link}>Ajout objet trouve </Link></Item>
+                    <Link to="/AjoutObjetTrouve" className={classes.link}>Ajout objet trouve </Link>
                 </Grid>
                 <Grid item xs={3}>
-                  <Item><Link to="/AjoutObjetPerdu" className={classes.link}>Ajout objet perdu </Link></Item>
+                  <Link to="/AjoutObjetPerdu" className={classes.link}>Ajout objet perdu </Link>
                 </Grid>
                 <Grid item xs={3}>
-                  <Item><Link to="/ChercherObjetPerdu" className={classes.link}>Chercher un objet </Link></Item>
+                 <Link to="/ChercherObjetPerdu" className={classes.link}>Chercher un objet </Link>
                 </Grid>
                 <Grid item xs={3}>
-                  <Item><Link to="/SuggestionObjetPerdu" className={classes.link}>Suggestions </Link></Item>
+                  <Link to="/SuggestionObjetPerdu" className={classes.link}>Suggestions </Link>
                 </Grid>
               </Grid>
 

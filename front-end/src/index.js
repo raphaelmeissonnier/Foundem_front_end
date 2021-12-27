@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router } from 'react-router-dom';
-import Header from "./Components/Header";
 import { Provider } from 'react-redux'
 import rootReducer from "./reducers/";
 import Auth from "./Auth";
@@ -11,7 +9,7 @@ import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
-import Header from "./Components/Header2";
+import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
 
@@ -24,8 +22,8 @@ ReactDOM.render(
     <Provider store={store}>
         {/*Rendu du Header et Footer*/}
         <Header />
-        <Footer />
         <Auth />
+        <Footer />
     </Provider>,
   document.getElementById('root')
 );
