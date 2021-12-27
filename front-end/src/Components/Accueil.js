@@ -1,3 +1,4 @@
+import Fond from '../images/fond.jpg';
 import React from "react";
 import { Box, Button } from '@material-ui/core';
 import {Link} from "react-router-dom";
@@ -11,12 +12,15 @@ const Accueil = () => {
     console.log("Accueil.js - userData: ", userData);
 
     return (
-      <div className="Accueil">
-          <div>
-            <br></br><br></br><br></br><br></br><br></br>
-            <h1> Un objet perdu se transforme souvent en objet trouvé ! </h1>
-            <h5> Vous avez perdu ou trouvé un objet ? Déclarez-le et la communauté
-            se met en mouvement pour vous aider à retrouver votre objet </h5>
+    <div className="Accueil">
+              <div style={{ backgroundImage : `url(${Fond})` , height : 400}}>
+                <br></br><br></br><br></br><br></br><br></br>
+               <br></br><br></br><br></br><br></br><br></br>
+
+                <h1 style={{ color: '#009688', fontSize:30, fontVariant: 'small-caps'}}> Un objet perdu se transforme souvent en objet trouvé ! </h1>
+                <h5 style={{ textAlign: 'left', marginLeft: 300, fontSize:20, fontVariant: 'small-caps'}}> Vous avez perdu ou trouvé un objet ? <br/>
+                 Déclarez-le et la communauté se met en mouvement <br/>
+                  pour vous aider à retrouver votre objet </h5>
 
               {/* Si l'utilisateur est connecté il aura accès à toutes les rubriques sauf 'Connexion' et 'Inscription
                   Si l'utilisateur n'est pas connecté il n'aura accès qu'aux rubriques 'Connexion' et 'Inscription'

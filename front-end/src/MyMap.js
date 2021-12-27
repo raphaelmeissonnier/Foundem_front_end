@@ -12,6 +12,11 @@ import FeatureStyles from "./Features/Styles";
 import {getLocation} from './App';
 import App from "./App"
 import marker from "./images/marker.svg"
+import { styled } from '@material-ui/core/styles';
+import { Paper} from '@material-ui/core';
+import Stack from '@mui/material/Stack';
+
+
 
 import "./App.css";
 import SuggestionObjetPerdu from "./Components/SuggestionObjetPerdu";
@@ -104,8 +109,31 @@ const MyMap = (props) => {
     console.log("Rayon:", rayon);
   }
 
+const Item = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+  backgroundColor: 'transparent',
+  border: 'none'
+}));
+
   return (
-    <div>
+    <Stack direction="row" spacing={2}>
+     <Item>
+          <Map center={fromLonLat(center)} zoom={zoom}>
+            <Layers>
+              <TileLayer source={osm()} zIndex={0} />
+              {features.length>0 && <VectorLayer source={cluster(test)} />}
+            </Layers>
+            <Controls>
+              <FullScreenControl />
+            </Controls>
+
+          </Map>
+          </Item>
+
+            <Item>
       <h3>Résultats: {items.length} objets proches de votre localisation</h3>
         Dans un rayon de:
             <div onChange={_handleRayonChange}>
@@ -114,19 +142,13 @@ const MyMap = (props) => {
                 <input type="radio" name="rayon" value="15" /> 15km
                 <input type="radio" name="rayon" value="20" /> 20km
             </div>
-      <Map center={fromLonLat(center)} zoom={zoom}>
-        <Layers>
-          <TileLayer source={osm()} zIndex={0} />
-          {features.length>0 && <VectorLayer source={cluster(test)} />}
-        </Layers>
-        <Controls>
-          <FullScreenControl />
-        </Controls>
-        
-      </Map>
+       </Item>
+        <Item>
       <br></br>
       {longitude > 0 && latitude > 0 ? (<SuggestionObjetPerdu longitude={longitude} latitude={latitude} /> ) : null }
-    </div>
+      </Item>
+      </Stack>
+
   );
 };
 

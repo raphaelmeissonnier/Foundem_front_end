@@ -1,6 +1,7 @@
 import React, {useState,useContext} from 'react';
 import { Paper, Select, Button } from '@material-ui/core';
 import { makeStyles, styled } from '@material-ui/core/styles';
+import hightech from '../images/Hightech.png';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import './ajoutObjetTrouve.css'
 import Geocoder from "react-mapbox-gl-geocoder"
@@ -105,6 +106,7 @@ const useStyles = makeStyles((theme) => ({
         },
     div: {
           alignItems: 'center',
+          textAlign: 'center'
     },
     grid: {
           backgroundColor: theme.palette.background.paper,
@@ -127,7 +129,11 @@ const useStyles = makeStyles((theme) => ({
       },
     mapboxglctrlgeocoder: {
           minWidth: '100%',
-      }
+      },
+    label: {
+        visibility: 'hidden',
+        position: 'absolute'
+    }
 
 }));
 
@@ -147,8 +153,10 @@ const classes = useStyles();
         Description: <input type="text" onChange={_handleDescriptionChange}/>
         <br></br>
         <div onChange={_handleCategorieChange}>
-            <input type="radio" value="hightech" /> High-Tech
-            <input type="radio" value="livres" /> Livres
+            <input type="radio" value="hightech"/>
+            <label className={classes.div} for="hightech"> High tech </label>
+            <span class="hightech-img"/>
+            <input type="radio" value="livres" id="hightech"/> Livres
             <input type="radio" value="beaute_sante" /> Beauté et santé
             <input type="radio" value="garde_robe" /> Garde-robe
             <input type="radio" value="cartes" /> Cartes
@@ -173,7 +181,9 @@ const classes = useStyles();
             <input type="radio" value="15" /> 15km
             <input type="radio" value="20" /> 20km
         </div>
-        <Button onClick={envoyerInformations}>Ajouter</Button>
+        <br/>
+        <Button variant="contained" style={{ backgroundColor: '#009688' }} onClick={envoyerInformations}>Ajouter</Button>
+
     </div>
   )
 }
