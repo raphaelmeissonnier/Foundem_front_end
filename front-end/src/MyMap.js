@@ -12,6 +12,11 @@ import FeatureStyles from "./Features/Styles";
 import {getLocation} from './App';
 import App from "./App"
 import marker from "./images/marker.svg"
+import { styled } from '@material-ui/core/styles';
+import { Paper} from '@material-ui/core';
+import Stack from '@mui/material/Stack';
+
+
 
 import "./App.css";
 import SuggestionObjetPerdu from "./Components/SuggestionObjetPerdu";
@@ -33,7 +38,6 @@ const MyMap = (props) => {
   const [rayon, setRayon] = useState(100);
   const [features, setFeatures] = useState([]);
 
-
   var iconStyle = new Style({
     image: new Icon({
       anchorXUnits: "fraction",
@@ -42,15 +46,25 @@ const MyMap = (props) => {
     }),
   });
 
-  //Au chargement de la page, on récupère les données depuis le back
+  //Au chargement de la page, on récupère les objets perdus et trouvés depuis le back
   useEffect(async () => {
     if(longitude && latitude && rayon){
       console.log("rayon envoyé", rayon)
-      let response = await fetch("/objets/"+longitude+"/"+latitude+"/"+rayon);
-      let data = await response.json();
-      console.log("apres le fetch dans MYMAP",data)
-      setItems(data);
-
+      //On récupère les objets perdus
+      //let response_perdu = await fetch("/objetsperdus/"+longitude+"/"+latitude+"/900");
+      let response_perdu = await fetch("/objetsperdus/"+longitude+"/"+latitude+"/"+rayon);
+      let data_perdu = await response_perdu.json();
+      //On récupère les objets trouvés
+      //let response_trouve = await fetch("/objetstrouves/"+longitude+"/"+latitude+"/900");
+      let response_trouve = await fetch("/objetstrouves/"+longitude+"/"+latitude+"/"+rayon);
+      let data_trouve = await response_trouve.json();
+      console.log("apres le fetch perdu dans MYMAP",data_perdu)
+      console.log("####################################################")
+      console.log("apres le fetch trouve dans MYMAP",data_trouve);
+      //Concaténation des tableaux d'objets trouvés et perdus
+      var objets_concat = data_perdu.concat(data_trouve);
+      console.log("Objets_concat: ", objets_concat);
+      setItems(objets_concat);
     }
   }, [rayon]);
 
@@ -95,8 +109,31 @@ const MyMap = (props) => {
     console.log("Rayon:", rayon);
   }
 
+const Item = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+  backgroundColor: 'transparent',
+  border: 'none'
+}));
+
   return (
-    <div>
+    <Stack direction="row" spacing={2}>
+     <Item>
+          <Map center={fromLonLat(center)} zoom={zoom}>
+            <Layers>
+              <TileLayer source={osm()} zIndex={0} />
+              {features.length>0 && <VectorLayer source={cluster(test)} />}
+            </Layers>
+            <Controls>
+              <FullScreenControl />
+            </Controls>
+
+          </Map>
+          </Item>
+
+            <Item>
       <h3>Résultats: {items.length} objets proches de votre localisation</h3>
         Dans un rayon de:
             <div onChange={_handleRayonChange}>
@@ -105,19 +142,13 @@ const MyMap = (props) => {
                 <input type="radio" name="rayon" value="15" /> 15km
                 <input type="radio" name="rayon" value="20" /> 20km
             </div>
-      <Map center={fromLonLat(center)} zoom={zoom}>
-        <Layers>
-          <TileLayer source={osm()} zIndex={0} />
-          {features.length>0 && <VectorLayer source={cluster(test)} />}
-        </Layers>
-        <Controls>
-          <FullScreenControl />
-        </Controls>
-        
-      </Map>
+       </Item>
+        <Item>
       <br></br>
       {longitude > 0 && latitude > 0 ? (<SuggestionObjetPerdu longitude={longitude} latitude={latitude} /> ) : null }
-    </div>
+      </Item>
+      </Stack>
+
   );
 };
 
