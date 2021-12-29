@@ -90,8 +90,6 @@ const [anchorEl, setAnchorEl] = React.useState(null);
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 <a  href="/">Found'em</a>
               </Typography>
-            </Toolbar>
-            <div>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -100,7 +98,7 @@ const [anchorEl, setAnchorEl] = React.useState(null);
                 onClick={handleMenu}
                 color="inherit"
               >
-                <Avatar alt="Toto" src="../images/Cartes.png"/>
+              <Avatar alt="Toto" src="../images/Cartes.png"/>
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -120,7 +118,7 @@ const [anchorEl, setAnchorEl] = React.useState(null);
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
               </Menu>
-            </div>
+            </Toolbar>
             
     </AppBar>
         <br></br><br></br><br></br>
