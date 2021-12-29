@@ -29,6 +29,11 @@
   color: #61dafb;
 }
 
+.danger {
+  background-color: #dddeff;
+  border-left: 6px solid #3669f4;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

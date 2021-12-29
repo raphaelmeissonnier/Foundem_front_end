@@ -50,7 +50,7 @@ const SuggestionObjetPerdu = (props) => {
                                 </div>
                             </article> )
                     }): null }
-                }</li>
+                </li>
             </ul>
         </div>
       )
