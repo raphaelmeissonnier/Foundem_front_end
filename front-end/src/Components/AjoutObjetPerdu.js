@@ -13,7 +13,6 @@ const {config} = require('../config');
 const mapboxApiKey = config.MY_API_TOKEN;
 const params = { country: "fr" };
 
-
 const AjoutObjetPerdu =() =>{
 
     const [created, setCreated] = useState(false);
@@ -27,7 +26,7 @@ const AjoutObjetPerdu =() =>{
     const validationSchema = Yup.object().shape({
         intitule: Yup.string().min(3).max(15).required("Veuillez saisir ce champs"),
         description: Yup.string().max(200),
-        date: Yup.date().required("Veuillez saisir ce champs").max(moment(new Date()).format('yyyy-MM-DD')),
+        date: Yup.date().required("Veuillez saisir ce champs").min(moment().subtract(365, 'days').calendar()).max(moment(new Date()).format('yyyy-MM-DD')),
         categorie: Yup.string().required("Veuillez saisir ce champs"),
         rayon: Yup.number().required("Veuillez saisir ce champs"),
     })
@@ -41,7 +40,9 @@ const AjoutObjetPerdu =() =>{
     }
 
     function onSubmit(values){
-        console.log("On entre dans la fonction onSubmit")
+        console.log("On entre dans la fonction onSubmit");
+        console.log("cate:", values.categorie);
+        console.log("rayon:", values.rayon);
         if(userId)
         {
             //Si au moins un des champs n'est pas saisi
@@ -60,10 +61,10 @@ const AjoutObjetPerdu =() =>{
             fetch('/objetsperdus', requestOptions)
                 //Je récupère la réponse émise par le back
                 .then(response => response.json()
-                    /*Je regarde l'attribut 'result' de la variable 'response'(qui contient la réponse émise par le back)
-                      Si l'attribut 'result'==0 alors je ne fais rien sinon je redirige l'user vers l'accueil + message
-                    */
-                    .then(data => data.result ? (window.alert(data.message), setCreated(true)) : window.alert(data.message)));
+            /*Je regarde l'attribut 'result' de la variable 'response'(qui contient la réponse émise par le back)
+              Si l'attribut 'result'==0 alors je ne fais rien sinon je redirige l'user vers l'accueil + message*/
+
+            .then(data => data.result ? (window.alert(data.message), setCreated(true)) : window.alert(data.message)));
         }
         else
         {
@@ -71,6 +72,7 @@ const AjoutObjetPerdu =() =>{
         }
     }
 
+    //Récupération de la longitude et latitude à partir de l'adresse
     //Récupération de la longitude et latitude à partir de l'adresse
     function onSelected(viewport, item){
         console.log("Item",item.place_name)
@@ -113,6 +115,7 @@ const AjoutObjetPerdu =() =>{
 
                     {/* Effets personnels = clés, lunettes, ...*/}
                     <label>Catégorie:</label>
+                    <ErrorMessage name="categorie" component="span" />
                     <Field as="select" name="categorie">
                         <option value="Autres">Choisir une catégorie</option>
                         <option value="PORTEFEUILLE">Portefeuille & CB</option>
@@ -126,6 +129,7 @@ const AjoutObjetPerdu =() =>{
                     <br></br>
 
                     <label>Date:</label>
+                    <ErrorMessage name="date" component="span" />
                     <Field type="date" name="date"/>
                     <br></br>
 
@@ -142,7 +146,9 @@ const AjoutObjetPerdu =() =>{
                     <br></br>
 
                     <label>Rayon:</label>
+                    <ErrorMessage name="rayon" component="span" />
                     <Field as="select" name="rayon" placeholder="Choisir un rayon">
+                        <option value="Aucun">Choisir un rayon</option>
                         <option value="5">5 km</option>
                         <option value="10">10 km</option>
                         <option value="15">15 km</option>
@@ -150,7 +156,7 @@ const AjoutObjetPerdu =() =>{
                     </Field>
                     <br></br>
 
-                    <button type="submit">Se connecter</button>
+                    <button type="submit">Valider</button>
                 </Form>
             </Formik>
 
@@ -160,6 +166,4 @@ const AjoutObjetPerdu =() =>{
 
     );
 }
-
-
 export default AjoutObjetPerdu;
