@@ -1,6 +1,6 @@
 export const GET_OBJETSTROUVES = "GET_OBJETSTROUVES";
 
-export const getObjetsPerdus = (uid) => {
+export const getObjetsTrouves = (uid) => {
     return async (dispatch) => {
         try{
             let response = await fetch('objetstrouves/'+uid);
