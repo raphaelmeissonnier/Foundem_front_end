@@ -5,6 +5,7 @@ import {getFoundItems, getLostItems} from "../Actions/ObjetsAction";
 import {Button} from "@material-ui/core";
 import _ from "lodash";
 import * as moment from "moment";
+import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
 
 
 const MesObjets  = () => {
@@ -160,40 +161,6 @@ const MesObjets  = () => {
                 </div>
             );
         }
-    }
-
-    /*Some style*/
-    const tableStyle = {
-        fontFamily: "Arial, Helvetica, sans-serif",
-        borderCollapse: "collapse",
-        width: "90%",
-        marginTop: "10px",
-        //center
-        marginLeft: "auto",
-        marginRight: "auto"
-    }
-
-    const tdStyle = {
-        border: "1px solid #ddd",
-        padding: "8px"
-    }
-
-    const thStyle = {
-        paddingTop: "12px",
-        paddingBottom: "12px",
-        textAlign: "left",
-        backgroundColor: "#04AA6D",
-        color: "white",
-        border: "1px solid #ddd",
-        padding: "8px",
-    }
-
-    const trHoverStyle = {
-        backgroundColor: "#ddd"
-    }
-
-    const trChildStyle = {
-        backgroundColor: "#f2f2f2"
     }
 
     return(

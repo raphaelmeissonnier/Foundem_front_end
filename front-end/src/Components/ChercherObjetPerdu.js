@@ -8,6 +8,8 @@ import {UserContext} from "./UserContext";
 import * as moment from 'moment';
 import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
+import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
+
 
 const _ = require("lodash");
 const {config} = require('../config');
@@ -75,40 +77,6 @@ const ChercherObjetPerdu =() =>{
                 </table>
             </div>
         );
-    }
-
-    /*Some style*/
-    const tableStyle = {
-        fontFamily: "Arial, Helvetica, sans-serif",
-        borderCollapse: "collapse",
-        width: "90%",
-        marginTop: "10px",
-        //center
-        marginLeft: "auto",
-        marginRight: "auto"
-    }
-
-    const tdStyle = {
-        border: "1px solid #ddd",
-        padding: "8px"
-    }
-
-    const thStyle = {
-        paddingTop: "12px",
-        paddingBottom: "12px",
-        textAlign: "left",
-        backgroundColor: "#04AA6D",
-        color: "white",
-        border: "1px solid #ddd",
-        padding: "8px",
-    }
-
-    const trHoverStyle = {
-        backgroundColor: "#ddd"
-    }
-
-    const trChildStyle = {
-        backgroundColor: "#f2f2f2"
     }
 
 
