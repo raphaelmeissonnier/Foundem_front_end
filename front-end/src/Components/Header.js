@@ -1,12 +1,23 @@
-import React, { Component, Fragment, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import clsx from 'clsx';
-import { Route, BrowserRouter as Router, Link, Switch } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, 
-  Button, IconButton, Avatar} from '@material-ui/core';
+import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, IconButton, Avatar} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import {useSelector} from "react-redux";
+import imageAvatar from '../images/Cartes.png';
 
-function Header() {
+const Header = () =>{
+    const user = useSelector(state => state.UserReducer);
+    const [username, setUsername] = useState(null);
+    console.log("username: ", user.username);
+
+    useEffect( () =>{
+        if(user)
+        {
+            setUsername(user.username);
+        }
+    }, [user])
+
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
         root: {
@@ -69,8 +80,34 @@ const [anchorEl, setAnchorEl] = React.useState(null);
     setAnchorEl(null);
   };
 
+    function stringToColor(string) {
+        let hash = 0;
+        let i;
 
+        /* eslint-disable no-bitwise */
+        for (i = 0; i < string.length; i += 1) {
+            hash = string.charCodeAt(i) + ((hash << 5) - hash);
+        }
 
+        let color = '#';
+
+        for (i = 0; i < 3; i += 1) {
+            const value = (hash >> (i * 8)) & 0xff;
+            color += `00${value.toString(16)}`.substr(-2);
+        }
+        /* eslint-enable no-bitwise */
+
+        return color;
+    }
+
+    function stringAvatar(name) {
+        return {
+            sx: {
+                bgcolor: stringToColor(name),
+            },
+            children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+        };
+    }
 
   return(
     <Box sx={{ flexGrow: 1 }}>
@@ -91,14 +128,14 @@ const [anchorEl, setAnchorEl] = React.useState(null);
                 <a  href="/">Found'em</a>
               </Typography>
               <IconButton
-                size="large"
+                size="medium"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
               >
-              <Avatar alt="Toto" src="../images/Cartes.png"/>
+                  <Avatar alt={"Toto"} src={imageAvatar} />
               </IconButton>
               <Menu
                 id="menu-appbar"
