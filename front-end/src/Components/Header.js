@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
         },
 }));
 const classes = useStyles();
-const [ouvrir, setOuvrir] = React.useState(false);
+//const [ouvrir, setOuvrir] = React.useState(false);
 /*const handleDrawerOpen = () => {
         setOuvrir(true);
 };
@@ -57,9 +57,9 @@ const handleDrawerClose = () => {
 
 const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleChange = (event) => {
-    //setAuth(event.target.checked);
-  };
+  /*const handleChange = (event) => {
+    setAuth(event.target.checked);
+  };*/
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
