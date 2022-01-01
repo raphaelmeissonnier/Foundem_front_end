@@ -75,7 +75,7 @@ envoyerLocalisation = () =>
           <Button variant="contained" style={{ backgroundColor: '#009688'}} onClick={this.envoyerLocalisation}>Centrer</Button>
           {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : <div style={{marginLeft:'auto', marginRight:'auto'}}><CircularProgress />
           <br></br>
-          <div class="danger">
+          <div className="danger">
           <p><strong>Info!</strong> Veuillez patienter le chargement peut prendre quelques instants...</p>
           </div></div> }
       </div>
