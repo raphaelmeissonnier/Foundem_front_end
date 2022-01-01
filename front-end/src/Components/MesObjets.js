@@ -3,9 +3,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {UserContext} from "./UserContext";
 import {getFoundItems, getLostItems} from "../Actions/ObjetsAction";
 import {Button} from "@material-ui/core";
+import Stack from '@mui/material/Stack';
 import _ from "lodash";
 import * as moment from "moment";
 import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
+import { red } from "@material-ui/core/colors";
 
 
 const MesObjets  = () => {
@@ -167,33 +169,37 @@ const MesObjets  = () => {
         <div>
             <br></br><br></br><br></br><br></br><br></br>
             <h1>Mes Objets</h1>
+            <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
             <Button
-                variant="outlined"
+                variant= {showLostItems ? "outlined" : "contained"}
                 style={{
-                    borderRadius: 2,
-                    backgroundColor: "#5fa082",
+                    borderRadius: 8,
+                    backgroundColor: "#5fa082" ,
                     padding: "5px 20px",
-                    fontSize: "15px"
+                    fontSize: "15px",
+                    borderBlockColor: "red"
                 }}
-                variant="contained"
+                //variant="contained"
                 onClick={() => handleClickLost()}
             >
                 Mes objets perdus
             </Button>
             <Button
-                variant="outlined"
+                variant= {!showLostItems ? "outlined" : "contained"}
                 style={{
-                    borderRadius: 2,
-                    backgroundColor: "#5fa082",
+                    borderRadius: 8,
+                    backgroundColor: "#5fa082" ,
                     padding: "5px 20px",
-                    fontSize: "15px"
+                    fontSize: "15px",
+                    borderBlockColor: "red"
                 }}
-                variant="contained"
+                //variant="contained"
                 onClick={() => handleClickFound()}
             >
                 Mes objets trouvés
             </Button>
-            {showFoundItems ? afficher(objetsTrouvesResponse) : showLostItems ? afficher(objetsPerdusResponse) : null }
+            </Stack>
+            {showFoundItems ? afficher(objetsTrouvesResponse) :  afficher(objetsPerdusResponse) }
         </div>
     )
 }
