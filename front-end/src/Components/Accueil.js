@@ -28,7 +28,7 @@ const Accueil = () => {
 
               {!_.isEmpty(userData) ?
                   <Box direction="row" spacing={4}>
-                      <Link to="/AjoutObjetTrouve">
+                      <Link to="/AjouterObjetTrouve">
                           <Button
                               variant="outlined"
                               style={{
@@ -43,7 +43,7 @@ const Accueil = () => {
                           </Button>
                       </Link>
 
-                      <Link to="/AjoutObjetPerdu">
+                      <Link to="/AjouterObjetPerdu">
                           <Button
                               variant="outlined"
                               style={{
