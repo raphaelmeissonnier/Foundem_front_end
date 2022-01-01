@@ -25,8 +25,8 @@ const MyMap = (props) => {
   var latitude = props.latitude;
   console.log("latitude", latitude);
 
-  const [center, setCenter] = useState([longitude,latitude]);
-  const [zoom, setZoom] = useState(16);
+  const center = [longitude,latitude];
+  const zoom= 16;
 
   const [items, setItems] = useState([]);
   const [items2, setItems2] = useState([]);
