@@ -23,12 +23,12 @@ const dispatch = useDispatch();
 useEffect(async() =>  {
     if(user.id){
         dispatch(getObjetsPerdus(user.id));
-        dispatch(getObjetsTrouves(user.id));
+       // dispatch(getObjetsTrouves(user.id));
     }
 });
 
 console.log(recupererobjetsperdus);
-console.log(recupererobjetstrouves);
+// console.log(recupererobjetstrouves);
 
 
 

@@ -26,7 +26,7 @@ const AjoutObjetTrouve =() =>{
     const validationSchema = Yup.object().shape({
         intitule: Yup.string().min(3).max(15).required("Veuillez saisir ce champs"),
         description: Yup.string().max(200),
-        date: Yup.date().required("Veuillez saisir ce champs").max(moment(new Date()).format('yyyy-MM-DD')),
+        date: Yup.date().required("Veuillez saisir ce champs").min(moment().subtract(365, 'days').calendar()).max(moment(new Date()).format('yyyy-MM-DD')),
         categorie: Yup.string().required("Veuillez saisir ce champs"),
     })
 
@@ -110,6 +110,7 @@ const AjoutObjetTrouve =() =>{
 
                     {/* Effets personnels = clés, lunettes, ...*/}
                     <label>Catégorie:</label>
+                    <ErrorMessage name="categorie" component="span" />
                     <Field as="select" name="categorie">
                         <option value="Autres">Choisir une catégorie</option>
                         <option value="PORTEFEUILLE">Portefeuille & CB</option>
@@ -123,6 +124,7 @@ const AjoutObjetTrouve =() =>{
                     <br></br>
 
                     <label>Date:</label>
+                    <ErrorMessage name="date" component="span" />
                     <Field type="date" name="date"/>
                     <br></br>
 
@@ -138,7 +140,7 @@ const AjoutObjetTrouve =() =>{
                     />
                     <br></br>
 
-                    <button type="submit">Se connecter</button>
+                    <button type="submit">Valider</button>
                 </Form>
             </Formik>
 
