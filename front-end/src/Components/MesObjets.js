@@ -25,10 +25,80 @@ useEffect(async() =>  {
         dispatch(getObjetsPerdus(user.id));
        // dispatch(getObjetsTrouves(user.id));
     }
-});
+}, [user.id]);
 
 console.log(recupererobjetsperdus);
 // console.log(recupererobjetstrouves);
+
+ function afficher()
+         {
+         if(recupererobjetsperdus != null){
+                 return(
+                     <div>
+                         <table style={tableStyle}>
+                             <thead>
+                             <tr style={trHoverStyle}>
+                                 <th style={thStyle}>Intitulé</th>
+                                 <th style={thStyle}>Description</th>
+                                 <th style={thStyle}>Catégorie</th>
+                                 <th style={thStyle}>Date</th>
+                             </tr>
+                             </thead>
+                             <tbody>
+
+                             {recupererobjetsperdus.map(item => {
+                                 return(
+                                     <tr style={trChildStyle} key={item.id}>
+                                         <td style={tdStyle}>{item.intitule}</td>
+                                         <td style={tdStyle}>{item.description}</td>
+                                         <td style={tdStyle}>{item.categorie}</td>
+                                         <td style={tdStyle}>{item.date}</td>
+                                     </tr>
+                                 );
+                             })}
+
+                             </tbody>
+                         </table>
+                     </div>
+                 );
+         }
+         }
+             /*Some style*/
+             const tableStyle = {
+                 fontFamily: "Arial, Helvetica, sans-serif",
+                 borderCollapse: "collapse",
+                 width: "90%",
+                 marginTop: "10px",
+                 //center
+                 marginLeft: "auto",
+                 marginRight: "auto"
+             }
+
+             const tdStyle = {
+                 border: "1px solid #ddd",
+                 padding: "8px"
+             }
+
+             const thStyle = {
+                 paddingTop: "12px",
+                 paddingBottom: "12px",
+                 textAlign: "left",
+                 backgroundColor: "#04AA6D",
+                 color: "white",
+                 border: "1px solid #ddd",
+                 padding: "8px",
+             }
+
+             const trHoverStyle = {
+                 backgroundColor: "#ddd"
+             }
+
+             const trChildStyle = {
+                 backgroundColor: "#f2f2f2"
+             }
+
+
+
 
 
 
@@ -41,7 +111,8 @@ console.log(recupererobjetsperdus);
       <br></br>
      <center><p> Salut {user.username} ! Ici, tu peux consulter tous tes objets perdus ou trouvés :) </p>
 
-     <strong><p>{user.username}, tu as perdu tous ces objet. Les voici : </p></strong>
+     <strong><p>{user.username}, tu as perdu tous ces objets. Les voici : </p></strong>
+     {afficher()}
 
      </center>
     </div>);
