@@ -7,7 +7,7 @@ const {config} = require('../config');
 const SuggestionObjetPerdu = (props) => {
 
     const mapboxApiKey = config.MY_API_TOKEN;
-    const [items2, setItems2] = useState([]);
+    const items2= new Array();
     const userId = useContext(UserContext);
 
     var longitude = props.longitude;

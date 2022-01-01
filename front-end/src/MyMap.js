@@ -5,12 +5,8 @@ import { Style, Icon } from "ol/style";
 import Feature from "ol/Feature";
 import Point from "ol/geom/Point";
 import { osm, vector,cluster } from "./Source";
-import { fromLonLat, get } from "ol/proj";
-import GeoJSON from "ol/format/GeoJSON";
+import { fromLonLat } from "ol/proj";
 import { Controls, FullScreenControl } from "./Controls";
-import FeatureStyles from "./Features/Styles";
-import {getLocation} from './App';
-import App from "./App"
 import marker from "./images/marker.svg"
 import { styled } from '@material-ui/core/styles';
 import { Paper} from '@material-ui/core';

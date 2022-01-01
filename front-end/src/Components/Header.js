@@ -1,23 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, IconButton, Avatar} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import {useSelector} from "react-redux";
 import imageAvatar from '../images/Cartes.png';
 
 const Header = () =>{
-    const user = useSelector(state => state.UserReducer);
-    const [username, setUsername] = useState(null);
-    console.log("username: ", user.username);
-
-    useEffect( () =>{
-        if(user)
-        {
-            setUsername(user.username);
-        }
-    }, [user])
-
+    
 const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
         root: {
@@ -59,12 +48,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 const classes = useStyles();
 const [ouvrir, setOuvrir] = React.useState(false);
-const handleDrawerOpen = () => {
+/*const handleDrawerOpen = () => {
         setOuvrir(true);
 };
 const handleDrawerClose = () => {
         setOuvrir(false);
-};
+};*/
 
 const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -80,40 +69,11 @@ const [anchorEl, setAnchorEl] = React.useState(null);
     setAnchorEl(null);
   };
 
-    function stringToColor(string) {
-        let hash = 0;
-        let i;
-
-        /* eslint-disable no-bitwise */
-        for (i = 0; i < string.length; i += 1) {
-            hash = string.charCodeAt(i) + ((hash << 5) - hash);
-        }
-
-        let color = '#';
-
-        for (i = 0; i < 3; i += 1) {
-            const value = (hash >> (i * 8)) & 0xff;
-            color += `00${value.toString(16)}`.substr(-2);
-        }
-        /* eslint-enable no-bitwise */
-
-        return color;
-    }
-
-    function stringAvatar(name) {
-        return {
-            sx: {
-                bgcolor: stringToColor(name),
-            },
-            children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-        };
-    }
-
   return(
     <Box sx={{ flexGrow: 1 }}>
     <AppBar position="fixed" className={clsx(classes.appBar, {[classes.appBarShift]: ouvrir,})}>
             <Toolbar>
-              <IconButton
+              {/*<IconButton
                 color="inherit"
                 aria-label="open drawer"
                 //onClick={handleDrawerOpen}
@@ -123,7 +83,7 @@ const [anchorEl, setAnchorEl] = React.useState(null);
                 })}
               >
                 <MenuIcon />
-              </IconButton>
+              </IconButton>*/}
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 <a  href="/">Found'em</a>
               </Typography>

@@ -1,8 +1,6 @@
 import React,{useEffect, useState} from "react";
-import {useSelector} from "react-redux";
 import cookie from "js-cookie";
 import { Redirect } from "react-router-dom";
-//import UserReducer from "../reducers/UserReducer";
 
 const Logout = ()=>{
 

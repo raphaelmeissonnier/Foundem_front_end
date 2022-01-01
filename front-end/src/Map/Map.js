@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, Text } from "react"
+import React, { useRef, useState, useEffect } from "react"
 import "./Map.css";
 import MapContext from "./MapContext";
 import * as ol from "ol";
@@ -22,13 +22,13 @@ const Map = ({ children, zoom, center }) => {
 		mapObject.setTarget(mapRef.current);
 
         mapObject.on('click', (event) => {
-              const feature = mapObject.forEachFeatureAtPixel(event.pixel, (feature) => {
+              const features = mapObject.forEachFeatureAtPixel(event.pixel, (feature) => {
                 return feature;
               });
-              if (feature) {
+              if (features) {
                   setCliked(true);
-                  setItemsInfos(feature.getProperties().features[0].values_.name);
-                  console.log("feature", feature.getProperties().features[0].values_.name)
+                  setItemsInfos(features.getProperties().features[0].values_.name);
+                  console.log("feature", features.getProperties().features[0].values_.name)
               }
         });
 

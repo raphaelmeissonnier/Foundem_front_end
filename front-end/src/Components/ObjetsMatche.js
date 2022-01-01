@@ -9,10 +9,7 @@ import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles
 const ObjetsMatche = (props) => {
 
     const [items, setItems] = useState([]);
-
     const [idObjetT,setIdObjetT] = useState();
-    const [idObjetP,setIdObjetP] = useState();
-
     const [iscreated, setcreated] = useState(false);
 
     const userId = useContext(UserContext);
@@ -31,7 +28,7 @@ const ObjetsMatche = (props) => {
         else
         {
             console.log("ObjetsMatch.js - User empty");
-            return;
+            
         }
     }, [userId])
 
@@ -73,10 +70,6 @@ const ObjetsMatche = (props) => {
         {
             console.log("Dans le if",e.target.value)
             createMatch(e.target.value);
-        }
-        if(idObjetP){
-            console.log("Id Objet P",idObjetP)
-            console.log("Id Objet T",idObjetT)
         }
     }
 
