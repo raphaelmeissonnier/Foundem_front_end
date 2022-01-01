@@ -109,6 +109,22 @@ const MesObjets  = () => {
         window.location.reload(true);
     }
 
+    function translateStatus(etat){
+        if(etat == 1){
+            return "Perdu"
+        }
+        else if(etat == 2){
+            return "En cours de Matching"
+        }
+        else if(etat == 3){
+            return "Objet Matché"
+        }
+        else{
+            return "NaN"
+        }
+
+    }
+
     //J'affiche ces objets trouvés selon leur état
     function afficher(items)
     {
@@ -123,6 +139,7 @@ const MesObjets  = () => {
                             <th style={thStyle}>Description</th>
                             <th style={thStyle}>Catégorie</th>
                             <th style={thStyle}>Date</th>
+                            <th style={thStyle}>Statut</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -133,6 +150,7 @@ const MesObjets  = () => {
                                     <td style={tdStyle}>{_.capitalize(item.description)}</td>
                                     <td style={tdStyle}>{_.capitalize(item.categorie)}</td>
                                     <td style={tdStyle}>{moment(item.date).format("L")}</td>
+                                    <td style={tdStyle}>{translateStatus(item.etat)}</td>
                                     {showFoundItems && item.etat==2 ? <td style={tdStyle}><button onClick={() => accepter(item.id)}>Accepter</button> <button value={item.id} onClick={() => refuser(item.id)}>Refuser</button></td> : null }
                                 </tr>
                             );
