@@ -11,7 +11,7 @@ const Logout = ()=>{
         console.log("Debut du UseEffect")
 
         let response = await fetch("/users/logout");
-        let data= await response.text;
+        let data = response.text;
         console.log("LOGOUT",data)
 
         cookie.remove("jwt", { expires: 1 });
