@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import {UserContext} from "./UserContext";
 import _ from "lodash";
 import * as moment from "moment";
