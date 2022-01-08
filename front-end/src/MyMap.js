@@ -9,7 +9,7 @@ import { fromLonLat } from "ol/proj";
 import { Controls, FullScreenControl } from "./Controls";
 import marker from "./images/marker.svg"
 import { styled } from '@material-ui/core/styles';
-import { Paper} from '@material-ui/core';
+import {FormControlLabel, FormLabel, Paper, Radio, RadioGroup} from '@material-ui/core';
 import Stack from '@mui/material/Stack';
 
 
@@ -29,10 +29,11 @@ const MyMap = (props) => {
   const zoom= 16;
 
   const [items, setItems] = useState([]);
-  const [items2, setItems2] = useState([]);
-  const [itemsInfos, setItemsInfos] = useState([]);
+  const [items2] = useState([]);
+  const [itemsInfos] = useState([]);
   const [rayon, setRayon] = useState(100);
-  const [features, setFeatures] = useState([]);
+  const [features] = useState([]);
+  const [changed, setChanged] = useState(1);
 
   var iconStyle = new Style({
     image: new Icon({
@@ -45,57 +46,54 @@ const MyMap = (props) => {
   //Au chargement de la page, on récupère les objets perdus et trouvés depuis le back
   useEffect(async () => {
     if(longitude && latitude && rayon){
-      console.log("rayon envoyé", rayon)
       //On récupère les objets perdus
-      //let response_perdu = await fetch("/objetsperdus/"+longitude+"/"+latitude+"/900");
       let response_perdu = await fetch("/objetsperdus/"+longitude+"/"+latitude+"/"+rayon);
       let data_perdu = await response_perdu.json();
+
       //On récupère les objets trouvés
-      //let response_trouve = await fetch("/objetstrouves/"+longitude+"/"+latitude+"/900");
       let response_trouve = await fetch("/objetstrouves/"+longitude+"/"+latitude+"/"+rayon);
       let data_trouve = await response_trouve.json();
-      console.log("apres le fetch perdu dans MYMAP",data_perdu)
-      console.log("####################################################")
-      console.log("apres le fetch trouve dans MYMAP",data_trouve);
+
+      console.log("MyMap.js - data_perdu",data_perdu)
+      console.log("MyMap.js - data_trouve",data_trouve);
+
       //Concaténation des tableaux d'objets trouvés et perdus
       var objets_concat = data_perdu.concat(data_trouve);
-      console.log("Objets_concat: ", objets_concat);
+      console.log("\"MyMap.js - Objets_concat: ", objets_concat);
       setItems(objets_concat);
+      console.log("MyMap.js - items: ", items);
+      setChanged(changed+1);
     }
   }, [rayon]);
 
   //On vérifie que les données soient bien récupérées
-  console.log("Items", items);
+  console.log("MyMap.js - items: ", items);
 
   useEffect( () =>{
-      if(items.length <=0)
+      console.log("2ème UseEffect - On vide items2");
+      items2.length=0;
+      itemsInfos.length=0;
+      features.length=0;
+      for(var i=0; i<items.length;i++)
       {
-        setItems2([]);
-        setItemsInfos([]);
-        setFeatures([])
+          //console.log("2ème UseEffect - On remplit items2")
+        items2[i] = [items[i][0].localisation.position.longitude, items[i][0].localisation.position.latitude];
+        itemsInfos[i] = [items[i][0].categorie, items[i][0].intitule, items[i][0].description, items[i][0].date] ;
       }
-      else
+      console.log("MyMap.js - Items2", items2);
+      console.log("MyMap.js -ItemsInfos", itemsInfos);
+      for(var j=0; j<items2.length; j++)
       {
-          for(var i=0; i<items.length;i++)
-          {
-            items2[i] = [items[i][0].localisation.position.longitude, items[i][0].localisation.position.latitude];
-            itemsInfos[i] = [items[i][0].categorie, items[i][0].intitule, items[i][0].description, items[i][0].date] ;
-          }
-          for(var j=0; j<items2.length; j++)
-          {
-            features[j] = new Feature({
-                geometry: new Point(fromLonLat(items2[j])),
-                name: itemsInfos[j],
-                properties:items2[j],
-            });
-            features[j].setStyle(iconStyle);
-          }
+        features[j] = new Feature({
+            geometry: new Point(fromLonLat(items2[j])),
+            name: itemsInfos[j],
+            properties:items2[j],
+        });
+        features[j].setStyle(iconStyle);
       }
-  }, [items])
+      console.log("MyMap.js - Features: ", features);
 
-  console.log("Items2", items2);
-  console.log("ItemsInfos", itemsInfos);
-  console.log("features", features);
+  }, [items])
 
   var test=vector({features});
 
@@ -115,6 +113,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
   return (
+      <div>
     <Stack direction="row" spacing={2}>
      <Item>
           <Map center={fromLonLat(center)} zoom={zoom}>
@@ -131,19 +130,22 @@ const Item = styled(Paper)(({ theme }) => ({
 
             <Item>
       <h3>Résultats: {items.length} objets proches de votre localisation</h3>
-        Dans un rayon de:
-            <div onChange={_handleRayonChange}>
-                <input type="radio" name="rayon" value="5" /> 5km
-                <input type="radio" name="rayon" value="10" /> 10km
-                <input type="radio" name="rayon" value="15" /> 15km
-                <input type="radio" name="rayon" value="20" /> 20km
-            </div>
+      <div>
+        <FormLabel component="legend">Dans un rayon de </FormLabel>
+        <RadioGroup value={rayon} onChange={_handleRayonChange}>
+            <FormControlLabel value="5" control={<Radio />} label="5km" />
+            <FormControlLabel value="10" control={<Radio />} label="10km" />
+            <FormControlLabel value="15" control={<Radio />} label="15km" />
+            <FormControlLabel value="20" control={<Radio />} label="20km" />
+        </RadioGroup>
+      </div>
        </Item>
-        <Item>
+    </Stack>
+        <div>
       <br></br>
       {longitude > 0 && latitude > 0 ? (<SuggestionObjetPerdu longitude={longitude} latitude={latitude} /> ) : null }
-      </Item>
-      </Stack>
+        </div>
+      </div>
 
   );
 };
