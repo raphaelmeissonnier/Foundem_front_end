@@ -1,126 +1,170 @@
 import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, IconButton, Avatar} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import Container from '@mui/material/Container';
+import Tooltip from '@mui/material/Tooltip';
+import Button from '@mui/material/Button';
 import imageAvatar from '../images/Cartes.png';
+import { Link } from 'react-router-dom';
+import {useSelector} from "react-redux";
+var _ = require('lodash');
 
 const Header = () =>{
-    
-const drawerWidth = 240;
-const useStyles = makeStyles((theme) => ({
-        root: {
-          flexGrow: 1,
-          minWidth: 275,
-        },
-        menuButton: {
-            backgroundColor: '#5fa082',
-            marginRight: theme.spacing(2),
-        },
-        appBar: {
-            zIndex: theme.zIndex.drawer + 1,
-            backgroundColor: '#5fa082',
-            transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        },
-        appBarShift: {
-           marginLeft: drawerWidth,
-           width: `calc(100% - ${drawerWidth}px)`,
-           transition: theme.transitions.create(['width', 'margin'], {
-           easing: theme.transitions.easing.sharp,
-           duration: theme.transitions.duration.enteringScreen,
-        }),
-        },
-        toolbar: {
-          display: 'flex',
-          backgroundColor: '#5fa082',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          padding: theme.spacing(0, 1),
-          // necessary for content to be below app bar
-          ...theme.mixins.toolbar,
-        },
-        hide: {
-          display: 'none',
-        },
-}));
-const classes = useStyles();
-const [ouvrir, setOuvrir] = React.useState(false);
-/*const handleDrawerOpen = () => {
-        setOuvrir(true);
-};
-const handleDrawerClose = () => {
-        setOuvrir(false);
-};*/
 
-const [anchorEl, setAnchorEl] = React.useState(null);
 
-  /*const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };*/
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+  const userData = useSelector((state) => state.UserReducer);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
   };
 
   return(
-    <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="fixed" className={clsx(classes.appBar, {[classes.appBarShift]: ouvrir,})}>
-            <Toolbar>
-              {/*<IconButton
-                color="inherit"
-                aria-label="open drawer"
-                //onClick={handleDrawerOpen}
-                edge="start"
-                className={clsx(classes.menuButton, {
-                [classes.hide]: ouvrir,
-                })}
-              >
-                <MenuIcon />
-              </IconButton>*/}
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                <a  href="/">Found'em</a>
-              </Typography>
-              <IconButton
-                size="medium"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                  <Avatar alt={"Toto"} src={imageAvatar} />
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+          >
+           <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              href="/"
+              color="inherit"
+            > Found'em</IconButton>
+          </Typography>
+
+          <Box sx={{ paddingLeft: 10, flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+                <MenuItem component={Link} to={"/AjouterObjetPerdu"} >
+                  <Typography textAlign="center">J'ai Perdu un Objet</Typography>
+                </MenuItem>
+                <MenuItem component={Link} to={"/AjouterObjetTrouve"}>
+                  <Typography textAlign="center">J'ai Trouvé un Objet</Typography>
+                </MenuItem>
+                <MenuItem component={Link} to={"/ChercherObjetPerdu"}>
+                  <Typography textAlign="center">Rechercher un Objet</Typography>
+                </MenuItem>
+            </Menu>
+          </Box>
+          <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              <Button href="/AjouterObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                J'ai Perdu un Objet
+              </Button>
+              <Button href="/AjouterObjetTrouve" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                J'ai Trouvé un Objet
+              </Button>
+              <Button href="/ChercherObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                Rechercher un Objet
+              </Button>
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Profil">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt={"Toto"}  src={imageAvatar} />
               </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </Toolbar>
+            </Tooltip>
             
+              {!_.isEmpty(userData) ? 
+              <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+                <MenuItem  component={Link} to={"/MesObjets"}>
+                  <Typography textAlign="center">Mes Objets</Typography>
+                </MenuItem>
+                <MenuItem  component={Link} to={"/Logout"}>
+                  <Typography textAlign="center">Deconnexion</Typography>
+                </MenuItem>
+                </Menu>
+                :
+                <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+                <MenuItem  component={Link} to={"/Inscription"}>
+                  <Typography textAlign="center">Inscription</Typography>
+                </MenuItem>
+                <MenuItem  component={Link} to={"/Login"}>
+                  <Typography textAlign="center">Connexion</Typography>
+                </MenuItem>
+                </Menu>
+              }
+            
+          </Box>
+        </Toolbar>
+      </Container>
     </AppBar>
-        <br></br><br></br><br></br>
-    </Box>
   )
 }
-
 export default Header;

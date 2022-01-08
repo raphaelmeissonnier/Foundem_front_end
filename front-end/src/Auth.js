@@ -4,6 +4,7 @@ import { UserContext } from "./Components/UserContext";
 import { useDispatch } from "react-redux";
 import { getUser } from "./Actions/UserAction";
 import { BrowserRouter as Router } from 'react-router-dom';
+import Header from "./Components/Header";
 
 const Auth = () => {
     const [userId, setUserId] = useState(null);
@@ -30,6 +31,7 @@ const Auth = () => {
     return (
         <UserContext.Provider value={userId}>
             <Router forceRefresh={true}>
+                <Header />
                 <Routes />
             </Router>
         </UserContext.Provider>
