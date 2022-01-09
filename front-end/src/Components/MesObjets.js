@@ -2,11 +2,14 @@ import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {UserContext} from "./UserContext";
 import {getFoundItems, getLostItems} from "../Actions/ObjetsAction";
-import {Button} from "@material-ui/core";
-import Stack from '@mui/material/Stack';
 import _ from "lodash";
 import * as moment from "moment";
 import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
+import Chip from '@mui/material/Chip';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Divider from '@mui/material/Divider';
+
 
 
 const MesObjets  = () => {
@@ -17,6 +20,8 @@ const MesObjets  = () => {
     const dispatch = useDispatch();
     const [showFoundItems, setShowFoundItems] = useState(false);
     const [showLostItems, setShowLostItems] = useState(false);
+    const [alignment,setAlignment]=useState('1');
+    const [value, setValue] = useState('1');
 
     useEffect(async () => {
         if(userID)
@@ -38,6 +43,19 @@ const MesObjets  = () => {
         setShowLostItems(true);
     }
 
+    const handleChange = (event, parValue) => {
+        if(parValue=='1'){
+            handleClickLost();
+            setAlignment('1');
+            setValue('1')
+        }
+        else if (parValue=='2'){
+            handleClickFound();
+            setAlignment('2');
+            setValue('2')
+        }
+      };
+
     async function accepter(idObjetTrouve)
     {
         //On récupère l'id de l'objet perdu associé à l'objet trouvé matché
@@ -49,7 +67,7 @@ const MesObjets  = () => {
         //On récupère l'adresse mail de l'utilisateur de l'objet perdu
         const idUserObjetPerdu = await fetch('/objetsperdus/'+idObjetPerdu)
             .then(response => response.json()
-                .then(data => (data.result===0 ? data.message : data.user_id)))
+                .then(data => (data.result==0 ? data.message : data.user_id)))
         console.log("Accepter: ", idUserObjetPerdu);
         const adresseMail = await fetch('/users/'+ idUserObjetPerdu)
             .then(response => response.json()
@@ -112,14 +130,14 @@ const MesObjets  = () => {
     }
 
     function translateStatus(etat){
-        if(etat === 1){
-            return "Perdu"
+        if(etat == 1){
+            return <Chip label="Perdu" />
         }
-        else if(etat === 2){
-            return "En cours de Matching"
+        else if(etat == 2){
+            return <Chip label="En cours de Matching" color="info" />
         }
-        else if(etat === 3){
-            return "Objet Matché"
+        else if(etat == 3){
+            return <Chip label="Matché" color="success" />
         }
         else{
             return "NaN"
@@ -168,37 +186,24 @@ const MesObjets  = () => {
         <div>
             <br></br><br></br><br></br><br></br><br></br>
             <h1>Mes Objets</h1>
-            <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
-            <Button
-                variant= {showLostItems ? "outlined" : "contained"}
-                style={{
-                    borderRadius: 8,
-                    backgroundColor: "#5fa082" ,
-                    padding: "5px 20px",
-                    fontSize: "15px",
-                    borderBlockColor: "red"
-                }}
-                //variant="contained"
-                onClick={() => handleClickLost()}
-            >
-                Mes objets perdus
-            </Button>
-            <Button
-                variant= {!showLostItems ? "outlined" : "contained"}
-                style={{
-                    borderRadius: 8,
-                    backgroundColor: "#5fa082" ,
-                    padding: "5px 20px",
-                    fontSize: "15px",
-                    borderBlockColor: "red"
-                }}
-                //variant="contained"
-                onClick={() => handleClickFound()}
-            >
-                Mes objets trouvés
-            </Button>
-            </Stack>
+            <center>
+            <ToggleButtonGroup
+                color="primary"
+                value={alignment}
+                exclusive
+                onChange={handleChange}
+                >
+                <ToggleButton value="1">Mes Objets Perdus</ToggleButton>
+                <ToggleButton value="2">Mes Objets Trouvés</ToggleButton>
+            </ToggleButtonGroup>
+            </center>
+            <br></br>
+            <Divider></Divider>
+            <br></br>
             {showFoundItems ? afficher(objetsTrouvesResponse) :  afficher(objetsPerdusResponse) }
+            <br></br>
+            <Divider></Divider>
+            <br></br>
         </div>
     )
 }
