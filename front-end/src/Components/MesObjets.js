@@ -7,7 +7,6 @@ import Stack from '@mui/material/Stack';
 import _ from "lodash";
 import * as moment from "moment";
 import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
-import { red } from "@material-ui/core/colors";
 
 
 const MesObjets  = () => {
@@ -50,7 +49,7 @@ const MesObjets  = () => {
         //On récupère l'adresse mail de l'utilisateur de l'objet perdu
         const idUserObjetPerdu = await fetch('/objetsperdus/'+idObjetPerdu)
             .then(response => response.json()
-                .then(data => (data.result==0 ? data.message : data.user_id)))
+                .then(data => (data.result===0 ? data.message : data.user_id)))
         console.log("Accepter: ", idUserObjetPerdu);
         const adresseMail = await fetch('/users/'+ idUserObjetPerdu)
             .then(response => response.json()
@@ -113,13 +112,13 @@ const MesObjets  = () => {
     }
 
     function translateStatus(etat){
-        if(etat == 1){
+        if(etat === 1){
             return "Perdu"
         }
-        else if(etat == 2){
+        else if(etat === 2){
             return "En cours de Matching"
         }
-        else if(etat == 3){
+        else if(etat === 3){
             return "Objet Matché"
         }
         else{

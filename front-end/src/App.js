@@ -1,7 +1,7 @@
 import React from "react";
 import MyMap from "./MyMap";
-import Accueil from "./Components/Accueil"
 import {CircularProgress, Button} from '@material-ui/core';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import { Alert } from "@mui/material";
 
 class App extends React.Component {
@@ -68,16 +68,28 @@ envoyerLocalisation = () =>
   render() {
   this.getLocation();
     return (
-      <div className="App">
-        <Accueil/>
-        <br></br>
-        <br></br>
-        <br></br>
-          <Button variant="contained" style={{ backgroundColor: '#009688'}} onClick={this.envoyerLocalisation}>Centrer</Button>
-          {this.state.longitude > 0 && this.state.latitude > 0 ? (<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/> ) : <div style={{marginLeft:'auto', marginRight:'auto'}}><CircularProgress />
-          <br></br>
-          <Alert severity="info"> Veuillez patienter le chargement peut prendre quelques instants...</Alert>
-          </div> }
+      <div>
+        {this.state.longitude > 0 && this.state.latitude > 0 ?
+            <div>
+              <Button variant="contained" size={"small"} startIcon={<GpsFixedIcon/>} style={{ position:'absolute', marginLeft:'56%', marginTop:"40px"}} onClick={this.envoyerLocalisation}>Centrer</Button>
+              <MyMap longitude={this.state.longitude} latitude={this.state.latitude}/>
+            </div>
+            :
+            <div style={{
+              height: '100vh',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column'
+            }}>
+              <CircularProgress/>
+              <Alert severity="info"
+                     style={{alignContent: 'center', justifyContent: 'center', marginTop: '5px'}}
+              >
+                Veuillez patienter le chargement peut prendre quelques instants...
+              </Alert>
+            </div>
+        }
       </div>
     )
   }

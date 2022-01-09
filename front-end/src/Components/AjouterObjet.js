@@ -49,7 +49,7 @@ const AjouterObjet =({objet}) =>{
         {
             if(values.intitule || values.date || values.categorie || longitude || latitude)
             {
-                if(objet=="perdu")
+                if(objet==="perdu")
                 {
                     if(values.rayon)
                     {
@@ -179,7 +179,7 @@ const AjouterObjet =({objet}) =>{
                     />
                     <br></br>
 
-                    {objet == "perdu" ?(
+                    {objet === "perdu" ?(
                         <div>
                             <label>Rayon:</label>
                             <ErrorMessage name="rayon" component="span"/>

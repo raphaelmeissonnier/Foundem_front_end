@@ -59,7 +59,7 @@ const MyMap = (props) => {
 
       //Concaténation des tableaux d'objets trouvés et perdus
       var objets_concat = data_perdu.concat(data_trouve);
-      console.log("\"MyMap.js - Objets_concat: ", objets_concat);
+      console.log("MyMap.js - Objets_concat: ", objets_concat);
       setItems(objets_concat);
       console.log("MyMap.js - items: ", items);
       setChanged(changed+1);
@@ -103,50 +103,38 @@ const MyMap = (props) => {
     console.log("Rayon:", rayon);
   }
 
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-  backgroundColor: 'transparent',
-  border: 'none'
-}));
+  const Item = styled(Paper)(({ theme }) => ({}));
 
   return (
       <div>
-    <Stack direction="row" spacing={2}>
-     <Item>
-          <Map center={fromLonLat(center)} zoom={zoom}>
-            <Layers>
-              <TileLayer source={osm()} zIndex={0} />
-              {features.length>0 && <VectorLayer source={cluster(test)} />}
-            </Layers>
-            <Controls>
-              <FullScreenControl />
-            </Controls>
-
-          </Map>
+      <Stack direction="row" spacing={2} >
+          <Item elevation={8} style={{width:'70%', marginLeft:'10px', marginRight:'10px', marginBottom:'10px', marginTop:'10px', textAlign:'center'}}>
+              <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20}}>Résultats: <b>{items.length}</b> objets proches de votre localisation</FormLabel>
+              <Map center={fromLonLat(center)} zoom={zoom}>
+                  <Layers>
+                      <TileLayer source={osm()} zIndex={0} />
+                      {features.length>0 && <VectorLayer source={cluster(test)} />}
+                  </Layers>
+                  <Controls>
+                      <FullScreenControl />
+                  </Controls>
+              </Map>
+              <div style={{flexDirection:"row", display:'flex', alignItems:'center', justifyContent:'center' }}>
+                  <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20, marginRight:"5px"}}>Dans un rayon de</FormLabel>
+                  <RadioGroup onChange={_handleRayonChange} value={rayon} row>
+                      <FormControlLabel value="5" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="5km" />
+                      <FormControlLabel value="10" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="10km" />
+                      <FormControlLabel value="15" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="15km" />
+                      <FormControlLabel value="20" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="20km" />
+                  </RadioGroup>
+              </div>
           </Item>
 
-            <Item>
-      <h3>Résultats: {items.length} objets proches de votre localisation</h3>
-      <div>
-        <FormLabel component="legend">Dans un rayon de </FormLabel>
-        <RadioGroup value={rayon} onChange={_handleRayonChange}>
-            <FormControlLabel value="5" control={<Radio />} label="5km" />
-            <FormControlLabel value="10" control={<Radio />} label="10km" />
-            <FormControlLabel value="15" control={<Radio />} label="15km" />
-            <FormControlLabel value="20" control={<Radio />} label="20km" />
-        </RadioGroup>
-      </div>
-       </Item>
-    </Stack>
-        <div>
-      <br></br>
-      {longitude > 0 && latitude > 0 ? (<SuggestionObjetPerdu longitude={longitude} latitude={latitude} /> ) : null }
-        </div>
-      </div>
+          {longitude > 0 && latitude > 0 ? <SuggestionObjetPerdu longitude={longitude} latitude={latitude} /> : null }
 
+      </Stack>
+
+      </div>
   );
 };
 

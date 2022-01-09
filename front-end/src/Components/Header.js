@@ -34,7 +34,7 @@ const Header = () =>{
 
   return(
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" style={{flexDirection:'row'}}>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
@@ -42,17 +42,21 @@ const Header = () =>{
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-           <IconButton
+            <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               href="/"
               color="inherit"
-            > Found'em</IconButton>
+           >
+               Found'em
+           </IconButton>
           </Typography>
 
-          <Box sx={{ paddingLeft: 10, flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          {!_.isEmpty(userData) ?
+              <div>
+            <Box sx={{ paddingLeft: 10, flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -103,8 +107,10 @@ const Header = () =>{
                 Rechercher un Objet
               </Button>
           </Box>
+              </div>
+              : <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' }, width:'60%' }}/>}
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{textAlign:'right', width:'40%'}}>
             <Tooltip title="Profil">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt={"Toto"}  src={imageAvatar} />
@@ -137,7 +143,6 @@ const Header = () =>{
                 </Menu>
                 :
                 <Menu
-              sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{

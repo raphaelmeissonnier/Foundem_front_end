@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { getUser } from "./Actions/UserAction";
 import { BrowserRouter as Router } from 'react-router-dom';
 import Header from "./Components/Header";
+import Footer from "./Components/Footer";
 
 const Auth = () => {
     const [userId, setUserId] = useState(null);
@@ -33,6 +34,7 @@ const Auth = () => {
             <Router forceRefresh={true}>
                 <Header />
                 <Routes />
+                <Footer />
             </Router>
         </UserContext.Provider>
     );

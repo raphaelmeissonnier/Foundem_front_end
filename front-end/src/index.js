@@ -19,9 +19,7 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        {/*Rendu du Header et Footer*/}
         <Auth />
-        <Footer />
     </Provider>,
   document.getElementById('root')
 );
