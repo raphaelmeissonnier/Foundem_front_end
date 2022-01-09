@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import imageAvatar from '../images/Cartes.png';
 import { Link } from 'react-router-dom';
 import {useSelector} from "react-redux";
+import logo from '../images/logo.jpg'
 var _ = require('lodash');
 
 const Header = () =>{
@@ -36,21 +37,16 @@ const Header = () =>{
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-          >
-           <IconButton
+        <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               href="/"
               color="inherit"
-            > Found'em</IconButton>
-          </Typography>
+            >
+          <img src={logo} alt="logo"/>
+          </IconButton>
 
           <Box sx={{ paddingLeft: 10, flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
