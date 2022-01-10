@@ -14,7 +14,7 @@ const {config} = require('../config');
 const SuggestionObjetPerdu = (props) => {
 
     const mapboxApiKey = config.MY_API_TOKEN;
-    const [items2] = useState([]);
+    var [items2] = useState([]);
     const userId = useContext(UserContext);
 
     var longitude = props.longitude;
@@ -28,6 +28,7 @@ const SuggestionObjetPerdu = (props) => {
         console.log("SuggestionObjetPerdu - apres le fetch: ",dataSugg)
 
         console.log("On remplit items2")
+        items2.length=0;
         for(var i=0; i<dataSugg.length;i++){
             var addr = await fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+dataSugg[i].longitude+","+dataSugg[i].latitude+".json?access_token="+mapboxApiKey)
             var repAddr = await addr.json();
