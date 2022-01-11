@@ -130,9 +130,10 @@ const Header = () =>{
             </IconButton>
             <Tooltip title="Profil">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={"Toto"}  src={imageAvatar} />
+                <Avatar alt={userData.username}  src={imageAvatar} />
               </IconButton>
             </Tooltip>
+            
             
               {!_.isEmpty(userData) ? 
               <Menu
@@ -184,6 +185,7 @@ const Header = () =>{
               }
             
           </Box>
+          <h4>{userData.username}</h4>
         </Toolbar>
       </Container>
     </AppBar>
