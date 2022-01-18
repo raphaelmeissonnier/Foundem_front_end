@@ -102,7 +102,7 @@ const Header = () =>{
               </Button>
           </Box>
               </div>
-              : <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' }, width:'60%' }}/>}
+              : <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' }, width:'55%' }}/>}
 
           <Box sx={{textAlign:'right', width:'40%'}}>
             <Tooltip title="Profil">
