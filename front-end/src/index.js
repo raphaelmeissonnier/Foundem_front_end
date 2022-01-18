@@ -9,7 +9,6 @@ import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
-import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 
 
@@ -20,10 +19,7 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        {/*Rendu du Header et Footer*/}
-        <Header />
         <Auth />
-        <Footer />
     </Provider>,
   document.getElementById('root')
 );
