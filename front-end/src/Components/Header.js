@@ -8,6 +8,11 @@ import imageAvatar from '../images/Cartes.png';
 import { Link } from 'react-router-dom';
 import {useSelector} from "react-redux";
 import logo from '../images/logo.jpg'
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import Badge from '@mui/material/Badge';
+
+
 var _ = require('lodash');
 
 const Header = () =>{
@@ -105,11 +110,30 @@ const Header = () =>{
               : <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' }, width:'55%' }}/>}
 
           <Box sx={{textAlign:'right', width:'40%'}}>
+          <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={2} color="error">
+                <EmojiEventsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={43} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
             <Tooltip title="Profil">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={"Toto"}  src={imageAvatar} />
+                <Avatar alt={userData.username}  src={imageAvatar} />
               </IconButton>
             </Tooltip>
+            
             
               {!_.isEmpty(userData) ? 
               <Menu
@@ -161,6 +185,7 @@ const Header = () =>{
               }
             
           </Box>
+          <h4>{userData.username}</h4>
         </Toolbar>
       </Container>
     </AppBar>
