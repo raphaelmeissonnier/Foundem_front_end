@@ -109,7 +109,19 @@ const MesObjets  = () => {
                 .then(data => (data.result >= 0 ? data.message : data.id_objet_matche)));
         console.log("Accepter: ", idObjetMatche);
 
+        const idObjetPerdu = await fetch('/objetsmatche/'+idObjetTrouve)
+            .then(response => response.json()
+                .then(data => (data.result >= 0 ? data.message : data.objet_perdu)));
+        console.log("Accepter: ", idObjetPerdu);
+
+
+        //On récupère l'id du second utilisateur
+        const idSecondUser = await fetch('/objetsperdus/'+idObjetPerdu)
+            .then(response => response.json()
+                .then(data => (data.result >= 0 ? data.message : data.utilisateur)));
+
         //On redirige l'utilisateur vers l'agenda (en passant dans la route l'id de l'objet matché)
+
     }
 
     async function refuser(idObjetTrouve)
