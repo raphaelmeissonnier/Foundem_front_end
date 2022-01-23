@@ -9,6 +9,7 @@ import Chip from '@mui/material/Chip';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
+import Agenda from "./Agenda";
 
 
 
@@ -93,9 +94,12 @@ const MesObjets  = () => {
             .then(response => response.json()
                 .then(data => console.log("ObjetTrouve MAJ :", data.message)));
 
-        //On affiche l'adresse mail de l'utilisateur de l'objet perdu
+
+
+        /* On affiche l'adresse mail de l'utilisateur de l'objet perdu
         window.alert("Vous venez d'accepter un match ! Grâce à vous un objet sera restitué à son propriétaire. Voici son adresse mail: "+ adresseMail);
         window.location.reload(true);
+      */
     }
 
     async function refuser(idObjetTrouve)
