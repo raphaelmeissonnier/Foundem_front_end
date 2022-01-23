@@ -10,6 +10,7 @@ import Inscription from "../Components/Inscription";
 import Logout from "../Components/Logout";
 import Profil from "../Components/Profil";
 import MesObjets from "../Components/MesObjets";
+import Dnd from "../Components/Dnd";
 
 const Routes = () =>{
     return(
@@ -24,6 +25,7 @@ const Routes = () =>{
                 <Route exact path="/Logout" component={Logout} />
                 <Route exact path="/Profil" component={Profil} />
                 <Route exact path="/MesObjets" component={MesObjets} />
+                <Route exact path="/Dnd" component={Dnd} />
             </Switch>
         </div>
     )

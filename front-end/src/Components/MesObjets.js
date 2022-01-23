@@ -23,12 +23,12 @@ const dispatch = useDispatch();
 useEffect(async() =>  {
     if(user.id){
         dispatch(getObjetsPerdus(user.id));
-       // dispatch(getObjetsTrouves(user.id));
+        dispatch(getObjetsTrouves(user.id));
     }
 }, [user.id]);
 
 console.log(recupererobjetsperdus);
-// console.log(recupererobjetstrouves);
+console.log(recupererobjetstrouves);
 
  function afficher()
          {
@@ -62,6 +62,37 @@ console.log(recupererobjetsperdus);
                      </div>
                  );
          }
+
+         if(recupererobjetstrouves != null){
+                          return(
+                              <div>
+                                  <table style={tableStyle}>
+                                      <thead>
+                                      <tr style={trHoverStyle}>
+                                          <th style={thStyle}>Intitulé</th>
+                                          <th style={thStyle}>Description</th>
+                                          <th style={thStyle}>Catégorie</th>
+                                          <th style={thStyle}>Date</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+
+                                      {recupererobjetstrouves.map(item => {
+                                          return(
+                                              <tr style={trChildStyle} key={item.id}>
+                                                  <td style={tdStyle}>{item.intitule}</td>
+                                                  <td style={tdStyle}>{item.description}</td>
+                                                  <td style={tdStyle}>{item.categorie}</td>
+                                                  <td style={tdStyle}>{item.date}</td>
+                                              </tr>
+                                          );
+                                      })}
+
+                                      </tbody>
+                                  </table>
+                              </div>
+                          );
+                  }
          }
              /*Some style*/
              const tableStyle = {
@@ -96,10 +127,6 @@ console.log(recupererobjetsperdus);
              const trChildStyle = {
                  backgroundColor: "#f2f2f2"
              }
-
-
-
-
 
 
     return (
