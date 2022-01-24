@@ -11,6 +11,7 @@ import "./Agenda.css";
 import Geocoder from "react-mapbox-gl-geocoder";
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import {Redirect} from "react-router-dom";
+import * as moment from "moment";
 
 
 const {config} = require('../config');
@@ -56,16 +57,16 @@ const Agenda = (props) =>{
     const viewport2 = { width: 400, height: 400 };
     const [longitude, setLongitude] = useState(null);
     const [latitude, setLatitude] = useState(null);
-    const [firstUser, setFirstUser] = userState(null);
-    const [secondUser, setSecondUser] = userState(null);
-    const [objetMatche, setObjetMatche] = userState(null);
+    const [firstUser, setFirstUser] = useState(null);
+    const [secondUser, setSecondUser] = useState(null);
+    const [objetMatche, setObjetMatche] = useState(null);
     const [created, setCreated] = useState(false);
 
     useEffect(async () =>{
         //on récupère le firstUser, le secondUser, le matcheObjet A MODIFIER
         setFirstUser(props.match.params.firstUser);
         setSecondUser(props.match.params.secondUser);
-        setObjetMatche(props.match.params.objetMatche);
+        setObjetMatche(props.match.params.idObjetmatche);
     });
 
 
@@ -76,6 +77,12 @@ const Agenda = (props) =>{
         if(!newEvent.end || !longitude || !latitude || !firstUser || !secondUser || !objetMatche)
         {
             console.log("Agenda.js - Parameters required");
+            console.log("Date: ", newEvent.end);
+            console.log("longitude: ", longitude);
+            console.log("latitude: ", latitude);
+            console.log("first_user: ", firstUser);
+            console.log("second_user: ", secondUser);
+            console.log("objet_matche: ", objetMatche);
         }
         else
         {
@@ -84,7 +91,7 @@ const Agenda = (props) =>{
                 port: 3001,
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({ date_rdv: newEvent.end, longitude: parseFloat(longitude), latitude: parseFloat(latitude), user_perdu: firstUser, user_trouve: secondUser, objet_matche: objetMatche})
+                body: JSON.stringify({ date_rdv: moment(newEvent.end).format("YYYY-MM-DD"), longitude: parseFloat(longitude), latitude: parseFloat(latitude), user_perdu: firstUser, user_trouve: secondUser, objet_matche: objetMatche})
             };
             await fetch('/objetsmatche/rdv', requestOptions)
                 .then(response => response.json()
