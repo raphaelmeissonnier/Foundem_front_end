@@ -13,6 +13,7 @@ import AjouterObjet from '../Components/AjouterObjet';
 import {UserContext} from "../Components/UserContext";
 import Agenda from "../Components/Agenda";
 import MesRdv from "../Components/MesRdv";
+import MonSolde from "../Components/MonSolde";
 
 
 const Routes = () =>{
@@ -32,6 +33,7 @@ const Routes = () =>{
                     <Route exact path="/ChercherObjetPerdu" component={ChercherObjetPerdu} />
                     <Route exact path="/Agenda/:idObjetmatche/:firstUser/:secondUser" component={Agenda} />
                     <Route exact path="/Mesrdv" component={MesRdv} />
+                    <Route exact path="/MonSolde" component={MonSolde} />
 
                 </Switch> : 
                 <Switch>

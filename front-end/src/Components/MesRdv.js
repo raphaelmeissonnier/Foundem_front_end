@@ -50,7 +50,7 @@ const MesRdv = () =>{
             };
             await fetch('/users/' + userID + '/rdv/' + id_rdv, requestOptions)
                 .then(response => response.json()
-                    .then(data => console.log("MesRdv MAJ :", data.msg)));
+                    .then(data => window.alert(data.msg)));
         }
         else {
             console.log("MesRdv.js - Parameters required");
@@ -67,7 +67,7 @@ const MesRdv = () =>{
             };
             await fetch('/users/' + userID + '/rdv/' + id_rdv, requestOptions)
                 .then(response => response.json()
-                    .then(data => console.log("MesRdv MAJ :", data.msg)));
+                    .then(data => window.alert(data.msg)));
         }
         else {
             console.log("MesRdv.js - Parameters required");
