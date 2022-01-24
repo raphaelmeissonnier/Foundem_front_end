@@ -13,22 +13,24 @@ import {config} from "../config";
 
 const MesRdv = () =>{
 
-    let mesRdv = useSelector((state) => state.MesRdvReducer);
+    let mesRdv = useSelector((state) => state.MesRdvReducer.getMesRdvResponse);
     const userID = useContext(UserContext);
     const dispatch = useDispatch();
     const mesRdv2 = new Array();
     const mapboxApiKey = config.MY_API_TOKEN;
     const [accepted, setAccepted] = useState(false);
+    const [changed, setChanged] = useState(false);
 
     useEffect(async () => {
         if(userID)
         {
             console.log("dans le if");
-            dispatch(getMesRdv(userID));
+            await dispatch(getMesRdv(userID));
 
         }
+        console.log("mes rdv", mesRdv);
+        setChanged(true);
         if(mesRdv){
-
             for(var i = 0; i<mesRdv.length; i++){
                 var addr = await fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+mesRdv[i].longitude+","+mesRdv[i].latitude+".json?access_token="+mapboxApiKey)
                 var repAddr = await addr.json();
@@ -36,8 +38,10 @@ const MesRdv = () =>{
                 mesRdv2[i]=[mesRdv[i],repAddr.features[2].place_name]
             }
 
+            console.log("mes rdv2", mesRdv2);
+
         }
-    }, [userID])
+    }, [userID, changed])
 
 
     async function accepter(id_rdv, date, longitude, latitude) {
