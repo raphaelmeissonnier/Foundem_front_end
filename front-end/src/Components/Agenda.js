@@ -10,6 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./Agenda.css";
 import Geocoder from "react-mapbox-gl-geocoder";
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import {Redirect} from "react-router-dom";
 
 
 const {config} = require('../config');
@@ -49,16 +50,28 @@ const events = [
     },
 ];
 
-function Agenda() {
+function Agenda(props) {
     const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
     const [allEvents, setAllEvents] = useState(events);
     const viewport2 = { width: 400, height: 400 };
     const [longitude, setLongitude] = useState(null);
     const [latitude, setLatitude] = useState(null);
+    const [created, setCreated] = useState(false);
 
 
-    function handleAddEvent() {
+    async function handleAddEvent() {
         setAllEvents([...allEvents, newEvent]);
+        //Création du rdv
+        const requestOptions = {
+            port: 3001,
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({longitude: longitude, latitude: latitude, date_rdv: newEvent.end, user_perdu: props.params.match.first_user, user_trouve: props.params.match.second_user, objet_matche: props.params.match.objet_matche})
+        };
+        await fetch('/objetsmatche/rdv', requestOptions)
+            .then(response => response.json()
+                .then(data => console.log("Agenda.js - rdv created :", data.message)));
+        setCreated(true);
     }
 
     //Récupération de la longitude et latitude à partir de l'adresse
@@ -97,8 +110,8 @@ function Agenda() {
             </div>
             <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} />
          </center>
+            {created ? <Redirect to="/" /> : console.log("Agenda.js - not redirected to home page")}
         </div>
-
     );
 }
 export default Agenda;
