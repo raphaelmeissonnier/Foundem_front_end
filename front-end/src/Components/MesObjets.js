@@ -10,6 +10,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
 import Agenda from "./Agenda";
+import {Redirect} from "react-router-dom";
 
 
 
@@ -23,6 +24,9 @@ const MesObjets  = () => {
     const [showLostItems, setShowLostItems] = useState(false);
     const [alignment,setAlignment]=useState('1');
     const [value, setValue] = useState('1');
+    const [accepted, setAccepted] = useState(false);
+    const [ObjetMatche, setObjetMatche] = useState(null);
+    const [secondUser, setsecondUser] = useState(null);
 
     useEffect(async () => {
         if(userID)
@@ -109,6 +113,8 @@ const MesObjets  = () => {
                 .then(data => (data.result >= 0 ? data.message : data.id_objet_matche)));
         console.log("Accepter: ", idObjetMatche);
 
+        setObjetMatche(idObjetMatche);
+
         const idObjetPerdu = await fetch('/objetsmatche/'+idObjetTrouve)
             .then(response => response.json()
                 .then(data => (data.result >= 0 ? data.message : data.objet_perdu)));
@@ -120,7 +126,11 @@ const MesObjets  = () => {
             .then(response => response.json()
                 .then(data => (data.result >= 0 ? data.message : data.utilisateur)));
 
-        //On redirige l'utilisateur vers l'agenda (en passant dans la route l'id de l'objet matché)
+        setsecondUser(idSecondUser);
+
+        //On redirige l'utilisateur vers l'agenda (en passant dans la route l'id de l'objet matché
+
+        setAccepted(true);
 
     }
 
@@ -230,6 +240,8 @@ const MesObjets  = () => {
             <br></br>
             <Divider></Divider>
             <br></br>
+
+            {accepted ? <Redirect to = {{pathname: '/Agenda/'+ObjetMatche +"/" + userID + "/" + secondUser}}/> : console.log("pas de redirection")}
         </div>
     )
 }

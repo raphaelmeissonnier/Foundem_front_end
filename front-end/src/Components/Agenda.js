@@ -134,6 +134,7 @@ const Agenda = (props) =>{
          </center>
             {created ? <Redirect to="/"/> : console.log("Agenda.js - not redirected to home page")}
         </div>
+
     );
 }
 export default Agenda;
