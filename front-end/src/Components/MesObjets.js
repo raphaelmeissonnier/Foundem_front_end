@@ -240,6 +240,7 @@ const MesObjets  = () => {
             <br></br>
             <Divider></Divider>
             <br></br>
+
             {accepted ? <Redirect to = {{pathname: '/Agenda/'+ObjetMatche +"/" + userID + "/" + secondUser}}/> : console.log("pas de redirection")}
         </div>
     )
