@@ -10,6 +10,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
 import Agenda from "./Agenda";
+import {Redirect} from "react-router-dom";
 
 
 
@@ -23,6 +24,9 @@ const MesObjets  = () => {
     const [showLostItems, setShowLostItems] = useState(false);
     const [alignment,setAlignment]=useState('1');
     const [value, setValue] = useState('1');
+    const [accepted, setAccepted] = useState(false);
+    const [ObjetMatche, setObjetMatche] = useState(null);
+    const [secondUser, setsecondUser] = useState(null);
 
     useEffect(async () => {
         if(userID)
@@ -59,6 +63,7 @@ const MesObjets  = () => {
 
     async function accepter(idObjetTrouve)
     {
+        /*
         //On récupère l'id de l'objet perdu associé à l'objet trouvé matché
         const idObjetPerdu = await fetch('/objetsmatche/'+idObjetTrouve)
             .then(response => response.json()
@@ -79,8 +84,9 @@ const MesObjets  = () => {
         await fetch('/objetsmatche/' + idObjetTrouve, {method: 'DELETE'})
             .then(response => response.json()
                 .then(data => console.log("Delete match: ", data.message)))
-
+        */
         //On met à jour les états des objets perdus et trouvés
+        /*
         const requestOptions = {
             port: 3001,
             method: 'PUT',
@@ -100,6 +106,32 @@ const MesObjets  = () => {
         window.alert("Vous venez d'accepter un match ! Grâce à vous un objet sera restitué à son propriétaire. Voici son adresse mail: "+ adresseMail);
         window.location.reload(true);
       */
+
+        //On récupère l'id de l'objet matché
+        const idObjetMatche = await fetch('/objetsmatche/'+idObjetTrouve)
+            .then(response => response.json()
+                .then(data => (data.result >= 0 ? data.message : data.id_objet_matche)));
+        console.log("Accepter: ", idObjetMatche);
+
+        setObjetMatche(idObjetMatche);
+
+        const idObjetPerdu = await fetch('/objetsmatche/'+idObjetTrouve)
+            .then(response => response.json()
+                .then(data => (data.result >= 0 ? data.message : data.objet_perdu)));
+        console.log("Accepter: ", idObjetPerdu);
+
+
+        //On récupère l'id du second utilisateur
+        const idSecondUser = await fetch('/objetsperdus/'+idObjetPerdu)
+            .then(response => response.json()
+                .then(data => (data.result >= 0 ? data.message : data.utilisateur)));
+
+        setsecondUser(idSecondUser);
+
+        //On redirige l'utilisateur vers l'agenda (en passant dans la route l'id de l'objet matché
+
+        setAccepted(true);
+
     }
 
     async function refuser(idObjetTrouve)
@@ -169,13 +201,13 @@ const MesObjets  = () => {
                         <tbody>
                         {items.map(item => {
                             return(
-                                <tr style={trChildStyle} key={item.id}>
+                                <tr style={trChildStyle} key={item.id_objet}>
                                     <td style={tdStyle}>{_.capitalize(item.intitule)}</td>
                                     <td style={tdStyle}>{_.capitalize(item.description)}</td>
-                                    <td style={tdStyle}>{_.capitalize(item.categorie)}</td>
+                                    <td style={tdStyle}>{_.capitalize(item.intitule_categorie)}</td>
                                     <td style={tdStyle}>{moment(item.date).format("L")}</td>
-                                    <td style={tdStyle}>{translateStatus(item.etat)}</td>
-                                    {showFoundItems && item.etat==2 ? <td style={tdStyle}><button onClick={() => accepter(item.id)}>Accepter</button> <button value={item.id} onClick={() => refuser(item.id)}>Refuser</button></td> : null }
+                                    <td style={tdStyle}>{_.capitalize(item.etat)}</td>
+                                    {showFoundItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>Accepter</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>Refuser</button></td> : null }
                                 </tr>
                             );
                         })}
@@ -208,6 +240,8 @@ const MesObjets  = () => {
             <br></br>
             <Divider></Divider>
             <br></br>
+
+            {accepted ? <Redirect to = {{pathname: '/Agenda/'+ObjetMatche +"/" + userID + "/" + secondUser}}/> : console.log("pas de redirection")}
         </div>
     )
 }

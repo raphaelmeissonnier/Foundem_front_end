@@ -28,7 +28,7 @@ const Routes = () =>{
                     <Route exact path="/AjouterObjetTrouve" render={() => <AjouterObjet objet={'trouve'}/>} />
                     <Route exact path="/ObjetsMatche/:idObjet" component={ObjetsMatche} />
                     <Route exact path="/ChercherObjetPerdu" component={ChercherObjetPerdu} />
-                    <Route exact path="/Agenda" component={Agenda} />
+                    <Route exact path="/Agenda/:idObjetmatche/:firstUser/:secondUser" component={Agenda} />
                 </Switch> : 
                 <Switch>
                     <Route exact path="/" component={App} />
