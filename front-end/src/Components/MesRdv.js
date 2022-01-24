@@ -37,9 +37,7 @@ const MesRdv = () =>{
                 console.log("ADRESSE",repAddr);
                 mesRdv2[i]=[mesRdv[i],repAddr.features[2].place_name]
             }
-
             console.log("mes rdv2", mesRdv2);
-
         }
     }, [userID, changed])
 
@@ -79,15 +77,15 @@ const MesRdv = () =>{
                         </tr>
                         </thead>
                         <tbody>
-                        {items.map(item => {
-                            return(
+                        {items.map(item => { console.log("idrdv", item[0].id_rdv)
+                            /*return(
                                 <tr style={trChildStyle} key={item.id_rdv}>
                                     <td style={tdStyle}>{moment(item.date_rdv).format("L")}</td>
                                     <td style={tdStyle}>{_.capitalize(item.etat)}</td>
                                     <td style={tdStyle}>{_.capitalize(item[1])}</td>
                                     {item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_rdv)}>Accepter</button> <button value={item.id_rdv} onClick={() => refuser(item.id_rdv)}>Refuser</button></td> : null }
                                 </tr>
-                            );
+                            );*/
                         })}
                         </tbody>
                     </table>
