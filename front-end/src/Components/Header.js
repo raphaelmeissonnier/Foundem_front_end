@@ -155,7 +155,7 @@ const Header = () =>{
                 <MenuItem  component={Link} to={"/MesObjets"}>
                   <Typography textAlign="center">Mes Objets</Typography>
                 </MenuItem>
-                <MenuItem  component={Link} to={"/MesRendezVous"}>
+                <MenuItem  component={Link} to={"/MesRdv"}>
                   <Typography textAlign="center">Mes Rendez-vous</Typography>
                 </MenuItem>
                 <MenuItem  component={Link} to={"/Logout"}>
