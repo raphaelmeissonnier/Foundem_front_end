@@ -11,6 +11,10 @@ import ObjetsMatche from '../Components/ObjetsMatche';
 import MesObjets from '../Components/MesObjets';
 import AjouterObjet from '../Components/AjouterObjet';
 import {UserContext} from "../Components/UserContext";
+import Agenda from "../Components/Agenda";
+import MesRdv from "../Components/MesRdv";
+import MonSolde from "../Components/MonSolde";
+
 
 const Routes = () =>{
 
@@ -26,7 +30,11 @@ const Routes = () =>{
                     <Route exact path="/AjouterObjetPerdu" render={() => <AjouterObjet objet={'perdu'}/>} />
                     <Route exact path="/AjouterObjetTrouve" render={() => <AjouterObjet objet={'trouve'}/>} />
                     <Route exact path="/ObjetsMatche/:idObjet" component={ObjetsMatche} />
-                    <Route exact path="/ChercherObjetPerdu" component={ChercherObjetPerdu} /> 
+                    <Route exact path="/ChercherObjetPerdu" component={ChercherObjetPerdu} />
+                    <Route exact path="/Agenda/:idObjetmatche/:firstUser/:secondUser" component={Agenda} />
+                    <Route exact path="/Mesrdv" component={MesRdv} />
+                    <Route exact path="/MonSolde" component={MonSolde} />
+
                 </Switch> : 
                 <Switch>
                     <Route exact path="/" component={App} />

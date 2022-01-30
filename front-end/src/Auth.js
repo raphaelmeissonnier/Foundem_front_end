@@ -15,7 +15,7 @@ const Auth = () => {
         //On vérifie que l'user est connecté
         let response = await fetch('/authId');
         let data = await response.json();
-        setUserId(data.id);
+        setUserId(data.id_utilisateur);
         console.log("Response /authId: ", data);
 
         //Si l'user est connecté alors on récupère ses informations et on les stocke (Redux)

@@ -48,12 +48,12 @@ const ObjetsMatche = (props) => {
                     <tbody>
                     {items.map(item => {
                         return(
-                            <tr style={trChildStyle} key={item.id}>
+                            <tr style={trChildStyle} key={item.id_objet}>
                                 <td style={tdStyle}>{_.capitalize(item.intitule)}</td>
                                 <td style={tdStyle}>{_.capitalize(item.description)}</td>
-                                <td style={tdStyle}>{_.capitalize(item.categorie)}</td>
-                                <td style={tdStyle}>{moment(item.date).format("L")}</td>
-                                <td style={tdStyle}><button onClick={handleMatch} value={item.id}>Matcher</button></td>
+                                <td style={tdStyle}>{_.capitalize(item.intitule_categorie)}</td>
+                                <td style={tdStyle}>{moment(item.dates).format("L")}</td>
+                                <td style={tdStyle}><button onClick={handleMatch} value={item.id_objet}>Matcher</button></td>
                                 { iscreated ? <Redirect to = "/" /> : console.log("not redirect")}
                             </tr>
                         );
@@ -74,8 +74,9 @@ const ObjetsMatche = (props) => {
     }
 
     async function createMatch(id_objet_p) {
+        console.log(id_objet_p);
       if(id_objet_p){
-        console.log("Id Objet P",id_objet_p)
+          console.log("Id Objet P",id_objet_p)
         const requestOptions = {
             port: 3001,
             method: 'POST',

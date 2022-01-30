@@ -23,7 +23,7 @@ const SuggestionObjetPerdu = (props) => {
     console.log("latitude", latitude);
 
     useEffect(async () => {
-        let responseSugg = await fetch("/objetsperdus/notUser/"+userId);
+        let responseSugg = await fetch("/objetsperdus/suggestions/"+userId);
         let dataSugg = await responseSugg.json();
         console.log("SuggestionObjetPerdu - apres le fetch: ",dataSugg)
 
