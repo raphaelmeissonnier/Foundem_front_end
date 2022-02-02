@@ -32,9 +32,7 @@ const Auth = () => {
     return (
         <UserContext.Provider value={userId}>
             <Router forceRefresh={true}>
-                <Header />
                 <Routes />
-                <Footer />
             </Router>
         </UserContext.Provider>
     );

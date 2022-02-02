@@ -1,12 +1,7 @@
+/*
 import React, { useState,useEffect } from "react";
-import Map from "./Map";
-import { Layers, TileLayer, VectorLayer } from "./Layers";
-import { Style, Icon } from "ol/style";
-import Feature from "ol/Feature";
-import Point from "ol/geom/Point";
-import { osm, vector,cluster } from "./Source";
+import Map from "./MapboxMap/Map";
 import { fromLonLat } from "ol/proj";
-import { Controls, FullScreenControl } from "./Controls";
 import marker from "./images/marker.svg"
 import { styled } from '@material-ui/core/styles';
 import {FormControlLabel, FormLabel, Paper, Radio, RadioGroup} from '@material-ui/core';
@@ -110,15 +105,7 @@ const MyMap = (props) => {
       <Stack direction="row" spacing={2} >
           <Item elevation={8} style={{width:'70%', marginLeft:'10px', marginRight:'10px', marginBottom:'10px', marginTop:'10px', textAlign:'center'}}>
               <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20}}>Résultats: <b>{items.length}</b> objets proches de votre localisation</FormLabel>
-              <Map center={fromLonLat(center)} zoom={zoom}>
-                  <Layers>
-                      <TileLayer source={osm()} zIndex={0} />
-                      {features.length>0 && <VectorLayer source={cluster(test)} />}
-                  </Layers>
-                  <Controls>
-                      <FullScreenControl />
-                  </Controls>
-              </Map>
+              <Map />
               <div style={{flexDirection:"row", display:'flex', alignItems:'center', justifyContent:'center' }}>
                   <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20, marginRight:"5px"}}>Dans un rayon de</FormLabel>
                   <RadioGroup onChange={_handleRayonChange} value={rayon} row>
@@ -138,4 +125,4 @@ const MyMap = (props) => {
   );
 };
 
-export default MyMap;
+export default MyMap;*/

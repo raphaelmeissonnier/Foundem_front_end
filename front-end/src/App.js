@@ -1,8 +1,8 @@
 import React from "react";
-import MyMap from "./MyMap";
 import {CircularProgress, Button} from '@material-ui/core';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import { Alert } from "@mui/material";
+import Map from "./MapboxMap/Map";
 
 class App extends React.Component {
 
@@ -71,8 +71,8 @@ envoyerLocalisation = () =>
       <div>
         {this.state.longitude > 0 && this.state.latitude > 0 ?
             <div>
-              <Button variant="contained" size={"small"} startIcon={<GpsFixedIcon/>} style={{ position:'absolute', marginLeft:'56%', marginTop:"40px"}} onClick={this.envoyerLocalisation}>Centrer</Button>
-              <MyMap longitude={this.state.longitude} latitude={this.state.latitude}/>
+              {/*<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/>*/}
+              <Map />
             </div>
             :
             <div style={{
