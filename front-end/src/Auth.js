@@ -34,7 +34,7 @@ const Auth = () => {
             <Router forceRefresh={true}>
                 <Header />
                 <Routes />
-                <Footer />
+                {/*<Footer />*/}
             </Router>
         </UserContext.Provider>
     );
