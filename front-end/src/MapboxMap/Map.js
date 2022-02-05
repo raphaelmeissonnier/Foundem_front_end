@@ -15,14 +15,14 @@ const {config} = require('../config');
 mapboxgl.accessToken = config.MY_API_TOKEN;
 
 
-const Map = () => {
+const Map = (props) => {
 
     const mapContainer = useRef(null);
     const [map,setMap] = useState(null);
     const [lng, setLng] = useState(2.21);
     const [lat, setLat] = useState(48.90);
-    const [longUser, setLongUser] = useState(null);
-    const [latUser, setLatUser] = useState(null);
+    const [longUser, setLongUser] = useState(props.longitude);
+    const [latUser, setLatUser] = useState(props.latitude);
     const [zoom, setZoom] = useState(10);
     const [rayon, setRayon] = useState(100);
 
@@ -33,18 +33,20 @@ const Map = () => {
     const [features] = useState([]);
     const [changed, setChanged] = useState(1);
 
-    if ("geolocation" in navigator) { 
+    
+   /* if ("geolocation" in navigator) { 
         navigator.geolocation.getCurrentPosition(position => { 
             console.log(position.coords.latitude, position.coords.longitude); 
             setLongUser(position.coords.longitude);
             setLatUser(position.coords.latitude);
         }); 
-    } else { /* geolocation IS NOT available, handle it */ }
-
+        } else {   }*/
     
     useEffect(() => {
+
        
-        //if (map) return; // initialize map only once
+
+        if (map) return; // initialize map only once
         if(longUser && latUser){
             const map = new mapboxgl.Map({
                 container: mapContainer.current,
@@ -134,7 +136,6 @@ const Map = () => {
         setRayon(e.target.value);
         console.log("Rayon:", rayon);
     }
-
     const Item = styled(Paper)(({ theme }) => ({}));*/
 
     return (
@@ -159,11 +160,8 @@ const Map = () => {
                             </RadioGroup>
                         </div>
                     </Item>
-
                     {longUser > 0 && latUser > 0 ? <SuggestionObjetPerdu longitude={longUser} latitude={latUser} /> : null }
-
                 </Stack>
-
             </div>*/}
         </div>
     );
