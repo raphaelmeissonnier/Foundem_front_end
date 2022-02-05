@@ -1,5 +1,6 @@
 
 import { width } from '@mui/system';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 import React, { useRef, useEffect, useState } from 'react';
 const {config} = require('../config');
@@ -11,9 +12,9 @@ const Map = () => {
 
     const mapContainer = useRef(null);
     const map = useRef(null);
-    const [lng, setLng] = useState(-70.9);
-    const [lat, setLat] = useState(42.35);
-    const [zoom, setZoom] = useState(9);
+    const [lng, setLng] = useState(2.21);
+    const [lat, setLat] = useState(48.90);
+    const [zoom, setZoom] = useState(12);
 
     
     useEffect(() => {
@@ -24,7 +25,7 @@ const Map = () => {
             style: 'mapbox://styles/mapbox/streets-v11',
             center: [lng, lat],
             zoom: zoom,
-            width:200
+            width: 30000
         });
         map.current.on('move', () => {
             setLng(map.current.getCenter().lng.toFixed(4));
@@ -53,6 +54,7 @@ const Map = () => {
 
     return (
         <div>
+            <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
             <div className="sidebar">
             Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </div>
