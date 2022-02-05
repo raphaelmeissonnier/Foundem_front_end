@@ -1,0 +1,8 @@
+.marker {
+    background-size: cover;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    cursor: pointer;
+  }

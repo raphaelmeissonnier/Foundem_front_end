@@ -1,6 +1,7 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 import React, { useRef, useEffect, useState } from 'react';
+import './Map.css'
 import { fromLonLat } from "ol/proj";
 //import marker from "./images/marker.svg"
 import { styled } from '@material-ui/core/styles';
@@ -41,7 +42,7 @@ const Map = () => {
     } else { /* geolocation IS NOT available, handle it */ }
 
     
-    useEffect(async() => {
+    useEffect(() => {
        
         if (map.current) return; // initialize map only once
         else if(longUser && latUser){
@@ -78,6 +79,28 @@ const Map = () => {
                
     }, [rayon]);
 
+    function ajoutMarkers(map,tabObjets){
+        for(var i=0; i< tabObjets.length;i++){
+            const el = document.createElement("div");
+            el.className = "marker ";
+            console.log("Longitude Marker ",tabObjets[i][0].localisation.position.longitude)
+            console.log("Latitude Marker ",tabObjets[i][0].localisation.position.latitude)
+            new mapboxgl.Marker(el)
+                .setLngLat([tabObjets[i][0].localisation.position.longitude,tabObjets[i][0].localisation.position.longitude])
+                .setPopup(
+                    new mapboxgl.Popup({ offset: 25 }) // add popups
+                        .setHTML(
+                            `<h5><b>Intitulé : ${tabObjets[i][0].intitule}</b></h5>
+                            <p>Description : ${tabObjets[i][0].description}</p>
+                            <p>Le <b>${tabObjets[i][0].date}</b></p>` 
+                        )
+                )
+                .addTo(map);
+        }
+        console.log("Markers crées")
+
+    }
+
 
     //Au chargement de la page, on récupère les objets perdus et trouvés depuis le back
     useEffect(async () => {
@@ -101,6 +124,12 @@ const Map = () => {
         setChanged(changed+1);
         }
     }, [rayon]);
+
+    useEffect( async() =>{
+        console.log("2ème UseEffect - On vide items2");
+        await ajoutMarkers(map.current,items)
+  
+    }, [items])
 
     /*function _handleRayonChange(e)
     {
