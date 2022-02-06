@@ -7,7 +7,7 @@
     cursor: pointer;
   }
 
-  .sidebar {
+.sidebar {
     background-color: rgba(35, 55, 75, 0.9);
     color: #fff;
     padding: 6px 12px;
@@ -18,4 +18,16 @@
     left: 0;
     margin: 12px;
     border-radius: 4px;
-    }
+}
+
+#instructions {
+    position: absolute;
+    margin: 20px;
+    width: 50%;
+    top: 20;
+    bottom: 20%;
+    padding: 20px;
+    background-color: #fff;
+    overflow-y: scroll;
+    font-family: sans-serif;
+}

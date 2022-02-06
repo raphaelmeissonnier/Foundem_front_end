@@ -85,10 +85,9 @@ const Map = (props) => {
                             <p>Le <b>${tabObjets[i][0].date}</b></p>`;
             const divElement = document.createElement('div');
             const assignBtn = document.createElement('div');
-            assignBtn.innerHTML = `<button class="btn btn-success btn-simple text-white" > Assign</button>`;
+            assignBtn.innerHTML = `<center><button class="btn btn-success btn-simple text-white" > Y Aller !</button></center>`;
             divElement.innerHTML = innerHtmlContent;
             divElement.appendChild(assignBtn);
-// btn.className = 'btn';
             assignBtn.addEventListener('click', (e) => {
                 console.log('Button clicked: ', tab);
                 getTrajet(tab, map);
@@ -103,83 +102,90 @@ const Map = (props) => {
                 .setPopup(
                     new mapboxgl.Popup({ offset: 25 }) // add popups
                         .setDOMContent(divElement)
-                        /*.setHTML(
-                            `<h3><b>Intitulé : ${tabObjets[i][0].intitule}</b></h3>
-                            <p>Description : ${tabObjets[i][0].description}</p>
-                            <p>Le <b>${tabObjets[i][0].date}</b></p>
-                        )*/
                 )
                 .addTo(map);
         }
-        /*onclick="${}"*/
-        async function getTrajet(objet,map){
-                console.log("getTrajet");
-            const rep = await fetch('https://api.mapbox.com/directions/v5/mapbox/driving/'+longUser+','+latUser+';'+objet.localisation.position.longitude+','+objet.localisation.position.latitude+'?geometries=geojson&access_token='+config.MY_API_TOKEN);
-            const json = await rep.json();
-            const data = json.routes[0];
-            const route = data.geometry.coordinates;
-            const geojson = {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                  type: 'LineString',
-                  coordinates: route
-                }
-            }
-            console.log("getRoutes objet", objet)
-            console.log("getRoutes data", data)
-            if (map.getSource('route')) {
-                map.getSource('route').setData(geojson);
-            }
-            else {
-                map.addLayer({
-                  id: 'route',
-                  type: 'line',
-                  source: {
-                    type: 'geojson',
-                    data: geojson
-                  },
-                  layout: {
-                    'line-join': 'round',
-                    'line-cap': 'round'
-                  },
-                  paint: {
-                    'line-color': '#3887be',
-                    'line-width': 5,
-                    'line-opacity': 0.75
-                  }
-                });
+    }
+
+    async function getTrajet(objet,map){
+        console.log("getTrajet");
+        const rep = await fetch('https://api.mapbox.com/directions/v5/mapbox/driving/'+longUser+','+latUser+';'+objet.localisation.position.longitude+','+objet.localisation.position.latitude+'?steps=true&geometries=geojson&access_token='+config.MY_API_TOKEN);
+        const json = await rep.json();
+        const data = json.routes[0];
+        const steps = data.legs[0].steps;
+        const route = data.geometry.coordinates;
+        const geojson = {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+                type: 'LineString',
+                coordinates: route
             }
         }
-            console.log("Markers crées")
-
+        console.log("getRoutes objet", objet)
+        console.log("getRoutes data", data)
+        if (map.getSource('route')) {
+            map.getSource('route').setData(geojson);
         }
-
-
-
-
-            //Au chargement de la page, on récupère les objets perdus et trouvés depuis le back
-            useEffect(async () => {
-                if(longUser && latUser && rayon){
-                //On récupère les objets perdus
-                let response_perdu = await fetch("/objetsperdus/"+longUser+"/"+latUser+"/"+rayon);
-                let data_perdu = await response_perdu.json();
-
-                //On récupère les objets trouvés
-                let response_trouve = await fetch("/objetstrouves/"+longUser+"/"+latUser+"/"+rayon);
-                let data_trouve = await response_trouve.json();
-
-                console.log("MyMap.js - data_perdu",data_perdu)
-                console.log("MyMap.js - data_trouve",data_trouve);
-
-                //Concaténation des tableaux d'objets trouvés et perdus
-                var objets_concat = data_perdu.concat(data_trouve);
-                console.log("MyMap.js - Objets_concat: ", objets_concat);
-                setItems(objets_concat);
-                console.log("MyMap.js - items: ", items);
-                setChanged(changed+1);
+        else {
+            map.addLayer({
+                id: 'route',
+                type: 'line',
+                source: {
+                type: 'geojson',
+                data: geojson
+                },
+                layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+                },
+                paint: {
+                'line-color': '#3887be',
+                'line-width': 5,
+                'line-opacity': 0.75
                 }
-            }, [rayon]);
+            });
+        }
+        const instructions = document.getElementById('instructions');
+        
+        let tripInstructions = '';
+        for (const step of steps) {
+            tripInstructions += `<li>${step.maneuver.instruction}</li>`;
+        }
+        instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
+            data.duration / 60
+            )} min 🚴 </strong></p><ol>${tripInstructions}</ol>`;
+
+        console.log("Markers crées",tripInstructions)
+    }
+        
+
+
+
+
+
+    //Au chargement de la page, on récupère les objets perdus et trouvés depuis le back
+    useEffect(async () => {
+        if(longUser && latUser && rayon){
+        //On récupère les objets perdus
+        let response_perdu = await fetch("/objetsperdus/"+longUser+"/"+latUser+"/"+rayon);
+        let data_perdu = await response_perdu.json();
+
+        //On récupère les objets trouvés
+        let response_trouve = await fetch("/objetstrouves/"+longUser+"/"+latUser+"/"+rayon);
+        let data_trouve = await response_trouve.json();
+
+        console.log("MyMap.js - data_perdu",data_perdu)
+        console.log("MyMap.js - data_trouve",data_trouve);
+
+        //Concaténation des tableaux d'objets trouvés et perdus
+        var objets_concat = data_perdu.concat(data_trouve);
+        console.log("MyMap.js - Objets_concat: ", objets_concat);
+        setItems(objets_concat);
+        console.log("MyMap.js - items: ", items);
+        setChanged(changed+1);
+        }
+    }, [rayon]);
 
             /*function _handleRayonChange(e)
             {
@@ -194,6 +200,7 @@ const Map = (props) => {
             <div className="sidebar">
             Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </div>
+            <div id="instructions"></div>
             <div style={{height:'500px', width:'800px'}}className="map-container" ref={mapContainer} />
             {/*<div>
                 <Stack direction="row" spacing={2} >
