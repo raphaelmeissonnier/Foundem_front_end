@@ -17,8 +17,29 @@
 
   "suggestionObjetPerdu": {
     "title": "Help us to find these items",
-    "lostOn": "Lost on",
+    "lostOn": "Lost on ",
     "foundIt": "I found it !"
-  }
+  },
+
+  "ajoutObjet": {
+    "name": "Name:",
+    "description": "Description:",
+    "category": "Category:",
+    "chooseCategory": "Choose a category",
+    "wallet": "Wallet & credit card",
+    "documents": "Official papers & documents",
+    "bags": "Bags & Luggages",
+    "hightech": "High-tech",
+    "kidsItems": "Children's items",
+    "clothes": "Clothes",
+    "personnalItems": "Personal items",
+    "date": "Date:",
+    "address": "Address:",
+    "radius": "Radius:",
+    "chooseRadius": "Choose a radius",
+    "send": "Save"
+  },
+
+
 
 }

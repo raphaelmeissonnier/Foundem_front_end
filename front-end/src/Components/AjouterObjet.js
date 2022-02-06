@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import {Redirect} from "react-router-dom";
 import {UserContext} from "./UserContext";
 import * as moment from 'moment';
+import i18n from '../Translation/i18n';
 
 const {config} = require('../config');
 const mapboxApiKey = config.MY_API_TOKEN;
@@ -32,7 +33,7 @@ const AjouterObjet =({objet}) =>{
         rayon: Yup.number().when("showRayon", {is: 'perdu', then: Yup.number().required("Veuillez saisir ce champs")}),
     })
 
-    //FAIRE ATTENTION A RAYON PEUT ETRE SOURCE DE CONFLIT DANS LE CAS DE L'AJOUT D'UN OBJET TROUVE
+    //Valures initiales des champs du formulaire
     const initialValues = {
         intitule: "",
         description: "",
@@ -42,7 +43,7 @@ const AjouterObjet =({objet}) =>{
         showRayon: objet
     }
 
-    //FAIRE ATTENTION A QUAND UNE FOIS L'OBJET PERDU AJOUTER EST TERMINEE
+    //Envoie des données vers back end après validation des données saisies
     function onSubmit(values){
         console.log("On entre dans la fonction onSubmit")
         if(userId)

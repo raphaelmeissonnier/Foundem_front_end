@@ -18,7 +18,26 @@
 
   "suggestionObjetPerdu": {
     "title": "Aidez nous à retrouver ces objets",
-    "lostOn": "Perdu le",
+    "lostOn": "Perdu le ",
     "foundIt": "Je l'ai trouvé !"
+  },
+
+  "ajoutObjet": {
+    "name": "Intitulé:",
+    "description": "Description:",
+    "category": "Catégorie:",
+    "chooseCategory": "Choisir une catégorie",
+    "wallet": "Portefeuille & CB",
+    "documents": "Papiers & documents officiels",
+    "bags": "Sacs & Bagages",
+    "hightech": "Electronique",
+    "kidsItems": "Affaires d'enfants",
+    "clothes": "Vêtements",
+    "personnalItems": "Effets personnels",
+    "date": "Date:",
+    "address": "Adresse:",
+    "radius": "Rayon:",
+    "chooseRadius": "Choisir un rayon",
+    "send": "Valider"
   }
 }
