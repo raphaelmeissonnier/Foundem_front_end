@@ -1,8 +1,4 @@
 {
-  "description": {
-    "part1": "Edit <1>src/App.js</1> and save to reload.",
-    "part2": "Learn React"
-  },
   "header": {
     "lostItem": "I have lost an item",
     "foundItem": "I found an Item",
@@ -68,7 +64,22 @@
     "decline": "Decline",
     "myLostItems": "My lost items",
     "myFoundItems": "My found items"
-  }
+  },
 
+  "monSolde": {
+    "myBalance": "My balance:",
+    "convertPoints": "Unlock a reward"
+  },
+
+  "objetsMatche": {
+    "match": "Link",
+    "title": "Linking page",
+    "lostItems": "Your lost items:"
+  },
+
+  "agenda": {
+    "calendar": "Calendar",
+    "addRdv": "Add an appointment"
+  }
 
 }

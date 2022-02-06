@@ -1,9 +1,4 @@
 {
-  "description": {
-    "part1": "Modifier et enregistrer pour rafraîchir.",
-    "part2": "Apprendre React"
-  },
-
   "header": {
     "lostItem": "J'ai perdu un objet",
     "foundItem": "J'ai trouvé un objet",
@@ -69,5 +64,21 @@
     "decline": "Refuser",
     "myLostItems": "Mes objets perdus",
     "myFoundItems": "Mes objets trouvés"
+  },
+
+  "monSolde": {
+    "myBalance": "Mon solde:",
+    "convertPoints": "Débloquer une récompense"
+  },
+
+  "objetsMatche": {
+    "match": "Matcher",
+    "title": "Page de matching",
+    "lostItems": "Vos objets perdus:"
+  },
+
+  "agenda": {
+    "calendar": "Calendrier",
+    "addRdv": "Ajouter un rendez-vous"
   }
 }
