@@ -1,11 +1,12 @@
 import React, { useState,useEffect,useContext } from "react";
 import {UserContext} from "./UserContext";
 import {styled} from "@material-ui/core/styles";
-import {Card, List, Paper} from "@material-ui/core";
+import {Card, Paper} from "@material-ui/core";
 import {CardContent, FormLabel, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import _ from "lodash";
 import {Link} from "react-router-dom";
+import i18 from "../Translation/i18n";
 
 const moment = require('moment')
 const {config} = require('../config');
@@ -44,7 +45,7 @@ const SuggestionObjetPerdu = (props) => {
     return(
         <Item elevation={8} style={{width:'30%', marginLeft:'10px', marginRight:'10px', marginBottom:'10px', marginTop:'10px'}}>
             <div style={{textAlign:'center'}}>
-                <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20, marginTop:'5px'}}>Aidez nous à retrouver ces objets</FormLabel>
+                <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20, marginTop:'5px'}}>{i18.t('suggestionObjetPerdu.title')}</FormLabel>
             </div>
             {items2.length>0 ? items2.map(item =>{
                 return(
@@ -53,9 +54,9 @@ const SuggestionObjetPerdu = (props) => {
                             <CardContent>
                                 <Typography style={{color:'black', fontFamily:'Arvo', fontSize:18, fontStyle:'bold'}}>{_.capitalize(item[0].intitule)}</Typography>
                                 <Typography style={{color:'black', fontFamily:'Arvo', fontSize:15}}>{(item[0].description) }</Typography>
-                                <Typography style={{color:'black', fontFamily:'Arvo', fontSize:15}}>Perdu le {(moment(item[0].date).format('DD/MM/YYYY'))}</Typography>
+                                <Typography style={{color:'black', fontFamily:'Arvo', fontSize:15}}>{i18.t('suggestionObjetPerdu.lostOn')} {(moment(item[0].date).format('DD/MM/YYYY'))}</Typography>
                                 <Typography style={{color:'black', fontFamily:'Arvo', fontSize:15}}>{(item[1])}</Typography>
-                                <Link to="/ChercherObjetPerdu"><Button variant="contained" color="primary" style={{marginTop:'5px', float:'right', marginBottom:'10px'}}>Je l'ai trouvé !</Button></Link>
+                                <Link to="/ChercherObjetPerdu"><Button variant="contained" color="primary" style={{marginTop:'5px', float:'right', marginBottom:'10px'}}>{i18.t('suggestionObjetPerdu.foundIt')}</Button></Link>
                             </CardContent>
                         </Card>
                     </div>

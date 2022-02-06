@@ -13,7 +13,6 @@ import {UserContext} from "../Components/UserContext";
 import Agenda from "../Components/Agenda";
 import MesRdv from "../Components/MesRdv";
 import MonSolde from "../Components/MonSolde";
-import Traduction from "../Components/Traduction"
 
 const Routes = () =>{
 
@@ -33,13 +32,11 @@ const Routes = () =>{
                     <Route exact path="/Agenda/:idObjetmatche/:firstUser/:secondUser" component={Agenda} />
                     <Route exact path="/Mesrdv" component={MesRdv} />
                     <Route exact path="/MonSolde" component={MonSolde} />
-                    <Route exact path="/Traduction" component={Traduction} />
-                </Switch> : 
+                </Switch> :
                 <Switch>
                     <Route exact path="/" component={App} />
                     <Route exact path="/Inscription" component={Inscription} />
                     <Route exact path="/Login" component={Login} />
-                    <Route exact path="/Traduction" component={Traduction} />
                 </Switch>
             }
                 

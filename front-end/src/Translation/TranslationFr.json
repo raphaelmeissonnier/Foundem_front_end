@@ -1,0 +1,24 @@
+{
+  "description": {
+    "part1": "Modifier et enregistrer pour rafraîchir.",
+    "part2": "Apprendre React"
+  },
+
+  "header": {
+    "lostItem": "J'ai perdu un objet",
+    "foundItem": "J'ai trouvé un objet",
+    "searchItem": "Rechercher un objet",
+    "myItems": "Mes objets",
+    "myRdv": "Mes rendez-vous",
+    "myBalance": "Mon solde",
+    "logout": "Deconnexion",
+    "registration": "Inscription",
+    "login": "Connexion"
+  },
+
+  "suggestionObjetPerdu": {
+    "title": "Aidez nous à retrouver ces objets",
+    "lostOn": "Perdu le",
+    "foundIt": "Je l'ai trouvé !"
+  }
+}

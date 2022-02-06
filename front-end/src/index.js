@@ -10,7 +10,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import Footer from "./Components/Footer";
-import './Config/i18n';
+import './Translation/i18n';
 
 
 const store = createStore(

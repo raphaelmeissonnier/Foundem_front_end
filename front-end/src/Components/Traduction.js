@@ -1,5 +1,5 @@
 import React from "react";
-import i18 from "../Config/i18n";
+import i18 from "../Translation/i18n";
 
 const Traduction = () =>{
     return (
