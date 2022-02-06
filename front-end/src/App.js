@@ -71,7 +71,6 @@ envoyerLocalisation = () =>
       <div>
         {this.state.longitude > 0 && this.state.latitude > 0 ?
             <div>
-              {/*<MyMap longitude={this.state.longitude} latitude={this.state.latitude}/>*/}
               <Map longitude={this.state.longitude} latitude={this.state.latitude}/>
             </div>
             :
