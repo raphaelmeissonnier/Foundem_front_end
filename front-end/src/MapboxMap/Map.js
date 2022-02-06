@@ -27,24 +27,10 @@ const Map = (props) => {
     const [rayon, setRayon] = useState(100);
 
     const [items, setItems] = useState([]);
-    const [items2] = useState([]);
-    const [itemsInfos] = useState([]);
-    
-    const [features] = useState([]);
     const [changed, setChanged] = useState(1);
-
-    
-   /* if ("geolocation" in navigator) { 
-        navigator.geolocation.getCurrentPosition(position => { 
-            console.log(position.coords.latitude, position.coords.longitude); 
-            setLongUser(position.coords.longitude);
-            setLatUser(position.coords.latitude);
-        }); 
-        } else {   }*/
     
     useEffect(() => {
 
-       
 
         if (map) return; // initialize map only once
         if(longUser && latUser){
@@ -80,6 +66,12 @@ const Map = (props) => {
                 setMap(map); // We declare the map as a State to make it available for every functions.
                 ajoutMarkers(map, items);
             });
+
+            map.on('click', 'marker', ()=>{
+                map.getCanvas().style.cursor = 'pointer'
+            })
+
+            
         }
         
                
@@ -98,14 +90,57 @@ const Map = (props) => {
                         .setHTML(
                             `<h3><b>Intitulé : ${tabObjets[i][0].intitule}</b></h3>
                             <p>Description : ${tabObjets[i][0].description}</p>
-                            <p>Le <b>${tabObjets[i][0].date}</b></p>` 
+                            <p>Le <b>${tabObjets[i][0].date}</b></p>
+                            <center><button onClick="${() => getTrajet(tabObjets[i][0],map)}"> Y aller !</button></center>` 
+
                         )
                 )
                 .addTo(map);
         }
+
+    async function getTrajet(objet,map){
+        const rep = await fetch('https://api.mapbox.com/directions/v5/mapbox/driving/'+longUser+','+latUser+';'+objet.localisation.position.longitude+','+objet.localisation.position.latitude+'?geometries=geojson&access_token='+config.MY_API_TOKEN);
+        const json = await rep.json();
+        const data = json.routes[0];
+        const route = data.geometry.coordinates;
+        const geojson = {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'LineString',
+              coordinates: route
+            }
+        }
+        console.log("getRoutes objet", objet)
+        console.log("getRoutes data", data)
+        if (map.getSource('route')) {
+            map.getSource('route').setData(geojson);
+        }
+        else {
+            map.addLayer({
+              id: 'route',
+              type: 'line',
+              source: {
+                type: 'geojson',
+                data: geojson
+              },
+              layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+              },
+              paint: {
+                'line-color': '#3887be',
+                'line-width': 5,
+                'line-opacity': 0.75
+              }
+            });
+        }      
+    }
         console.log("Markers crées")
 
     }
+
+    
 
 
     //Au chargement de la page, on récupère les objets perdus et trouvés depuis le back
@@ -144,7 +179,7 @@ const Map = (props) => {
             <div className="sidebar">
             Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
             </div>
-            <div style={{height:'400px', width:'800px'}}className="map-container" ref={mapContainer} />
+            <div style={{height:'500px', width:'800px'}}className="map-container" ref={mapContainer} />
             {/*<div>
                 <Stack direction="row" spacing={2} >
                     <Item elevation={8} style={{width:'70%', marginLeft:'10px', marginRight:'10px', marginBottom:'10px', marginTop:'10px', textAlign:'center'}}>
