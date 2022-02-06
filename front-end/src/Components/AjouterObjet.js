@@ -127,7 +127,7 @@ const AjouterObjet =({objet}) =>{
                 validationSchema={validationSchema}
             >
                 <Form className="formContainer">
-                    <label>Intitulé:</label>
+                    <label>{i18n.t('ajoutObjet.name')}</label>
                     <ErrorMessage name="intitule" component="span" />
                     <Field
                         autoComplete="off"
@@ -137,7 +137,7 @@ const AjouterObjet =({objet}) =>{
                     />
                     <br></br>
 
-                    <label>Description:</label>
+                    <label>{i18n.t('ajoutObjet.description')}</label>
                     <ErrorMessage name="description" component="span" />
                     <Field
                         autoComplete="off"
@@ -149,26 +149,26 @@ const AjouterObjet =({objet}) =>{
                     <br></br>
 
                     {/* Effets personnels = clés, lunettes, ...*/}
-                    <label>Catégorie:</label>
+                    <label>{i18n.t('ajoutObjet.category')}</label>
                     <ErrorMessage name="categorie" component="span" />
                     <Field as="select" name="categorie">
-                        <option value="Autres">Choisir une catégorie</option>
-                        <option value="PORTEFEUILLE">Portefeuille & CB</option>
-                        <option value="PAPIERS">Papiers & documents officiels</option>
-                        <option value="BAGAGES">Sacs & Bagages</option>
-                        <option value="ELECTRONIQUE">Electronique</option>
-                        <option value="ENFANTS">Affaires d'enfants</option>
-                        <option value="VETEMENTS">Vêtements</option>
-                        <option value="EFFETS PERSONNELS">Effets personnels</option>
+                        <option value="Autres">{i18n.t('ajoutObjet.chooseCategory')}</option>
+                        <option value="PORTEFEUILLE">{i18n.t('ajoutObjet.wallet')}</option>
+                        <option value="PAPIERS">{i18n.t('ajoutObjet.documents')}</option>
+                        <option value="BAGAGES">{i18n.t('ajoutObjet.bags')}</option>
+                        <option value="ELECTRONIQUE">{i18n.t('ajoutObjet.hightech')}</option>
+                        <option value="ENFANTS">{i18n.t('ajoutObjet.kidsItems')}</option>
+                        <option value="VETEMENTS">{i18n.t('ajoutObjet.clothes')}</option>
+                        <option value="EFFETS PERSONNELS">{i18n.t('ajoutObjet.personnalItems')}</option>
                     </Field>
                     <br></br>
 
-                    <label>Date:</label>
+                    <label>{i18n.t('ajoutObjet.date')}</label>
                     <ErrorMessage name="date" component="span" />
                     <Field type="date" name="date"/>
                     <br></br>
 
-                    <label>Adresse:</label>
+                    <label>{i18n.t('ajoutObjet.address')}</label>
                     <Geocoder
                         mapboxApiAccessToken={mapboxApiKey}
                         hideOnSelect={true}
@@ -182,10 +182,10 @@ const AjouterObjet =({objet}) =>{
 
                     {objet === "perdu" ?(
                         <div>
-                            <label>Rayon:</label>
+                            <label>{i18n.t('ajoutObjet.radius')}</label>
                             <ErrorMessage name="rayon" component="span"/>
                             <Field as="select" name="rayon" placeholder="Choisir un rayon">
-                                <option value="Aucun">Choisir un rayon</option>
+                                <option value="Aucun">{i18n.t('ajoutObjet.chooseRadius')}</option>
                                 <option value="5">5 km</option>
                                 <option value="10">10 km</option>
                                 <option value="15">15 km</option>

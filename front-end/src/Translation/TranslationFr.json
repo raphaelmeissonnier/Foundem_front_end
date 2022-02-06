@@ -39,5 +39,35 @@
     "radius": "Rayon:",
     "chooseRadius": "Choisir un rayon",
     "send": "Valider"
+  },
+
+  "chercherObjet": {
+    "name": "Intitulé",
+    "description": "Description",
+    "category": "Catégorie",
+    "date": "Date",
+    "myItem": "C'est mon objet",
+    "titlePart1": "Rechercher un objet perdu",
+    "titlePart2": "Merci de renseigner un maximum de champs pour pouvoir vous afficher les articles les plus proches de votre description !",
+    "search": "Rechercher"
+  },
+
+  "inscription": {
+    "username": "Username:",
+    "email": "Email:",
+    "password": "Mot de passe:",
+    "signUp": "S'inscrire"
+  },
+
+  "connexion":{
+    "login": "Se connecter"
+  },
+
+  "mesObjets": {
+    "status": "Statut",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "myLostItems": "Mes objets perdus",
+    "myFoundItems": "Mes objets trouvés"
   }
 }

@@ -40,6 +40,35 @@
     "send": "Save"
   },
 
+  "chercherObjet": {
+    "name": "Name",
+    "description": "Description",
+    "category": "Category",
+    "date": "Date",
+    "myItem": "It is my item",
+    "titlePart1": "Search for a lost item",
+    "titlePart2": "Please fill in as many fields as possible so that we can display the items closest to your description !",
+    "search": "Search"
+  },
+
+  "inscription": {
+    "username": "Username:",
+    "email": "Email:",
+    "password": "Password:",
+    "signUp": "Sign up"
+  },
+
+  "connexion":{
+    "login": "Sign in"
+  },
+
+  "mesObjets": {
+    "status": "Status",
+    "accept": "Accept",
+    "decline": "Decline",
+    "myLostItems": "My lost items",
+    "myFoundItems": "My found items"
+  }
 
 
 }

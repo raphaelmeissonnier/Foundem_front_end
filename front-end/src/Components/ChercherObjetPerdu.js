@@ -9,7 +9,7 @@ import * as moment from 'moment';
 import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
-
+import i18n from "../Translation/i18n";
 
 const _ = require("lodash");
 const {config} = require('../config');
@@ -55,10 +55,10 @@ const ChercherObjetPerdu =() =>{
                 <table style={tableStyle}>
                     <thead>
                     <tr style={trHoverStyle}>
-                        <th style={thStyle}>Intitulé</th>
-                        <th style={thStyle}>Description</th>
-                        <th style={thStyle}>Catégorie</th>
-                        <th style={thStyle}>Date</th>
+                        <th style={thStyle}>{i18n.t(chercherObjet.name)}</th>
+                        <th style={thStyle}>{i18n.t(chercherObjet.description)}</th>
+                        <th style={thStyle}>{i18n.t(chercherObjet.category)}</th>
+                        <th style={thStyle}>{i18n.t(chercherObjet.date)}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -69,7 +69,7 @@ const ChercherObjetPerdu =() =>{
                                 <td style={tdStyle}>{_.capitalize(item.description)}</td>
                                 <td style={tdStyle}>{_.capitalize(item.categorie)}</td>
                                 <td style={tdStyle}>{moment(item.date).format("L")}</td>
-                                <td style={tdStyle}><Link to={{pathname: '/ObjetsMatche/'+item.id }}><button>C'est mon objet</button></Link></td>
+                                <td style={tdStyle}><Link to={{pathname: '/ObjetsMatche/'+item.id }}><button>{i18n.t(chercherObjet.myItem)}</button></Link></td>
                             </tr>
                         );
                     })}
@@ -127,13 +127,11 @@ const ChercherObjetPerdu =() =>{
             padding: theme.spacing(2, 4, 3),
             marginLeft: '70vh',
             alignItems: 'center',
-
         },
         title: {
             flexGrow: 1,
             alignItems: 'center',
             textAlign: 'center',
-
         },
     }));
     const classes = useStyles();
@@ -142,10 +140,10 @@ const ChercherObjetPerdu =() =>{
         <div>
             <br></br><br></br><br></br><br></br><br></br>
 
-            <h1 className={classes.title} > Rechercher un objet perdu </h1>
+            <h1 className={classes.title}> {i18n.t(chercherObjet.titlePart1)} </h1>
             <br></br>
             <center>
-                <p>Merci de renseigner un maximum de champs pour pouvoir vous afficher les articles les plus proches de votre description !</p>
+                <p>{i18n.t(chercherObjet.titlePart2)}</p>
             </center>
             <br></br>
 
@@ -155,7 +153,7 @@ const ChercherObjetPerdu =() =>{
                 validationSchema={validationSchema}
             >
                 <Form className="formContainer">
-                    <label>Intitulé:</label>
+                    <label>{i18n.t(ajoutObjet.name)}</label>
                     <ErrorMessage name="intitule" component="span" />
                     <Field
                         autoComplete="off"
@@ -166,25 +164,25 @@ const ChercherObjetPerdu =() =>{
                     <br></br>
 
                     {/* Effets personnels = clés, lunettes, ...*/}
-                    <label>Catégorie:</label>
+                    <label>{i18n.t(ajoutObjet.category)}</label>
                     <Field as="select" name="categorie">
-                        <option value="Autres">Choisir une catégorie</option>
-                        <option value="PORTEFEUILLE">Portefeuille & CB</option>
-                        <option value="PAPIERS">Papiers & documents officiels</option>
-                        <option value="BAGAGES">Sacs & Bagages</option>
-                        <option value="ELECTRONIQUE">Electronique</option>
-                        <option value="ENFANTS">Affaires d'enfants</option>
-                        <option value="VETEMENTS">Vêtements</option>
-                        <option value="EFFETS PERSONNELS">Effets personnels</option>
+                        <option value="Autres">{i18n.t(ajoutObjet.chooseCategory)}</option>
+                        <option value="PORTEFEUILLE">{i18n.t(ajoutObjet.wallet)}</option>
+                        <option value="PAPIERS">{i18n.t(ajoutObjet.documents)}</option>
+                        <option value="BAGAGES">{i18n.t(ajoutObjet.bags)}</option>
+                        <option value="ELECTRONIQUE">{i18n.t(ajoutObjet.hightech)}</option>
+                        <option value="ENFANTS">{i18n.t(ajoutObjet.kidsItems)}</option>
+                        <option value="VETEMENTS">{i18n.t(ajoutObjet.clothes)}</option>
+                        <option value="EFFETS PERSONNELS">{i18n.t(ajoutObjet.personnalItems)}</option>
                     </Field>
                     <br></br>
 
-                    <label>Date:</label>
+                    <label>{i18n.t(ajoutObjet.date)}</label>
                     <ErrorMessage name="date" component="span" />
                     <Field type="date" name="date"/>
                     <br></br>
 
-                    <label>Adresse:</label>
+                    <label>{i18n.t(ajoutObjet.address)}</label>
                     <Geocoder
                         mapboxApiAccessToken={mapboxApiKey}
                         hideOnSelect={true}
@@ -196,7 +194,7 @@ const ChercherObjetPerdu =() =>{
                     />
                     <br></br>
 
-                    <button type="submit">Rechercher</button>
+                    <button type="submit">{i18n.t(chercherObjet.search)}</button>
                 </Form>
             </Formik>
 
