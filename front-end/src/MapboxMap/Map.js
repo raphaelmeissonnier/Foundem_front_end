@@ -5,7 +5,7 @@ import './Map.css'
 import { fromLonLat } from "ol/proj";
 //import marker from "./images/marker.svg"
 import { styled } from '@material-ui/core/styles';
-import {FormControlLabel, FormLabel, Paper, Radio, RadioGroup} from '@material-ui/core';
+import {FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Button} from '@material-ui/core';
 import Stack from '@mui/material/Stack';
 import SuggestionObjetPerdu from '../Components/SuggestionObjetPerdu';
 
@@ -79,99 +79,114 @@ const Map = (props) => {
 
     async function ajoutMarkers(map,tabObjets){
         for(var i=0; i< tabObjets.length;i++){
+            const tab = tabObjets[i][0];
+            const innerHtmlContent = `<h3><b>Intitulé : ${tabObjets[i][0].intitule}</b></h3>
+                            <p>Description : ${tabObjets[i][0].description}</p>
+                            <p>Le <b>${tabObjets[i][0].date}</b></p>`;
+            const divElement = document.createElement('div');
+            const assignBtn = document.createElement('div');
+            assignBtn.innerHTML = `<button class="btn btn-success btn-simple text-white" > Assign</button>`;
+            divElement.innerHTML = innerHtmlContent;
+            divElement.appendChild(assignBtn);
+// btn.className = 'btn';
+            assignBtn.addEventListener('click', (e) => {
+                console.log('Button clicked: ', tab);
+                getTrajet(tab, map);
+            });
+
             const el = document.createElement("div");
-            el.className = "marker ";
+            el.className = "marker";
             console.log("Longitude Marker ",tabObjets[i][0].localisation.position.longitude)
             console.log("Latitude Marker ",tabObjets[i][0].localisation.position.latitude)
             new mapboxgl.Marker(el)
                 .setLngLat([tabObjets[i][0].localisation.position.longitude,tabObjets[i][0].localisation.position.latitude])
                 .setPopup(
                     new mapboxgl.Popup({ offset: 25 }) // add popups
-                        .setHTML(
+                        .setDOMContent(divElement)
+                        /*.setHTML(
                             `<h3><b>Intitulé : ${tabObjets[i][0].intitule}</b></h3>
                             <p>Description : ${tabObjets[i][0].description}</p>
                             <p>Le <b>${tabObjets[i][0].date}</b></p>
-                            <center><button onClick="${() => getTrajet(tabObjets[i][0],map)}"> Y aller !</button></center>` 
-
-                        )
+                        )*/
                 )
                 .addTo(map);
         }
-
-    async function getTrajet(objet,map){
-        const rep = await fetch('https://api.mapbox.com/directions/v5/mapbox/driving/'+longUser+','+latUser+';'+objet.localisation.position.longitude+','+objet.localisation.position.latitude+'?geometries=geojson&access_token='+config.MY_API_TOKEN);
-        const json = await rep.json();
-        const data = json.routes[0];
-        const route = data.geometry.coordinates;
-        const geojson = {
-            type: 'Feature',
-            properties: {},
-            geometry: {
-              type: 'LineString',
-              coordinates: route
+        /*onclick="${}"*/
+        async function getTrajet(objet,map){
+                console.log("getTrajet");
+            const rep = await fetch('https://api.mapbox.com/directions/v5/mapbox/driving/'+longUser+','+latUser+';'+objet.localisation.position.longitude+','+objet.localisation.position.latitude+'?geometries=geojson&access_token='+config.MY_API_TOKEN);
+            const json = await rep.json();
+            const data = json.routes[0];
+            const route = data.geometry.coordinates;
+            const geojson = {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                  type: 'LineString',
+                  coordinates: route
+                }
+            }
+            console.log("getRoutes objet", objet)
+            console.log("getRoutes data", data)
+            if (map.getSource('route')) {
+                map.getSource('route').setData(geojson);
+            }
+            else {
+                map.addLayer({
+                  id: 'route',
+                  type: 'line',
+                  source: {
+                    type: 'geojson',
+                    data: geojson
+                  },
+                  layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                  },
+                  paint: {
+                    'line-color': '#3887be',
+                    'line-width': 5,
+                    'line-opacity': 0.75
+                  }
+                });
             }
         }
-        console.log("getRoutes objet", objet)
-        console.log("getRoutes data", data)
-        if (map.getSource('route')) {
-            map.getSource('route').setData(geojson);
+            console.log("Markers crées")
+
         }
-        else {
-            map.addLayer({
-              id: 'route',
-              type: 'line',
-              source: {
-                type: 'geojson',
-                data: geojson
-              },
-              layout: {
-                'line-join': 'round',
-                'line-cap': 'round'
-              },
-              paint: {
-                'line-color': '#3887be',
-                'line-width': 5,
-                'line-opacity': 0.75
-              }
-            });
-        }      
-    }
-        console.log("Markers crées")
-
-    }
-
-    
 
 
-    //Au chargement de la page, on récupère les objets perdus et trouvés depuis le back
-    useEffect(async () => {
-        if(longUser && latUser && rayon){
-        //On récupère les objets perdus
-        let response_perdu = await fetch("/objetsperdus/"+longUser+"/"+latUser+"/"+rayon);
-        let data_perdu = await response_perdu.json();
 
-        //On récupère les objets trouvés
-        let response_trouve = await fetch("/objetstrouves/"+longUser+"/"+latUser+"/"+rayon);
-        let data_trouve = await response_trouve.json();
 
-        console.log("MyMap.js - data_perdu",data_perdu)
-        console.log("MyMap.js - data_trouve",data_trouve);
+            //Au chargement de la page, on récupère les objets perdus et trouvés depuis le back
+            useEffect(async () => {
+                if(longUser && latUser && rayon){
+                //On récupère les objets perdus
+                let response_perdu = await fetch("/objetsperdus/"+longUser+"/"+latUser+"/"+rayon);
+                let data_perdu = await response_perdu.json();
 
-        //Concaténation des tableaux d'objets trouvés et perdus
-        var objets_concat = data_perdu.concat(data_trouve);
-        console.log("MyMap.js - Objets_concat: ", objets_concat);
-        setItems(objets_concat);
-        console.log("MyMap.js - items: ", items);
-        setChanged(changed+1);
-        }
-    }, [rayon]);
+                //On récupère les objets trouvés
+                let response_trouve = await fetch("/objetstrouves/"+longUser+"/"+latUser+"/"+rayon);
+                let data_trouve = await response_trouve.json();
 
-    /*function _handleRayonChange(e)
-    {
-        setRayon(e.target.value);
-        console.log("Rayon:", rayon);
-    }
-    const Item = styled(Paper)(({ theme }) => ({}));*/
+                console.log("MyMap.js - data_perdu",data_perdu)
+                console.log("MyMap.js - data_trouve",data_trouve);
+
+                //Concaténation des tableaux d'objets trouvés et perdus
+                var objets_concat = data_perdu.concat(data_trouve);
+                console.log("MyMap.js - Objets_concat: ", objets_concat);
+                setItems(objets_concat);
+                console.log("MyMap.js - items: ", items);
+                setChanged(changed+1);
+                }
+            }, [rayon]);
+
+            /*function _handleRayonChange(e)
+            {
+                setRayon(e.target.value);
+                console.log("Rayon:", rayon);
+            }
+            const Item = styled(Paper)(({ theme }) => ({}));*/
 
     return (
         <div>
