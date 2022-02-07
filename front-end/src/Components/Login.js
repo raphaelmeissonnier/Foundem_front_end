@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Redirect } from "react-router-dom";
+import i18n from "../Translation/i18n";
 
 
 const Login =() =>{
@@ -43,7 +44,7 @@ const Login =() =>{
              onSubmit={onSubmit}
             >
                 <Form className="formContainer">
-                    <label>Username:</label>
+                    <label>{i18n.t(inscription.username)}</label>
                     <ErrorMessage name="username" component="span" />
                     <Field
                     autoComplete="off"
@@ -52,17 +53,17 @@ const Login =() =>{
                     placeholder="Votre pseudo"
                     />
 
-                    <label> Password:</label>
+                    <label>{i18n.t(inscription.password)}</label>
                     <ErrorMessage name="password" component="span" />
                     <Field
-                    autoComplete="off"
-                    type="password"
-                    id="inputCreatePost"
-                    name="password"
-                    placeholder="Votre mot de passe"
+                        autoComplete="off"
+                        type="password"
+                        id="inputCreatePost"
+                        name="password"
+                        placeholder="Votre mot de passe"
                     />
 
-                    <button type="submit"> Se connecter</button>
+                    <button type="submit">{i18n.t(connexion.login)}</button>
                 </Form>
             </Formik>
 

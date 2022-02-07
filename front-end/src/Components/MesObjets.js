@@ -5,13 +5,11 @@ import {getFoundItems, getLostItems} from "../Actions/ObjetsAction";
 import _ from "lodash";
 import * as moment from "moment";
 import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
-import Chip from '@mui/material/Chip';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
-import Agenda from "./Agenda";
 import {Redirect} from "react-router-dom";
-
+import i18n from "../Translation/i18n";
 
 
 const MesObjets  = () => {
@@ -63,50 +61,6 @@ const MesObjets  = () => {
 
     async function accepter(idObjetTrouve)
     {
-        /*
-        //On récupère l'id de l'objet perdu associé à l'objet trouvé matché
-        const idObjetPerdu = await fetch('/objetsmatche/'+idObjetTrouve)
-            .then(response => response.json()
-                .then(data => (data.result >= 0 ? data.message : data.objetperdu_id)));
-        console.log("Accepter: ", idObjetPerdu);
-
-        //On récupère l'adresse mail de l'utilisateur de l'objet perdu
-        const idUserObjetPerdu = await fetch('/objetsperdus/'+idObjetPerdu)
-            .then(response => response.json()
-                .then(data => (data.result==0 ? data.message : data.user_id)))
-        console.log("Accepter: ", idUserObjetPerdu);
-        const adresseMail = await fetch('/users/'+ idUserObjetPerdu)
-            .then(response => response.json()
-                .then(data => data.email));
-        console.log("Accepter: ", adresseMail);
-
-        //On supprime le match
-        await fetch('/objetsmatche/' + idObjetTrouve, {method: 'DELETE'})
-            .then(response => response.json()
-                .then(data => console.log("Delete match: ", data.message)))
-        */
-        //On met à jour les états des objets perdus et trouvés
-        /*
-        const requestOptions = {
-            port: 3001,
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({etat: 3})
-        };
-        await fetch('/objetsperdus/' + idObjetPerdu, requestOptions)
-            .then(response => response.json()
-                .then(data => console.log("ObjetPerdu MAJ :", data.message)));
-        await fetch('/objetstrouves/' + idObjetTrouve, requestOptions)
-            .then(response => response.json()
-                .then(data => console.log("ObjetTrouve MAJ :", data.message)));
-
-
-
-        /* On affiche l'adresse mail de l'utilisateur de l'objet perdu
-        window.alert("Vous venez d'accepter un match ! Grâce à vous un objet sera restitué à son propriétaire. Voici son adresse mail: "+ adresseMail);
-        window.location.reload(true);
-      */
-
         //On récupère l'id de l'objet matché
         const idObjetMatche = await fetch('/objetsmatche/'+idObjetTrouve)
             .then(response => response.json()
@@ -165,22 +119,6 @@ const MesObjets  = () => {
         window.location.reload(true);
     }
 
-    function translateStatus(etat){
-        if(etat == 1){
-            return <Chip label="Perdu" />
-        }
-        else if(etat == 2){
-            return <Chip label="En cours de Matching" color="info" />
-        }
-        else if(etat == 3){
-            return <Chip label="Matché" color="success" />
-        }
-        else{
-            return "NaN"
-        }
-
-    }
-
     //J'affiche ces objets trouvés selon leur état
     function afficher(items)
     {
@@ -191,11 +129,11 @@ const MesObjets  = () => {
                     <table style={tableStyle}>
                         <thead>
                         <tr style={trHoverStyle}>
-                            <th style={thStyle}>Intitulé</th>
-                            <th style={thStyle}>Description</th>
-                            <th style={thStyle}>Catégorie</th>
-                            <th style={thStyle}>Date</th>
-                            <th style={thStyle}>Statut</th>
+                            <th style={thStyle}>{i18n.t(chercherObjet.name)}</th>
+                            <th style={thStyle}>{i18n.t(chercherObjet.description)}</th>
+                            <th style={thStyle}>{i18n.t(chercherObjet.category)}</th>
+                            <th style={thStyle}>{i18n.t(chercherObjet.date)}</th>
+                            <th style={thStyle}>{i18n.t(mesObjets.status)}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -207,7 +145,7 @@ const MesObjets  = () => {
                                     <td style={tdStyle}>{_.capitalize(item.intitule_categorie)}</td>
                                     <td style={tdStyle}>{moment(item.date).format("L")}</td>
                                     <td style={tdStyle}>{_.capitalize(item.etat)}</td>
-                                    {showFoundItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>Accepter</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>Refuser</button></td> : null }
+                                    {showFoundItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>{i18n.t(mesObjets.accept)}</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t(mesObjets.decline)}</button></td> : null }
                                 </tr>
                             );
                         })}
@@ -229,8 +167,8 @@ const MesObjets  = () => {
                 exclusive
                 onChange={handleChange}
                 >
-                <ToggleButton value="1">Mes Objets Perdus</ToggleButton>
-                <ToggleButton value="2">Mes Objets Trouvés</ToggleButton>
+                <ToggleButton value="1">{i18n.t(mesObjets.myLostItems)}</ToggleButton>
+                <ToggleButton value="2">{i18n.t(mesObjets.myFoundItems)}</ToggleButton>
             </ToggleButtonGroup>
             </center>
             <br></br>

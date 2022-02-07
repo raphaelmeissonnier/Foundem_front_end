@@ -11,7 +11,7 @@ import logo from '../images/logo.jpg'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
-
+import i18 from "../Translation/i18n";
 
 var _ = require('lodash');
 
@@ -85,25 +85,25 @@ const Header = () =>{
               }}
             >
                 <MenuItem component={Link} to={"/AjouterObjetPerdu"} >
-                  <Typography textAlign="center">J'ai Perdu un Objet</Typography>
+                  <Typography textAlign="center">{i18.t('header.lostItem')}</Typography>
                 </MenuItem>
                 <MenuItem component={Link} to={"/AjouterObjetTrouve"}>
-                  <Typography textAlign="center">J'ai Trouvé un Objet</Typography>
+                  <Typography textAlign="center">{i18.t('header.foundItem')}</Typography>
                 </MenuItem>
                 <MenuItem component={Link} to={"/ChercherObjetPerdu"}>
-                  <Typography textAlign="center">Rechercher un Objet</Typography>
+                  <Typography textAlign="center">{i18.t('header.searchItem')}</Typography>
                 </MenuItem>
             </Menu>
           </Box>
           <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Button href="/AjouterObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-                J'ai Perdu un Objet
+                {i18.t('header.lostItem')}
               </Button>
               <Button href="/AjouterObjetTrouve" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-                J'ai Trouvé un Objet
+                {i18.t('header.foundItem')}
               </Button>
               <Button href="/ChercherObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-                Rechercher un Objet
+                {i18.t('header.searchItem')}
               </Button>
           </Box>
               </div>
@@ -153,16 +153,16 @@ const Header = () =>{
               onClose={handleCloseUserMenu}
             >
                 <MenuItem  component={Link} to={"/MesObjets"}>
-                  <Typography textAlign="center">Mes Objets</Typography>
+                  <Typography textAlign="center">{i18.t('header.myItems')}</Typography>
                 </MenuItem>
                 <MenuItem  component={Link} to={"/MesRdv"}>
-                  <Typography textAlign="center">Mes Rendez-vous</Typography>
+                  <Typography textAlign="center">{i18.t('header.myRdv')}</Typography>
                 </MenuItem>
                 <MenuItem  component={Link} to={"/MonSolde"}>
-                  <Typography textAlign="center">Mon Solde</Typography>
+                  <Typography textAlign="center">{i18.t('header.myBalance')}</Typography>
                 </MenuItem>
                 <MenuItem  component={Link} to={"/Logout"}>
-                  <Typography textAlign="center">Deconnexion</Typography>
+                  <Typography textAlign="center">{i18.t('header.logout')}</Typography>
                 </MenuItem>
                 </Menu>
                 :
@@ -182,10 +182,10 @@ const Header = () =>{
               onClose={handleCloseUserMenu}
             >
                 <MenuItem  component={Link} to={"/Inscription"}>
-                  <Typography textAlign="center">Inscription</Typography>
+                  <Typography textAlign="center">{i18.t('header.registration')}</Typography>
                 </MenuItem>
                 <MenuItem  component={Link} to={"/Login"}>
-                  <Typography textAlign="center">Connexion</Typography>
+                  <Typography textAlign="center">{i18.t('header.login')}</Typography>
                 </MenuItem>
                 </Menu>
               }

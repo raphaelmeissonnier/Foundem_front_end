@@ -1,6 +1,5 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Switch, Route } from "react-router-dom";
-import {useContext} from "react";
 
 import App from "../App";
 import ChercherObjetPerdu from "../Components/ChercherObjetPerdu";
@@ -14,7 +13,6 @@ import {UserContext} from "../Components/UserContext";
 import Agenda from "../Components/Agenda";
 import MesRdv from "../Components/MesRdv";
 import MonSolde from "../Components/MonSolde";
-
 
 const Routes = () =>{
 
@@ -34,8 +32,7 @@ const Routes = () =>{
                     <Route exact path="/Agenda/:idObjetmatche/:firstUser/:secondUser" component={Agenda} />
                     <Route exact path="/Mesrdv" component={MesRdv} />
                     <Route exact path="/MonSolde" component={MonSolde} />
-
-                </Switch> : 
+                </Switch> :
                 <Switch>
                     <Route exact path="/" component={App} />
                     <Route exact path="/Inscription" component={Inscription} />

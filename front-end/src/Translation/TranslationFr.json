@@ -1,0 +1,84 @@
+{
+  "header": {
+    "lostItem": "J'ai perdu un objet",
+    "foundItem": "J'ai trouvé un objet",
+    "searchItem": "Rechercher un objet",
+    "myItems": "Mes objets",
+    "myRdv": "Mes rendez-vous",
+    "myBalance": "Mon solde",
+    "logout": "Deconnexion",
+    "registration": "Inscription",
+    "login": "Connexion"
+  },
+
+  "suggestionObjetPerdu": {
+    "title": "Aidez nous à retrouver ces objets",
+    "lostOn": "Perdu le ",
+    "foundIt": "Je l'ai trouvé !"
+  },
+
+  "ajoutObjet": {
+    "name": "Intitulé:",
+    "description": "Description:",
+    "category": "Catégorie:",
+    "chooseCategory": "Choisir une catégorie",
+    "wallet": "Portefeuille & CB",
+    "documents": "Papiers & documents officiels",
+    "bags": "Sacs & Bagages",
+    "hightech": "Electronique",
+    "kidsItems": "Affaires d'enfants",
+    "clothes": "Vêtements",
+    "personnalItems": "Effets personnels",
+    "date": "Date:",
+    "address": "Adresse:",
+    "radius": "Rayon:",
+    "chooseRadius": "Choisir un rayon",
+    "send": "Valider"
+  },
+
+  "chercherObjet": {
+    "name": "Intitulé",
+    "description": "Description",
+    "category": "Catégorie",
+    "date": "Date",
+    "myItem": "C'est mon objet",
+    "titlePart1": "Rechercher un objet perdu",
+    "titlePart2": "Merci de renseigner un maximum de champs pour pouvoir vous afficher les articles les plus proches de votre description !",
+    "search": "Rechercher"
+  },
+
+  "inscription": {
+    "username": "Username:",
+    "email": "Email:",
+    "password": "Mot de passe:",
+    "signUp": "S'inscrire"
+  },
+
+  "connexion":{
+    "login": "Se connecter"
+  },
+
+  "mesObjets": {
+    "status": "Statut",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "myLostItems": "Mes objets perdus",
+    "myFoundItems": "Mes objets trouvés"
+  },
+
+  "monSolde": {
+    "myBalance": "Mon solde:",
+    "convertPoints": "Débloquer une récompense"
+  },
+
+  "objetsMatche": {
+    "match": "Matcher",
+    "title": "Page de matching",
+    "lostItems": "Vos objets perdus:"
+  },
+
+  "agenda": {
+    "calendar": "Calendrier",
+    "addRdv": "Ajouter un rendez-vous"
+  }
+}
