@@ -203,31 +203,28 @@ const Map = (props) => {
 
     return (
         <div>
+            <Stack direction="row" spacing={2} style={{width:'95%', marginLeft:'10px', marginRight:'10px', marginBottom:'10px', marginTop:'10px', textAlign:'center'}}>
             <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
-            <div className="sidebar">
-                Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-            </div>
-            <div id="instructions"></div>
-
-            <div>
-                <Stack direction="row" spacing={2} style={{width:'70%', marginLeft:'10px', marginRight:'10px', marginBottom:'10px', marginTop:'10px', textAlign:'center'}}>
+                <div id="instructions" />
+                <div style={{flexDirection:"column", alignItems:'center', justifyContent:'center', display:'flex', width:'100%', marginTop:"10px", marginLeft:"10px"}} className="card">
                     <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20}}>Résultats: <b>{items.length}</b> objets proches de votre localisation</FormLabel>
-                    <div style={{height:'500px', width:'70%'}} className="map-container" ref={mapContainer} />
-
-                    {/*<Item elevation={8} style={{width:'70%', marginLeft:'10px', marginRight:'10px', marginBottom:'10px', marginTop:'10px', textAlign:'center'}}>*/}
-                        <div style={{flexDirection:"row", display:'flex', alignItems:'center', justifyContent:'center' }}>
-                            <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20, marginRight:"5px"}}>Dans un rayon de</FormLabel>
-                            <RadioGroup onChange={_handleRayonChange} value={rayon} row>
-                                <FormControlLabel value="5" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="5km" />
-                                <FormControlLabel value="10" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="10km" />
-                                <FormControlLabel value="15" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="15km" />
-                                <FormControlLabel value="20" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="20km" />
-                            </RadioGroup>
-                        </div>
-                    {/*</Item>*/}
-                    {longUser > 0 && latUser > 0 ? <SuggestionObjetPerdu longitude={longUser} latitude={latUser} /> : null }
-                </Stack>
+                    <div style={{height:'500px', width:'90%', marginTop:'10px'}} ref={mapContainer}>
+                    <div className="sidebar">
+                        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+                    </div>
+                </div>
+                    <div style={{flexDirection:"row", display:'flex', alignItems:'center', justifyContent:'center' }}>
+                    <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20, marginRight:"5px"}}>Dans un rayon de</FormLabel>
+                    <RadioGroup onChange={_handleRayonChange} value={rayon} row>
+                        <FormControlLabel value="5" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="5km" />
+                        <FormControlLabel value="10" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="10km" />
+                        <FormControlLabel value="15" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="15km" />
+                        <FormControlLabel value="20" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="20km" />
+                    </RadioGroup>
+                </div>
             </div>
+                {longUser > 0 && latUser > 0 ? <SuggestionObjetPerdu longitude={longUser} latitude={latUser} /> : null }
+            </Stack>
         </div>
     );
 }
