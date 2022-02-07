@@ -80,5 +80,13 @@
   "agenda": {
     "calendar": "Calendrier",
     "addRdv": "Ajouter un rendez-vous"
+  },
+
+  "map": {
+    "results": "Résultats:",
+    "foundNearYou": " objets proches de votre localisation",
+    "longitude": "Longitude: ",
+    "latitude": "Latitude:",
+    "zoom": "Zoom:"
   }
 }

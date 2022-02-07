@@ -80,6 +80,14 @@
   "agenda": {
     "calendar": "Calendar",
     "addRdv": "Add an appointment"
+  },
+
+  "map": {
+    "results": "Results:",
+    "foundNearYou": " items near your localization",
+    "longitude": "Longitude: ",
+    "latitude": "Latitude:",
+    "zoom": "Zoom:"
   }
 
 }

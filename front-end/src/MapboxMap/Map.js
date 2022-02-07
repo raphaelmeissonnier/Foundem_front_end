@@ -6,6 +6,8 @@ import { styled } from '@material-ui/core/styles';
 import {FormControlLabel, FormLabel, Paper, Radio, RadioGroup} from '@material-ui/core';
 import Stack from '@mui/material/Stack';
 import SuggestionObjetPerdu from '../Components/SuggestionObjetPerdu';
+import i18n from "../Translation/i18n";
+
 
 const {config} = require('../config');
 
@@ -207,10 +209,10 @@ const Map = (props) => {
             <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
                 <div id="instructions" />
                 <div style={{flexDirection:"column", alignItems:'center', justifyContent:'center', display:'flex', width:'100%', marginTop:"10px", marginLeft:"10px"}} className="card">
-                    <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20}}>Résultats: <b>{items.length}</b> objets proches de votre localisation</FormLabel>
+                    <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20}}>{i18n.t(map.results)} <b>{items.length}</b> {i18n.t(map.foundNearYou)}</FormLabel>
                     <div style={{height:'500px', width:'90%', marginTop:'10px'}} ref={mapContainer}>
                     <div className="sidebar">
-                        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+                        {i18n.t(map.longitude)} {lng} | {i18n.t(map.latitude)} {lat} | {i18n.t(map.zoom)} {zoom}
                     </div>
                 </div>
                     <div style={{flexDirection:"row", display:'flex', alignItems:'center', justifyContent:'center' }}>
