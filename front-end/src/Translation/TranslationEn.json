@@ -87,7 +87,8 @@
     "foundNearYou": " items near your localization",
     "longitude": "Longitude: ",
     "latitude": "Latitude:",
-    "zoom": "Zoom:"
+    "zoom": "Zoom:",
+    "withinRadius": "Within a radius"
   }
 
 }

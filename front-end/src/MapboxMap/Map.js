@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import React, { useRef, useEffect, useState } from 'react';
 import './Map.css'
 import { styled } from '@material-ui/core/styles';
-import {FormControlLabel, FormLabel, Paper, Radio, RadioGroup} from '@material-ui/core';
+import {Box, Card, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Slider} from '@material-ui/core';
 import Stack from '@mui/material/Stack';
 import SuggestionObjetPerdu from '../Components/SuggestionObjetPerdu';
 import i18n from "../Translation/i18n";
@@ -27,7 +27,25 @@ const Map = (props) => {
     const [rayon, setRayon] = useState(100);
     const [items, setItems] = useState([]);
     const [changed, setChanged] = useState(1);
-
+    const [clickedTrajet, setClickedTrajet] = useState(false);
+    const marks = [
+        {
+            value: 5,
+            label: '5Km',
+        },
+        {
+            value: 10,
+            label: '10Km',
+        },
+        {
+            value: 15,
+            label: '15Km',
+        },
+        {
+            value: 20,
+            label: '20Km',
+        },
+    ];
 
     useEffect(() => {
         // initialize map only once
@@ -144,6 +162,7 @@ const Map = (props) => {
 
     //Calcul de l'itinéraire vers un point de la map
     async function getTrajet(objet,laMap){
+        setClickedTrajet(true);
         console.log("getTrajet");
         const rep = await fetch('https://api.mapbox.com/directions/v5/mapbox/driving/'+longUser+','+latUser+';'+objet.localisation.position.longitude+','+objet.localisation.position.latitude+'?steps=true&geometries=geojson&access_token='+config.MY_API_TOKEN);
         const json = await rep.json();
@@ -196,9 +215,9 @@ const Map = (props) => {
     }
         
 
-    function _handleRayonChange(e)
+    const _handleRayonChange = (event, newValue) =>
     {
-        setRayon(e.target.value);
+        setRayon(newValue);
         console.log("Rayon:", rayon);
     }
     const Item = styled(Paper)(({ theme }) => ({}));
@@ -207,22 +226,53 @@ const Map = (props) => {
         <div>
             <Stack direction="row" spacing={2} style={{width:'95%', marginLeft:'10px', marginRight:'10px', marginBottom:'10px', marginTop:'10px', textAlign:'center'}}>
             <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
-                <div id="instructions" />
-                <div style={{flexDirection:"column", alignItems:'center', justifyContent:'center', display:'flex', width:'100%', marginTop:"10px", marginLeft:"10px"}} className="card">
-                    <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20}}>{i18n.t(map.results)} <b>{items.length}</b> {i18n.t(map.foundNearYou)}</FormLabel>
-                    <div style={{height:'500px', width:'90%', marginTop:'10px'}} ref={mapContainer}>
-                    <div className="sidebar">
-                        {i18n.t(map.longitude)} {lng} | {i18n.t(map.latitude)} {lat} | {i18n.t(map.zoom)} {zoom}
-                    </div>
-                </div>
+                <div style={{flexDirection:"column", alignItems:'center', justifyItems:'center', display:'flex', width:'100%', marginTop:"10px", marginLeft:"10px"}} className="card">
+                    <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20}}>{i18n.t('map.results')} <b>{items.length}</b> {i18n.t('map.foundNearYou')}</FormLabel>
+                    <Card style={{height:'500px', width:'90%', marginTop:'10px'}} ref={mapContainer}>
+                        <div className="sidebar">
+                            {i18n.t('map.longitude')} {lng} | {i18n.t('map.latitude')} {lat} | {i18n.t('map.zoom')} {zoom}
+                        </div>
+                    </Card>
+                    <Card id="instructions"/>
                     <div style={{flexDirection:"row", display:'flex', alignItems:'center', justifyContent:'center' }}>
-                    <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20, marginRight:"5px"}}>Dans un rayon de</FormLabel>
-                    <RadioGroup onChange={_handleRayonChange} value={rayon} row>
-                        <FormControlLabel value="5" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="5km" />
-                        <FormControlLabel value="10" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="10km" />
-                        <FormControlLabel value="15" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="15km" />
-                        <FormControlLabel value="20" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="20km" />
-                    </RadioGroup>
+                        <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20, marginRight:"10px"}}>{i18n.t('map.withinRadius')}</FormLabel>
+                        <Box sx={{ width: 500 , marginTop:"15px"}}>
+                            <Slider
+                                aria-label="Restricted values"
+                                defaultValue={10}
+                                step={null}
+                                valueLabelDisplay="auto"
+                                marks={marks}
+                                color="secondary"
+                                min={5}
+                                max={20}
+                                onChange={_handleRayonChange}
+                            />
+                        </Box>
+                        {/*<RadioGroup onChange={_handleRayonChange} value={rayon} row>
+                            <FormControlLabel value="5" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="5km" />
+                            <FormControlLabel value="10" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="10km" />
+                            <FormControlLabel value="15" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="15km" />
+                            <FormControlLabel value="20" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="20km" />
+                        </RadioGroup>*/}
+
+                        {/*{clickedTrajet ?
+                        <div>
+                            <Item style={{height:'500px', width:'90%', marginTop:'10px'}} ref={mapContainer}>
+                                <div className="sidebar">
+                                    {i18n.t('map.longitude')} {lng} | {i18n.t('map.latitude')} {lat} | {i18n.t('map.zoom')} {zoom}
+                                </div>
+                            </Item>
+                            <div>
+                            <Card id="instructions"/>
+                            </div>
+                        </div>
+                        :
+                        <div style={{height:'500px', width:'90%', marginTop:'10px'}} ref={mapContainer}>
+                        <div className="sidebar">
+                            {i18n.t('map.longitude')} {lng} | {i18n.t('map.latitude')} {lat} | {i18n.t('map.zoom')} {zoom}
+                        </div>
+                    </div>}*/}
                 </div>
             </div>
                 {longUser > 0 && latUser > 0 ? <SuggestionObjetPerdu longitude={longUser} latitude={latUser} /> : null }

@@ -20,13 +20,13 @@
     border-radius: 4px;*/
 }
 
-#instructions {
-    width: 50%;
+/*#instructions {
+    width: 100%;
     padding: 20px;
-    background-color: white;
+    background-color: black;
     overflow-y: scroll;
     font-family: sans-serif;
-}
+}*/
 
 .card {
     /* Add shadows to create the "card" effect */
