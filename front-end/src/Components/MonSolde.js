@@ -41,8 +41,8 @@ const MonSolde = () =>{
     
     return(
         <div>
-            <h3>{i18n.t(monSolde.myBalance)} {solde}</h3>
-            <button onClick={()=>convertir()}>{i18n.t(monSolde.convertPoints)}</button>
+            <h3>{i18n.t('monSolde.myBalance')} {solde}</h3>
+            <button onClick={()=>convertir()}>{i18n.t('monSolde.convertPoints')}</button>
         </div>
 
     )

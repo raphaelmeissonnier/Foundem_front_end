@@ -44,7 +44,7 @@ const Login =() =>{
              onSubmit={onSubmit}
             >
                 <Form className="formContainer">
-                    <label>{i18n.t(inscription.username)}</label>
+                    <label>{i18n.t('inscription.username')}</label>
                     <ErrorMessage name="username" component="span" />
                     <Field
                     autoComplete="off"
@@ -53,7 +53,7 @@ const Login =() =>{
                     placeholder="Votre pseudo"
                     />
 
-                    <label>{i18n.t(inscription.password)}</label>
+                    <label>{i18n.t('inscription.password')}</label>
                     <ErrorMessage name="password" component="span" />
                     <Field
                         autoComplete="off"
@@ -63,7 +63,7 @@ const Login =() =>{
                         placeholder="Votre mot de passe"
                     />
 
-                    <button type="submit">{i18n.t(connexion.login)}</button>
+                    <button type="submit">{i18n.t('connexion.login')}</button>
                 </Form>
             </Formik>
 
