@@ -38,6 +38,41 @@ const MonSolde = () =>{
                     .then(data => window.alert(data.message + "https://www.mavieencouleurs.fr/")));
         }
     }
+
+    async function affiche_tableau(){
+        if(user.id_utilisateur) {
+            const res = await fetch('/users/'+user.id_utilisateur+'/historique')
+                .then(response => response.json()
+                    .then(data => (data.result >= 0 ? data.message : null) ));
+
+            console.log("Historique ",res);
+
+            return(
+                <div>
+                    <table style={tableStyle}>
+                        <thead>
+                        <tr style={trHoverStyle}>
+                            <th style={thStyle}>Date</th>
+                            <th style={thStyle}>Intitule</th>
+                            <th style={thStyle}>Valeur</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {res.map(item => {
+                            return(
+                                <tr style={trChildStyle} key={item.id_objet}>
+                                    <td style={tdStyle}>{moment(item.date_rdv || item.date_recompense).format("L")}</td>
+                                    <td style={tdStyle}>{_.capitalize(item.intitule)}</td>
+                                    <td style={tdStyle}>{_.capitalize(item.valeur)}</td>
+                                </tr>
+                            );
+                        })}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+    }
     
     return(
         <div>
