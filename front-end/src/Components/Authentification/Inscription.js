@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
-import i18n from "../Translation/i18n";
+import i18n from "../../Translation/i18n";
 
 const Inscription = () => {
     const initialValues = {
@@ -51,7 +51,7 @@ const Inscription = () => {
             validationSchema={validationSchema}
             >
                 <Form className="formContainer">
-                    <label>{i18n.t(inscription.username)}</label>
+                    <label>{i18n.t('inscription.username')}</label>
                     <ErrorMessage name="username" component="span" />
                     <Field
                     autoComplete="off"
@@ -60,7 +60,7 @@ const Inscription = () => {
                     placeholder="Votre pseudo"
                     />
                     
-                    <label>{i18n.t(inscription.email)}</label>
+                    <label>{i18n.t('inscription.email')}</label>
                     <ErrorMessage name="email" component="span" />
                     <Field
                     autoComplete="off"
@@ -69,7 +69,7 @@ const Inscription = () => {
                     placeholder="Votre adresse-mail"
                     />
 
-                    <label>{i18n.t(inscription.password)}</label>
+                    <label>{i18n.t('inscription.password')}</label>
                     <ErrorMessage name="password" component="span" />
                     <Field
                     autoComplete="off"
@@ -79,7 +79,7 @@ const Inscription = () => {
                     placeholder="Votre mot de passe"
                     />
 
-                    <button type="submit">{i18n.t(inscription.signUp)}</button>
+                    <button type="submit">{i18n.t('inscription.signUp')}</button>
                 </Form>
             </Formik>
              {iscreated ? <Redirect to = "/"/> : console.log("not redirect")}

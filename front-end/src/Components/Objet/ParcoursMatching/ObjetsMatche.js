@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { Redirect } from "react-router-dom";
-import {UserContext} from "./UserContext";
+import {UserContext} from "../../Authentification/UserContext";
 import _ from "lodash";
 import * as moment from "moment";
-import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
-import i18n from "../Translation/i18n";
+import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "../AjoutObjet/styles";
+import i18n from "../../../Translation/i18n";
 
 
 const ObjetsMatche = (props) => {
@@ -40,10 +40,10 @@ const ObjetsMatche = (props) => {
                 <table style={tableStyle}>
                     <thead>
                     <tr style={trHoverStyle}>
-                        <th style={thStyle}>{i18n.t(chercherObjet.name)}</th>
-                        <th style={thStyle}>{i18n.t(chercherObjet.description)}</th>
-                        <th style={thStyle}>{i18n.t(chercherObjet.category)}</th>
-                        <th style={thStyle}>{i18n.t(chercherObjet.date)}</th>
+                        <th style={thStyle}>{i18n.t('chercherObjet.name')}</th>
+                        <th style={thStyle}>{i18n.t('chercherObjet.description')}</th>
+                        <th style={thStyle}>{i18n.t('chercherObjet.category')}</th>
+                        <th style={thStyle}>{i18n.t('chercherObjet.date')}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -54,7 +54,7 @@ const ObjetsMatche = (props) => {
                                 <td style={tdStyle}>{_.capitalize(item.description)}</td>
                                 <td style={tdStyle}>{_.capitalize(item.intitule_categorie)}</td>
                                 <td style={tdStyle}>{moment(item.dates).format("L")}</td>
-                                <td style={tdStyle}><button onClick={handleMatch} value={item.id_objet}>{i18n.t(objetsMatche.match)}</button></td>
+                                <td style={tdStyle}><button onClick={handleMatch} value={item.id_objet}>{i18n.t('objetsMatche.match')}</button></td>
                                 { iscreated ? <Redirect to = "/" /> : console.log("not redirect")}
                             </tr>
                         );
@@ -102,9 +102,9 @@ const ObjetsMatche = (props) => {
         <br></br>
         <br></br>
         <br></br>
-        <h1>{i18n.t(objetsMatche.title)}</h1>
+        <h1>{i18n.t('objetsMatche.title')}</h1>
         <br></br>
-        <h4>{i18n.t(objetsMatche.lostItems)}</h4>
+        <h4>{i18n.t('objetsMatche.lostItems')}</h4>
         {items.length ? afficher() : null}
         </div>
     )

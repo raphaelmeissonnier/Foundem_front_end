@@ -12,9 +12,9 @@ import Geocoder from "react-mapbox-gl-geocoder";
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import {Redirect} from "react-router-dom";
 import * as moment from "moment";
-import i18n from "../Translation/i18n";
+import i18n from "../../../Translation/i18n";
 
-const {config} = require('../config');
+const {config} = require('../../../config');
 const mapboxApiKey = config.MY_API_TOKEN;
 const params = { country: "fr" };
 
@@ -114,15 +114,15 @@ const Agenda = (props) =>{
     return (
         <div className="Agenda">
 
-            <h1>{i18n.t(agenda.calendar)}</h1>
+            <h1>{i18n.t('agenda.calendar')}</h1>
             <center>
-            <h2>{i18n.t(agenda.addRdv)}</h2>
+            <h2>{i18n.t('agenda.addRdv')}</h2>
             <div>
                 <input type="text" placeholder="Ajouter un titre" style={{ width: "20%", marginRight: "10px" }} value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
                 <input type="time" placeholder="Horaire" style={{ width: "20%", marginRight: "10px" }} value={newEvent.time} onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })} />
                 <br></br>
 
-                <label>{i18n.t(ajoutObjet.address)}</label>
+                <label>{i18n.t('ajoutObjet.address')}</label>
                 <Geocoder
                     mapboxApiAccessToken={mapboxApiKey}
                     hideOnSelect={true}
@@ -138,7 +138,7 @@ const Agenda = (props) =>{
                 <DatePicker placeholderText="Fin Date" selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
 
                 <button style={{ marginTop: "10px" }} onClick={handleAddEvent}>
-                    {i18n.t(agenda.addRdv)}
+                    {i18n.t('agenda.addRdv')}
                 </button>
             </div>
             <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} />

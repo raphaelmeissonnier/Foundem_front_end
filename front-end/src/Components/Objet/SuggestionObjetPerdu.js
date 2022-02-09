@@ -1,15 +1,15 @@
 import React, { useState,useEffect,useContext } from "react";
-import {UserContext} from "./UserContext";
+import {UserContext} from "../Authentification/UserContext";
 import {styled} from "@material-ui/core/styles";
 import {Card, Paper} from "@material-ui/core";
 import {CardContent, FormLabel, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import _ from "lodash";
 import {Link} from "react-router-dom";
-import i18 from "../Translation/i18n";
+import i18 from "../../Translation/i18n";
 
 const moment = require('moment')
-const {config} = require('../config');
+const {config} = require('../../config');
 
 
 const SuggestionObjetPerdu = (props) => {
