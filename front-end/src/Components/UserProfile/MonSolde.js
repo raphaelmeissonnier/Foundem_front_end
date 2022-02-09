@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import * as moment from "moment";
-import i18n from "../Translation/i18n";
+import i18n from "../../Translation/i18n";
 
 
 const MonSolde = () =>{
@@ -41,8 +41,8 @@ const MonSolde = () =>{
     
     return(
         <div>
-            <h3>{i18n.t(monSolde.myBalance)} {solde}</h3>
-            <button onClick={()=>convertir()}>{i18n.t(monSolde.convertPoints)}</button>
+            <h3>{i18n.t('monSolde.myBalance')} {solde}</h3>
+            <button onClick={()=>convertir()}>{i18n.t('monSolde.convertPoints')}</button>
         </div>
 
     )

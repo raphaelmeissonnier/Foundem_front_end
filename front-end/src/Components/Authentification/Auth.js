@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Routes from "./Routes/Routes";
-import { UserContext } from "./Components/UserContext";
+import Routes from "../../Routes/Routes";
+import { UserContext } from "./UserContext";
 import { useDispatch } from "react-redux";
-import { getUser } from "./Actions/UserAction";
+import { getUser } from "../../Actions/UserAction";
 import { BrowserRouter as Router } from 'react-router-dom';
-import Header from "./Components/Header";
-import Footer from "./Components/Footer";
+import Header from "../Static/Header";
+import Footer from "../Static/Footer";
 
 const Auth = () => {
     const [userId, setUserId] = useState(null);

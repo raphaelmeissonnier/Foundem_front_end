@@ -2,17 +2,17 @@ import React, {useContext} from "react";
 import { Switch, Route } from "react-router-dom";
 
 import App from "../App";
-import ChercherObjetPerdu from "../Components/ChercherObjetPerdu";
-import Login from "../Components/Login";
-import Inscription from "../Components/Inscription";
-import Logout from "../Components/Logout";
-import ObjetsMatche from '../Components/ObjetsMatche';
-import MesObjets from '../Components/MesObjets';
-import AjouterObjet from '../Components/AjouterObjet';
-import {UserContext} from "../Components/UserContext";
-import Agenda from "../Components/Agenda";
-import MesRdv from "../Components/MesRdv";
-import MonSolde from "../Components/MonSolde";
+import ChercherObjetPerdu from "../Components/Objet/ParcoursMatching/ChercherObjetPerdu";
+import Login from "../Components/Authentification/Login";
+import Inscription from "../Components/Authentification/Inscription";
+import Logout from "../Components/Authentification/Logout";
+import ObjetsMatche from '../Components/Objet/ParcoursMatching/ObjetsMatche';
+import MesObjets from '../Components/UserProfile/MesObjets';
+import AjouterObjet from '../Components/Objet/AjoutObjet/AjouterObjet';
+import {UserContext} from "../Components/Authentification/UserContext";
+import Agenda from "../Components/Objet/ParcoursMatching/Agenda";
+import MesRdv from "../Components/UserProfile/MesRdv";
+import MonSolde from "../Components/UserProfile/MonSolde";
 
 const Routes = () =>{
 

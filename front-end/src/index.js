@@ -4,12 +4,12 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import rootReducer from "./reducers/";
-import Auth from "./Auth";
+import Auth from "./Components/Authentification/Auth";
 import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
-import Footer from "./Components/Footer";
+import Footer from "./Components/Static/Footer";
 import './Translation/i18n';
 
 

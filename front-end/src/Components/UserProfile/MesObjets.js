@@ -1,15 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {UserContext} from "./UserContext";
-import {getFoundItems, getLostItems} from "../Actions/ObjetsAction";
+import {UserContext} from "../Authentification/UserContext";
+import {getFoundItems, getLostItems} from "../../Actions/ObjetsAction";
 import _ from "lodash";
 import * as moment from "moment";
-import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
+import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "../Objet/AjoutObjet/styles";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
 import {Redirect} from "react-router-dom";
-import i18n from "../Translation/i18n";
+import i18n from "../../Translation/i18n";
 
 
 const MesObjets  = () => {
@@ -129,11 +129,11 @@ const MesObjets  = () => {
                     <table style={tableStyle}>
                         <thead>
                         <tr style={trHoverStyle}>
-                            <th style={thStyle}>{i18n.t(chercherObjet.name)}</th>
-                            <th style={thStyle}>{i18n.t(chercherObjet.description)}</th>
-                            <th style={thStyle}>{i18n.t(chercherObjet.category)}</th>
-                            <th style={thStyle}>{i18n.t(chercherObjet.date)}</th>
-                            <th style={thStyle}>{i18n.t(mesObjets.status)}</th>
+                            <th style={thStyle}>{i18n.t('chercherObjet.name')}</th>
+                            <th style={thStyle}>{i18n.t('chercherObjet.description')}</th>
+                            <th style={thStyle}>{i18n.t('chercherObjet.category')}</th>
+                            <th style={thStyle}>{i18n.t('chercherObjet.date')}</th>
+                            <th style={thStyle}>{i18n.t('mesObjets.status')}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -145,7 +145,7 @@ const MesObjets  = () => {
                                     <td style={tdStyle}>{_.capitalize(item.intitule_categorie)}</td>
                                     <td style={tdStyle}>{moment(item.date).format("L")}</td>
                                     <td style={tdStyle}>{_.capitalize(item.etat)}</td>
-                                    {showFoundItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>{i18n.t(mesObjets.accept)}</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t(mesObjets.decline)}</button></td> : null }
+                                    {showFoundItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>{i18n.t('mesObjets.accept')}</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t('mesObjets.decline')}</button></td> : null }
                                 </tr>
                             );
                         })}
@@ -167,8 +167,8 @@ const MesObjets  = () => {
                 exclusive
                 onChange={handleChange}
                 >
-                <ToggleButton value="1">{i18n.t(mesObjets.myLostItems)}</ToggleButton>
-                <ToggleButton value="2">{i18n.t(mesObjets.myFoundItems)}</ToggleButton>
+                <ToggleButton value="1">{i18n.t('mesObjets.myLostItems')}</ToggleButton>
+                <ToggleButton value="2">{i18n.t('mesObjets.myFoundItems')}</ToggleButton>
             </ToggleButtonGroup>
             </center>
             <br></br>

@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {UserContext} from "./UserContext";
-import {tableStyle, tdStyle, thStyle, trChildStyle, trHoverStyle} from "./styles";
+import {UserContext} from "../Authentification/UserContext";
+import {tableStyle, tdStyle, thStyle, trChildStyle, trHoverStyle} from "../Objet/AjoutObjet/styles";
 import _ from "lodash";
 import * as moment from "moment";
 import Divider from "@mui/material/Divider";
-import {config} from "../config";
-import i18n from "../Translation/i18n";
+import {config} from "../../config";
+import i18n from "../../Translation/i18n";
 
 
 const MesRdv = () =>{
@@ -85,8 +85,8 @@ const MesRdv = () =>{
                     <table style={tableStyle}>
                         <thead>
                         <tr style={trHoverStyle}>
-                            <th style={thStyle}>{i18n.t(chercherObjet.date)}</th>
-                            <th style={thStyle}>{i18n.t(mesObjets.status)}</th>
+                            <th style={thStyle}>{i18n.t('chercherObjet.date')}</th>
+                            <th style={thStyle}>{i18n.t('mesObjets.status')}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -95,7 +95,7 @@ const MesRdv = () =>{
                                 <tr style={trChildStyle} key={item.id_rdv}>
                                     <td style={tdStyle}>{moment(item.date_rdv).format("L")}</td>
                                     <td style={tdStyle}>{_.capitalize(item.etat)}</td>
-                                    {item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_rdv, item.date_rdv, item.longitude, item.latitude)}>{i18n.t(mesObjets.accept)}</button> <button value={item.id_rdv} onClick={() => refuser(item.id_rdv, item.date_rdv, item.longitude, item.latitude)}>{i18n.t(mesObjets.decline)}</button></td> : null }
+                                    {item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_rdv, item.date_rdv, item.longitude, item.latitude)}>{i18n.t('mesObjets.accept')}</button> <button value={item.id_rdv} onClick={() => refuser(item.id_rdv, item.date_rdv, item.longitude, item.latitude)}>{i18n.t('mesObjets.decline')}</button></td> : null }
                                 </tr>
                             );
                         }) : <h1>RDV NULL DANS AFFICHAGE</h1>}
