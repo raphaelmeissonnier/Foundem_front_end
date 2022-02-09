@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import * as moment from "moment";
+import _ from "lodash";
+import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "../Objet/AjoutObjet/styles";
 import i18n from "../../Translation/i18n";
 
 
@@ -8,10 +10,17 @@ const MonSolde = () =>{
 
     const user = useSelector((state)=> state.UserReducer);
     const [solde, setSolde] = useState(null);
+    let res = useState([])
 
     //Récupérer le solde du user
     useEffect(async()=>{
         //FAIRE UN DISPATCH SUR LE USER
+        if(user.id_utilisateur) {
+            res = await fetch('/users/'+user.id_utilisateur+'/historique')
+                .then(response => response.json())
+
+            console.log("RES",res)
+        }
         setSolde(user.solde); 
     }, [user.solde])
 
@@ -39,13 +48,10 @@ const MonSolde = () =>{
         }
     }
 
-    async function affiche_tableau(){
-        if(user.id_utilisateur) {
-            const res = await fetch('/users/'+user.id_utilisateur+'/historique')
-                .then(response => response.json()
-                    .then(data => (data.result >= 0 ? data.message : null) ));
-
-            console.log("Historique ",res);
+    function affiche_tableau(){
+        if(res) {
+           
+            //console.log("Historique ",res);
 
             return(
                 <div>
@@ -59,13 +65,14 @@ const MonSolde = () =>{
                         </thead>
                         <tbody>
                         {res.map(item => {
-                            return(
-                                <tr style={trChildStyle} key={item.id_objet}>
-                                    <td style={tdStyle}>{moment(item.date_rdv || item.date_recompense).format("L")}</td>
+                            console.log("Item.date", item)
+                            /*return(
+                                <tr style={trChildStyle} key={item.intitule}>
+                                    <td style={tdStyle}>{moment(item.date).format("L")}</td>
                                     <td style={tdStyle}>{_.capitalize(item.intitule)}</td>
                                     <td style={tdStyle}>{_.capitalize(item.valeur)}</td>
                                 </tr>
-                            );
+                            );*/
                         })}
                         </tbody>
                     </table>
@@ -78,6 +85,7 @@ const MonSolde = () =>{
         <div>
             <h3>{i18n.t('monSolde.myBalance')} {solde}</h3>
             <button onClick={()=>convertir()}>{i18n.t('monSolde.convertPoints')}</button>
+            <div>{ res!=null ? affiche_tableau() : console.log("RES NULL")}</div>
         </div>
 
     )
