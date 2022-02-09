@@ -2,7 +2,7 @@ import React from "react";
 import {CircularProgress, Button} from '@material-ui/core';
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import { Alert } from "@mui/material";
-import Map from "./MapboxMap/Map";
+import Map from "./Components/MapboxMap/Map";
 
 class App extends React.Component {
 

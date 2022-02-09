@@ -1,5 +1,5 @@
 .marker {
-    background-image: url('../images/marker.svg');
+    background-image: url('../../images/marker.svg');
     background-size: cover;
     width: 30px;
     height: 30px;
@@ -15,18 +15,7 @@
     z-index: 1;
     position: absolute;
     top: 0;
-    /*left: 0;
-    margin: 12px;
-    border-radius: 4px;*/
 }
-
-/*#instructions {
-    width: 100%;
-    padding: 20px;
-    background-color: black;
-    overflow-y: scroll;
-    font-family: sans-serif;
-}*/
 
 .card {
     /* Add shadows to create the "card" effect */

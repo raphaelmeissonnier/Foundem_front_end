@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Redirect } from "react-router-dom";
-import i18n from "../Translation/i18n";
+import i18n from "../../Translation/i18n";
 
 const Inscription = () => {
     const initialValues = {

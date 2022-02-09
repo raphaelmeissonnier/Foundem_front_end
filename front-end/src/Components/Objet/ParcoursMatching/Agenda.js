@@ -12,9 +12,9 @@ import Geocoder from "react-mapbox-gl-geocoder";
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import {Redirect} from "react-router-dom";
 import * as moment from "moment";
-import i18n from "../Translation/i18n";
+import i18n from "../../../Translation/i18n";
 
-const {config} = require('../config');
+const {config} = require('../../../config');
 const mapboxApiKey = config.MY_API_TOKEN;
 const params = { country: "fr" };
 

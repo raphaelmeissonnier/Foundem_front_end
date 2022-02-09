@@ -1,15 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {UserContext} from "./UserContext";
-import {getFoundItems, getLostItems} from "../Actions/ObjetsAction";
+import {UserContext} from "../Authentification/UserContext";
+import {getFoundItems, getLostItems} from "../../Actions/ObjetsAction";
 import _ from "lodash";
 import * as moment from "moment";
-import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
+import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "../Objet/AjoutObjet/styles";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
 import {Redirect} from "react-router-dom";
-import i18n from "../Translation/i18n";
+import i18n from "../../Translation/i18n";
 
 
 const MesObjets  = () => {

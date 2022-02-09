@@ -1,18 +1,18 @@
 import React, {useContext, useState} from 'react';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import './ajoutObjetTrouve.css'
+import '../AjoutObjet/ajoutObjetTrouve.css'
 import Geocoder from "react-mapbox-gl-geocoder"
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import {UserContext} from "./UserContext";
+import {UserContext} from "../../Authentification/UserContext";
 import * as moment from 'moment';
 import { Link } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
-import i18n from "../Translation/i18n";
+import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "../AjoutObjet/styles";
+import i18n from "../../../Translation/i18n";
 
 const _ = require("lodash");
-const {config} = require('../config');
+const {config} = require('../../../config');
 const mapboxApiKey = config.MY_API_TOKEN;
 const params = { country: "fr" };
 

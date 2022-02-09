@@ -5,11 +5,11 @@ import Geocoder from "react-mapbox-gl-geocoder"
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import {Redirect} from "react-router-dom";
-import {UserContext} from "./UserContext";
+import {UserContext} from "../../Authentification/UserContext";
 import * as moment from 'moment';
-import i18n from '../Translation/i18n';
+import i18n from '../../../Translation/i18n';
 
-const {config} = require('../config');
+const {config} = require('../../../config');
 const mapboxApiKey = config.MY_API_TOKEN;
 const params = { country: "fr" };
 

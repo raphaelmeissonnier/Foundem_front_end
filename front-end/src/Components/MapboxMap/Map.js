@@ -5,11 +5,11 @@ import './Map.css'
 import { styled } from '@material-ui/core/styles';
 import {Box, Card, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Slider} from '@material-ui/core';
 import Stack from '@mui/material/Stack';
-import SuggestionObjetPerdu from '../Components/SuggestionObjetPerdu';
-import i18n from "../Translation/i18n";
+import SuggestionObjetPerdu from '../Objet/SuggestionObjetPerdu';
+import i18n from "../../Translation/i18n";
 
 
-const {config} = require('../config');
+const {config} = require('../../config');
 
 
 mapboxgl.accessToken = config.MY_API_TOKEN;

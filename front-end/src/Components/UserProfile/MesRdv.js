@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {UserContext} from "./UserContext";
-import {tableStyle, tdStyle, thStyle, trChildStyle, trHoverStyle} from "./styles";
+import {UserContext} from "../Authentification/UserContext";
+import {tableStyle, tdStyle, thStyle, trChildStyle, trHoverStyle} from "../Objet/AjoutObjet/styles";
 import _ from "lodash";
 import * as moment from "moment";
 import Divider from "@mui/material/Divider";
-import {config} from "../config";
-import i18n from "../Translation/i18n";
+import {config} from "../../config";
+import i18n from "../../Translation/i18n";
 
 
 const MesRdv = () =>{

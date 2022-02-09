@@ -4,14 +4,14 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
-import imageAvatar from '../images/Cartes.png';
+import imageAvatar from '../../images/Cartes.png';
 import { Link } from 'react-router-dom';
 import {useSelector} from "react-redux";
-import logo from '../images/logo.jpg'
+import logo from '../../images/logo.jpg'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
-import i18 from "../Translation/i18n";
+import i18 from "../../Translation/i18n";
 
 var _ = require('lodash');
 

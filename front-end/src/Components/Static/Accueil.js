@@ -1,4 +1,4 @@
-import Fond from '../images/fond.jpg';
+import Fond from '../../images/fond.jpg';
 import React from "react";
 import { Box, Button } from '@material-ui/core';
 import {Link} from "react-router-dom";

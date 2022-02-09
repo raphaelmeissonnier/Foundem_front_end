@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { Redirect } from "react-router-dom";
-import {UserContext} from "./UserContext";
+import {UserContext} from "../../Authentification/UserContext";
 import _ from "lodash";
 import * as moment from "moment";
-import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "./styles";
-import i18n from "../Translation/i18n";
+import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "../AjoutObjet/styles";
+import i18n from "../../../Translation/i18n";
 
 
 const ObjetsMatche = (props) => {

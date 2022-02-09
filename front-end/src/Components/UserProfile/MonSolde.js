@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import * as moment from "moment";
-import i18n from "../Translation/i18n";
+import i18n from "../../Translation/i18n";
 
 
 const MonSolde = () =>{

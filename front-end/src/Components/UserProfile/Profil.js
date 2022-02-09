@@ -2,8 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import { Box, Button } from '@material-ui/core';
 import {Link, NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {UserContext} from "./UserContext";
-import {getUser} from "../Actions/UserAction";
+import {UserContext} from "../Authentification/UserContext";
+import {getUser} from "../../Actions/UserAction";
 
 const Profil = () => {
 
