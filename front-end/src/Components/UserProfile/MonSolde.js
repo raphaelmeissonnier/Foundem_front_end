@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 import * as moment from "moment";
-import _ from "lodash";
-import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "../Objet/AjoutObjet/styles";
+import _, { random } from "lodash";
+import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle, tdStyle_pos, tdStyle_neg} from "../Objet/AjoutObjet/styles";
 import i18n from "../../Translation/i18n";
 
 
@@ -10,23 +10,24 @@ const MonSolde = () =>{
 
     const user = useSelector((state)=> state.UserReducer);
     const [solde, setSolde] = useState(null);
-    let res = useState([])
+    const [hists,setHists] = useState(null)
 
     //Récupérer le solde du user
     useEffect(async()=>{
         //FAIRE UN DISPATCH SUR LE USER
         if(user.id_utilisateur) {
-            res = await fetch('/users/'+user.id_utilisateur+'/historique')
-                .then(response => response.json())
-
-            console.log("RES",res)
+            await fetch('/users/'+user.id_utilisateur+'/historique')
+                .then(response => response.json()
+                    .then(data => data ? setHists(data) : null));
+            
+            console.log("RES",hists)
         }
         setSolde(user.solde); 
     }, [user.solde])
 
     //Récupérer la liste des récompenses existantes
     //Créer un GroupButton où chaque bouton aurait l'id de la récompense
-
+    console.log("RES29",hists)
     //Créer une récompense
     async function convertir()
     {
@@ -47,9 +48,9 @@ const MonSolde = () =>{
                     .then(data => window.alert(data.message + "https://www.mavieencouleurs.fr/")));
         }
     }
-
+//{ item.valeur_pos ? <td style={tdStyle}>{_.capitalize(item.valeur_pos)}</td>: <td style={tdStyle}>{_.capitalize(item.valeur_neg)}</td> }
     function affiche_tableau(){
-        if(res) {
+        if(hists != null) { 
            
             //console.log("Historique ",res);
 
@@ -64,16 +65,17 @@ const MonSolde = () =>{
                         </tr>
                         </thead>
                         <tbody>
-                        {res.map(item => {
+                        { hists.map(item => {
                             console.log("Item.date", item)
-                            /*return(
-                                <tr style={trChildStyle} key={item.intitule}>
-                                    <td style={tdStyle}>{moment(item.date).format("L")}</td>
+                            return(
+                                <tr style={trChildStyle} key={random(10000000)}>
+                                    <td style={tdStyle}>{moment(item.date).format("DD/MM/YYYY")}</td>
                                     <td style={tdStyle}>{_.capitalize(item.intitule)}</td>
-                                    <td style={tdStyle}>{_.capitalize(item.valeur)}</td>
+                                    <td style={item.valeur_pos ? tdStyle_pos: tdStyle_neg}>{_.capitalize(  item.valeur_pos || - item.valeur_neg)}</td>
                                 </tr>
-                            );*/
-                        })}
+                            );
+                        })
+                        }
                         </tbody>
                     </table>
                 </div>
@@ -85,7 +87,7 @@ const MonSolde = () =>{
         <div>
             <h3>{i18n.t('monSolde.myBalance')} {solde}</h3>
             <button onClick={()=>convertir()}>{i18n.t('monSolde.convertPoints')}</button>
-            <div>{ res!=null ? affiche_tableau() : console.log("RES NULL")}</div>
+            <div>{ hists ? affiche_tableau() : console.log("RES NULL")}</div>
         </div>
 
     )
