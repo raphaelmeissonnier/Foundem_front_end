@@ -96,6 +96,10 @@
     "latitude": "Latitude:",
     "zoom": "Zoom:",
     "withinRadius": "Within a radius"
+  },
+
+  "app": {
+    "loadMessage": "Please be patient, loading may take a few moments..."
   }
 
 }

@@ -249,30 +249,6 @@ const Map = (props) => {
                                 onChange={_handleRayonChange}
                             />
                         </Box>
-                        {/*<RadioGroup onChange={_handleRayonChange} value={rayon} row>
-                            <FormControlLabel value="5" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="5km" />
-                            <FormControlLabel value="10" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="10km" />
-                            <FormControlLabel value="15" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="15km" />
-                            <FormControlLabel value="20" style={{fontFamily:'Arvo', fontSize:20, color:'black'}} control={<Radio size="small" color="primary"/>} label="20km" />
-                        </RadioGroup>*/}
-
-                        {/*{clickedTrajet ?
-                        <div>
-                            <Item style={{height:'500px', width:'90%', marginTop:'10px'}} ref={mapContainer}>
-                                <div className="sidebar">
-                                    {i18n.t('map.longitude')} {lng} | {i18n.t('map.latitude')} {lat} | {i18n.t('map.zoom')} {zoom}
-                                </div>
-                            </Item>
-                            <div>
-                            <Card id="instructions"/>
-                            </div>
-                        </div>
-                        :
-                        <div style={{height:'500px', width:'90%', marginTop:'10px'}} ref={mapContainer}>
-                        <div className="sidebar">
-                            {i18n.t('map.longitude')} {lng} | {i18n.t('map.latitude')} {lat} | {i18n.t('map.zoom')} {zoom}
-                        </div>
-                    </div>}*/}
                 </div>
             </div>
                 {longUser > 0 && latUser > 0 ? <SuggestionObjetPerdu longitude={longUser} latitude={latUser} /> : null }

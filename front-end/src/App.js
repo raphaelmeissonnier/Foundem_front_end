@@ -1,8 +1,8 @@
 import React from "react";
 import {CircularProgress, Button} from '@material-ui/core';
-import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import { Alert } from "@mui/material";
 import Map from "./Components/MapboxMap/Map";
+import i18n from "./Translation/i18n";
 
 class App extends React.Component {
 
@@ -85,7 +85,7 @@ envoyerLocalisation = () =>
               <Alert severity="info"
                      style={{alignContent: 'center', justifyContent: 'center', marginTop: '5px'}}
               >
-                Veuillez patienter le chargement peut prendre quelques instants...
+                {i18n.t('app.loadMessage')}
               </Alert>
             </div>
         }
