@@ -1,44 +1,46 @@
-import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import React, {useContext, useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import * as moment from "moment";
 import _, { random } from "lodash";
 import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle, tdStyle_pos, tdStyle_neg} from "../Objet/AjoutObjet/styles";
 import i18n from "../../Translation/i18n";
+import {UserContext} from "../Authentification/UserContext";
+import {getUser, getHistorique} from "../../Actions/UserAction";
 
 
-const MonSolde = () =>{
+const MonSolde = () => {
 
-    const user = useSelector((state)=> state.UserReducer);
+    let user = useSelector((state) => state.UserReducer.getUserResponse);
+    let hists = useSelector((state) => state.UserReducer.getHistoriqueResponse);
+    const dispatch = useDispatch();
     const [solde, setSolde] = useState(null);
-    const [hists,setHists] = useState(null)
+    const userID = useContext(UserContext);
 
     //Récupérer le solde du user
-    useEffect(async()=>{
-        //FAIRE UN DISPATCH SUR LE USER
-        if(user.id_utilisateur) {
-            await fetch('/users/'+user.id_utilisateur+'/historique')
-                .then(response => response.json()
-                    .then(data => data ? setHists(data) : null));
-            
-            console.log("RES",hists)
+    useEffect(async () => {
+        if(userID)
+        {
+            dispatch(getUser(userID));
+            //Récupération du solde
+            if(user)
+            {
+                setSolde(user.solde);
+            }
+            dispatch(getHistorique(userID));
         }
-        setSolde(user.solde); 
-    }, [user.solde])
+    }, [userID])
 
-    //Récupérer la liste des récompenses existantes
-    //Créer un GroupButton où chaque bouton aurait l'id de la récompense
-    console.log("RES29",hists)
     //Créer une récompense
     async function convertir()
     {
-        console.log("user_id", user.id_utilisateur);
-        if(user.id_utilisateur) {
+        console.log("user_id", userID);
+        if(userID) {
             const requestOptions = {
                 port: 3001,
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                    id: user.id_utilisateur,
+                    id: userID,
                     date: moment(new Date()).format("YYYY-MM-DD"),
                     recompense_id: "1"
                 })
@@ -48,12 +50,9 @@ const MonSolde = () =>{
                     .then(data => window.alert(data.message + "https://www.mavieencouleurs.fr/")));
         }
     }
-//{ item.valeur_pos ? <td style={tdStyle}>{_.capitalize(item.valeur_pos)}</td>: <td style={tdStyle}>{_.capitalize(item.valeur_neg)}</td> }
-    function affiche_tableau(){
-        if(hists != null) { 
-           
-            //console.log("Historique ",res);
 
+    function affiche_tableau(){
+        if(hists != null) {
             return(
                 <div>
                     <table style={tableStyle}>
@@ -66,7 +65,6 @@ const MonSolde = () =>{
                         </thead>
                         <tbody>
                         { hists.map(item => {
-                            console.log("Item.date", item)
                             return(
                                 <tr style={trChildStyle} key={random(10000000)}>
                                     <td style={tdStyle}>{moment(item.date).format("DD/MM/YYYY")}</td>
@@ -82,7 +80,7 @@ const MonSolde = () =>{
             )
         }
     }
-    
+
     return(
         <div>
             <h3>{i18n.t('monSolde.myBalance')} {solde}</h3>
