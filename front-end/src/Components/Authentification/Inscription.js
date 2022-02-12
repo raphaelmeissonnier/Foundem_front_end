@@ -5,15 +5,21 @@ import { Redirect } from "react-router-dom";
 import i18n from "../../Translation/i18n";
 
 const Inscription = () => {
+
+    const [iscreated, setcreated] = useState(false);
+
+    //Valeurs initiales des champs du formulaire
     const initialValues = {
+        name: "",
+        firstName: "",
         username: "",
         email: "",
         password: "",
     };
 
-    const [iscreated, setcreated] = useState(false);
-
     const validationSchema = Yup.object().shape({
+        name: Yup.string().min(3).max(30).required(),
+        firstName: Yup.string().min(3).max(30).required(),
         username: Yup.string().min(3).max(15).required(),
         email: Yup.string().email(),
         password: Yup.string().min(4).max(20).required(),
@@ -31,7 +37,7 @@ const Inscription = () => {
             port: 3001,
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({ username: values.username, email: values.email, password: values.password})
+            body: JSON.stringify({ nom: values.name, prenom: values.firstName, username: values.username, email: values.email, password: values.password})
         };
         fetch('/users', requestOptions)
             //Je récupère la réponse émise par le back
@@ -51,13 +57,31 @@ const Inscription = () => {
             validationSchema={validationSchema}
             >
                 <Form className="formContainer">
+                    <label>{i18n.t('inscription.name')}</label>
+                    <ErrorMessage name="name" component="span" />
+                    <Field
+                        autoComplete="off"
+                        id="inputCreatePost"
+                        name="name"
+                        placeholder={i18n.t('inscription.yourName')}
+                    />
+
+                    <label>{i18n.t('inscription.firstName')}</label>
+                    <ErrorMessage name="firstName" component="span" />
+                    <Field
+                        autoComplete="off"
+                        id="inputCreatePost"
+                        name="firstName"
+                        placeholder={i18n.t('inscription.yourFirstName')}
+                    />
+
                     <label>{i18n.t('inscription.username')}</label>
                     <ErrorMessage name="username" component="span" />
                     <Field
                     autoComplete="off"
                     id="inputCreatePost"
                     name="username"
-                    placeholder="Votre pseudo"
+                    placeholder={i18n.t('inscription.yourUsername')}
                     />
                     
                     <label>{i18n.t('inscription.email')}</label>
@@ -66,7 +90,7 @@ const Inscription = () => {
                     autoComplete="off"
                     id="inputCreatePost"
                     name="email"
-                    placeholder="Votre adresse-mail"
+                    placeholder={i18n.t('inscription.yourEmail')}
                     />
 
                     <label>{i18n.t('inscription.password')}</label>
@@ -76,7 +100,7 @@ const Inscription = () => {
                     type="password"
                     id="inputCreatePost"
                     name="password"
-                    placeholder="Votre mot de passe"
+                    placeholder={i18n.t('inscription.yourPassword')}
                     />
 
                     <button type="submit">{i18n.t('inscription.signUp')}</button>

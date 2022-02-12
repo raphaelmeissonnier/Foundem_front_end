@@ -48,9 +48,16 @@
   },
 
   "inscription": {
+    "name" : "Name:",
+    "yourName" : "Your name...",
+    "firstName" : "First name:",
+    "yourFirstName" : "Your first name..",
     "username": "Username:",
+    "yourUsername": "Your username...",
     "email": "Email:",
+    "yourEmail": "Your email...",
     "password": "Password:",
+    "yourPassword": "Your password...",
     "signUp": "Sign up"
   },
 

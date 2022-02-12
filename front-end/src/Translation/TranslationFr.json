@@ -48,9 +48,16 @@
   },
 
   "inscription": {
+    "name" : "Nom:",
+    "yourName" : "Votre nom...",
+    "firstName" : "Prénom:",
+    "yourFirstName" : "Votre prénom...",
     "username": "Username:",
+    "yourUsername": "Votre pseudo...",
     "email": "Email:",
+    "yourEmail": "Votre adresse mail...",
     "password": "Mot de passe:",
+    "yourPassword": "Votre mot de passe...",
     "signUp": "S'inscrire"
   },
 
