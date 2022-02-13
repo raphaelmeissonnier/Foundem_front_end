@@ -1,6 +1,8 @@
 export const GET_USER = "GET_USER";
 export const GET_HISTORIQUE = "GET_HISTORIQUE";
+export const GET_RDV = "GET_RDV";
 
+/*API call getting user information*/
 export const getUser = (uid) => {
     return async (dispatch) => {
         try{
@@ -16,6 +18,7 @@ export const getUser = (uid) => {
     };
 };
 
+/*API call getting history user*/
 export const getHistorique = (uid) => {
     return async (dispatch) => {
         try{
@@ -23,6 +26,22 @@ export const getHistorique = (uid) => {
             let data = await response.json();
             console.log("UserAction - getHistorique: ", data);
             dispatch({type: GET_HISTORIQUE, payload: data});
+        }
+        catch (e)
+        {
+            alert(e);
+        }
+    };
+};
+
+/*API call getting rdv user*/
+export const getRdv = (uid) => {
+    return async (dispatch) => {
+        try{
+            let response = await fetch('/users/'+uid+'/rdv');
+            let data = await response.json();
+            console.log("UserAction - getRdv: ", data);
+            dispatch({type: GET_RDV, payload: data});
         }
         catch (e)
         {

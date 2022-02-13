@@ -70,7 +70,8 @@
     "accept": "Accepter",
     "decline": "Refuser",
     "myLostItems": "Mes objets perdus",
-    "myFoundItems": "Mes objets trouvés"
+    "myFoundItems": "Mes objets trouvés",
+    "place": "Lieu"
   },
 
   "monSolde": {
@@ -100,5 +101,9 @@
 
   "app": {
     "loadMessage": "Veuillez patienter le chargement peut prendre quelques instants..."
+  },
+
+  "mesRdv": {
+    "title": "Mes rendez-vous"
   }
 }
