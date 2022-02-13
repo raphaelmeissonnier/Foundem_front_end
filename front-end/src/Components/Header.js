@@ -114,6 +114,7 @@ const Header = () =>{
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
+              href="/EspaceFidelite"
             >
               <Badge badgeContent={2} color="error">
                 <EmojiEventsIcon />

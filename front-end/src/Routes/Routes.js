@@ -10,6 +10,7 @@ import Logout from "../Components/Logout";
 import ObjetsMatche from '../Components/ObjetsMatche';
 import MesObjets from '../Components/MesObjets';
 import AjouterObjet from '../Components/AjouterObjet';
+import EspaceFidelite from '../Components/EspaceFidelite';
 import {UserContext} from "../Components/UserContext";
 
 const Routes = () =>{
@@ -26,7 +27,9 @@ const Routes = () =>{
                     <Route exact path="/AjouterObjetPerdu" render={() => <AjouterObjet objet={'perdu'}/>} />
                     <Route exact path="/AjouterObjetTrouve" render={() => <AjouterObjet objet={'trouve'}/>} />
                     <Route exact path="/ObjetsMatche/:idObjet" component={ObjetsMatche} />
-                    <Route exact path="/ChercherObjetPerdu" component={ChercherObjetPerdu} /> 
+                    <Route exact path="/ChercherObjetPerdu" component={ChercherObjetPerdu} />
+                    <Route exact path="/EspaceFidelite" component={EspaceFidelite} />
+
                 </Switch> : 
                 <Switch>
                     <Route exact path="/" component={App} />
