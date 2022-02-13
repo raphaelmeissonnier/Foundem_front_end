@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, IconButton, Avatar} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import Container from '@mui/material/Container';
@@ -6,22 +6,30 @@ import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import imageAvatar from '../../images/Cartes.png';
 import { Link } from 'react-router-dom';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import logo from '../../images/logo.jpg'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 import i18 from "../../Translation/i18n";
+import {UserContext} from "../Authentification/UserContext";
+import {getUser} from "../../Actions/UserAction";
 
 var _ = require('lodash');
 
 const Header = () =>{
 
 
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [username, setUsername] = useState(null);
+  const userID = useContext(UserContext);
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.UserReducer.getUserResponse);
 
-  const userData = useSelector((state) => state.UserReducer);
+  useEffect( async () => {
+    dispatch(getUser(userID));
+  }, [userID])
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -42,60 +50,60 @@ const Header = () =>{
     <AppBar position="static">
       <Container maxWidth="xl" style={{flexDirection:'row'}}>
         <Toolbar disableGutters>
-        <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              href="/"
-              color="inherit"
-            >
-          <img src={logo} alt="logo"/>
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            href="/"
+            color="inherit"
+          >
+            <img src={logo} alt="logo"/>
           </IconButton>
 
           {!_.isEmpty(userData) ?
               <div>
-            <Box sx={{ paddingLeft: 10, flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-                <MenuItem component={Link} to={"/AjouterObjetPerdu"} >
-                  <Typography textAlign="center">{i18.t('header.lostItem')}</Typography>
-                </MenuItem>
-                <MenuItem component={Link} to={"/AjouterObjetTrouve"}>
-                  <Typography textAlign="center">{i18.t('header.foundItem')}</Typography>
-                </MenuItem>
-                <MenuItem component={Link} to={"/ChercherObjetPerdu"}>
-                  <Typography textAlign="center">{i18.t('header.searchItem')}</Typography>
-                </MenuItem>
-            </Menu>
-          </Box>
-          <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                <Box sx={{ paddingLeft: 10, flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                  <IconButton
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpenNavMenu}
+                    color="inherit"
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorElNav}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left',
+                    }}
+                    open={Boolean(anchorElNav)}
+                    onClose={handleCloseNavMenu}
+                    sx={{
+                      display: { xs: 'block', md: 'none' },
+                    }}
+                  >
+                    <MenuItem component={Link} to={"/AjouterObjetPerdu"} >
+                      <Typography textAlign="center">{i18.t('header.lostItem')}</Typography>
+                    </MenuItem>
+                    <MenuItem component={Link} to={"/AjouterObjetTrouve"}>
+                      <Typography textAlign="center">{i18.t('header.foundItem')}</Typography>
+                    </MenuItem>
+                    <MenuItem component={Link} to={"/ChercherObjetPerdu"}>
+                      <Typography textAlign="center">{i18.t('header.searchItem')}</Typography>
+                    </MenuItem>
+                  </Menu>
+              </Box>
+              <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               <Button href="/AjouterObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                 {i18.t('header.lostItem')}
               </Button>
@@ -130,12 +138,12 @@ const Header = () =>{
             </IconButton>
             <Tooltip title="Profil">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={userData.username}  src={imageAvatar} />
+                <Avatar alt={username}  src={imageAvatar} />
               </IconButton>
             </Tooltip>
             
             
-              {!_.isEmpty(userData) ? 
+              {!_.isEmpty(userData) ?
               <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -191,7 +199,7 @@ const Header = () =>{
               }
             
           </Box>
-          <h4>{userData.username}</h4>
+          <h4>{!_.isEmpty(userData) ? userData.username : null }</h4>
         </Toolbar>
       </Container>
     </AppBar>
