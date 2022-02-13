@@ -14,11 +14,23 @@ export const tdStyle = {
     padding: "8px"
 }
 
+export const tdStyle_neg = {
+    border: "1px solid #ddd",
+    padding: "8px",
+    backgroundColor: "#ED8181"
+}
+
+export const tdStyle_pos = {
+    border: "1px solid #ddd",
+    padding: "8px",
+    backgroundColor: "#8BED95"
+}
+
 export const thStyle = {
     paddingTop: "12px",
     paddingBottom: "12px",
     textAlign: "left",
-    backgroundColor: "#04AA6D",
+    backgroundColor: "#8763D8",
     color: "white",
     border: "1px solid #ddd",
     padding: "8px",

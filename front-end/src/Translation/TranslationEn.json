@@ -48,9 +48,16 @@
   },
 
   "inscription": {
+    "name" : "Name:",
+    "yourName" : "Your name...",
+    "firstName" : "First name:",
+    "yourFirstName" : "Your first name..",
     "username": "Username:",
+    "yourUsername": "Your username...",
     "email": "Email:",
+    "yourEmail": "Your email...",
     "password": "Password:",
+    "yourPassword": "Your password...",
     "signUp": "Sign up"
   },
 
@@ -63,7 +70,8 @@
     "accept": "Accept",
     "decline": "Decline",
     "myLostItems": "My lost items",
-    "myFoundItems": "My found items"
+    "myFoundItems": "My found items",
+    "place": "Location"
   },
 
   "monSolde": {
@@ -89,6 +97,13 @@
     "latitude": "Latitude:",
     "zoom": "Zoom:",
     "withinRadius": "Within a radius"
+  },
+
+  "app": {
+    "loadMessage": "Please be patient, loading may take a few moments..."
+  },
+  "mesRdv": {
+    "title": "My appointments"
   }
 
 }

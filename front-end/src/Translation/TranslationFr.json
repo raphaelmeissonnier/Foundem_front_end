@@ -48,9 +48,16 @@
   },
 
   "inscription": {
+    "name" : "Nom:",
+    "yourName" : "Votre nom...",
+    "firstName" : "Prénom:",
+    "yourFirstName" : "Votre prénom...",
     "username": "Username:",
+    "yourUsername": "Votre pseudo...",
     "email": "Email:",
+    "yourEmail": "Votre adresse mail...",
     "password": "Mot de passe:",
+    "yourPassword": "Votre mot de passe...",
     "signUp": "S'inscrire"
   },
 
@@ -63,7 +70,8 @@
     "accept": "Accepter",
     "decline": "Refuser",
     "myLostItems": "Mes objets perdus",
-    "myFoundItems": "Mes objets trouvés"
+    "myFoundItems": "Mes objets trouvés",
+    "place": "Lieu"
   },
 
   "monSolde": {
@@ -89,5 +97,13 @@
     "latitude": "Latitude:",
     "zoom": "Zoom:",
     "withinRadius": "Dans un rayon de"
+  },
+
+  "app": {
+    "loadMessage": "Veuillez patienter le chargement peut prendre quelques instants..."
+  },
+
+  "mesRdv": {
+    "title": "Mes rendez-vous"
   }
 }
