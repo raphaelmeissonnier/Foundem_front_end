@@ -110,11 +110,11 @@ const AjouterObjet =({objet}) =>{
 
     //Récupération de la longitude et latitude à partir de l'adresse
     function onSelected(viewport, item){
-        console.log("Item",item.place_name)
+        console.log("Item place",item.place_name)
         console.log("Item",item)
         setLongitude(item.center[0])
         setLatitude(item.center[1])
-        console.log("Item long",typeof(item.center[0]))
+        console.log("Item ",typeof(item.center[0]))
     }
 
 

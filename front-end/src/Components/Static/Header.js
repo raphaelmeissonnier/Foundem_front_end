@@ -8,20 +8,39 @@ import imageAvatar from '../../images/Cartes.png';
 import { Link } from 'react-router-dom';
 import {useSelector} from "react-redux";
 import logo from '../../images/logo.jpg'
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 import i18 from "../../Translation/i18n";
+<<<<<<< Updated upstream
+=======
+import {UserContext} from "../Authentification/UserContext";
+import {getUser, getAllRdv} from "../../Actions/UserAction";
+>>>>>>> Stashed changes
 
 var _ = require('lodash');
 
 const Header = () =>{
 
 
+<<<<<<< Updated upstream
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const userData = useSelector((state) => state.UserReducer);
+=======
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [username, setUsername] = useState(null);
+  const count= useSelector((state) => state.UserReducer.getAllRdv);
+  const userID = useContext(UserContext);
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.UserReducer.getUserResponse);
+
+  useEffect( async () => {
+    dispatch(getUser(userID));
+    dispatch(getAllRdv(userID));
+  }, [userID])
+>>>>>>> Stashed changes
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -110,21 +129,12 @@ const Header = () =>{
               : <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' }, width:'55%' }}/>}
 
           <Box sx={{textAlign:'right', width:'40%'}}>
-          <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={2} color="error">
-                <EmojiEventsIcon />
-              </Badge>
-            </IconButton>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={43} color="error">
+              <Badge badgeContent={count} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
