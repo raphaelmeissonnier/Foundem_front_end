@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useContext } from "react";
 import {UserContext} from "../Authentification/UserContext";
 import {styled} from "@material-ui/core/styles";
-import {Box, Card, Paper} from "@material-ui/core";
+import {Card, Paper} from "@material-ui/core";
 import {CardContent, FormLabel, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import _ from "lodash";
@@ -15,30 +15,39 @@ const {config} = require('../../config');
 const SuggestionObjetPerdu = (props) => {
 
     const mapboxApiKey = config.MY_API_TOKEN;
-    var [items2] = useState([]);
+    const [items2, setItems2] = useState([]);
+    const [itemsSuggeres, setItemsSuggeres] = useState(null); //SOURCE DE PB ??
     const userId = useContext(UserContext);
 
     var longitude = props.longitude;
-    console.log("longitude", longitude);
     var latitude = props.latitude;
-    console.log("latitude", latitude);
 
     useEffect(async () => {
+        //Récupération des objets suggérés
         let responseSugg = await fetch("/objetsperdus/suggestions/"+userId);
         let dataSugg = await responseSugg.json();
-        console.log("SuggestionObjetPerdu - apres le fetch: ",dataSugg)
-
-        console.log("On remplit items2")
-        items2.length=0;
-        for(var i=0; i<dataSugg.length;i++){
-            var addr = await fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/"+dataSugg[i].longitude+","+dataSugg[i].latitude+".json?access_token="+mapboxApiKey)
-            var repAddr = await addr.json();
-            console.log("ADRESSE",repAddr);
-            items2[i]=[dataSugg[i],repAddr.features[2].place_name]
-        }
+        setItemsSuggeres(dataSugg);
+        console.log("SuggestionObjetPerdu - apres le fetch: ",dataSugg);
     }, [longitude,latitude,userId]);
 
-    console.log("SuggestionObjetsPerdus.js - items2: ", items2);
+    useEffect( async () => {
+        if(itemsSuggeres) {
+            console.log("On remplit items2: ", itemsSuggeres);
+            setItems2(await recuperationLieu(itemsSuggeres));
+            console.log("SuggestionObjetsPerdus.js - items2: ", items2);
+        }
+    }, [itemsSuggeres])
+
+    async function recuperationLieu(listeOjets)
+    {
+        let tableau = [];
+        for (var i = 0; i < listeOjets.length; i++) {
+            var addr = await fetch("https://api.mapbox.com/geocoding/v5/mapbox.places/" + listeOjets[i].longitude + "," + listeOjets[i].latitude + ".json?access_token=" + mapboxApiKey)
+            var repAddr = await addr.json();
+            tableau[i] = [listeOjets[i], repAddr.features[2].place_name]
+        }
+        return tableau;
+    }
 
     const Item = styled(Paper)(({ theme }) => ({}));
 
@@ -47,7 +56,7 @@ const SuggestionObjetPerdu = (props) => {
             <div style={{textAlign:'center'}}>
                 <FormLabel style={{color:'black', fontFamily:'Trebuchet MS', fontSize:'18px', marginTop:'5px'}}>{i18.t('suggestionObjetPerdu.title')}</FormLabel>
             </div>
-            {items2.length>0 ? items2.map(item =>{
+            {items2 !=null ? items2.map(item =>{
                 return(
                     <div style={{marginLeft:'auto', marginRight:'auto', width:'90%'}}>
                         <Card style={{boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px", marginTop:'10px', marginBottom:'10px'}}>
