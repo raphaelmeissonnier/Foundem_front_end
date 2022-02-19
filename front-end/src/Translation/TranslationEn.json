@@ -8,7 +8,10 @@
     "myBalance": "My balance",
     "logout": "Logout",
     "registration": "Registration",
-    "login": "Login"
+    "login": "Login",
+    "notificationsMessage" : "You have received a new appointment request",
+    "profil": "Profile",
+    "notifications": "Notifications"
   },
 
   "suggestionObjetPerdu": {
@@ -42,23 +45,21 @@
     "category": "Category",
     "date": "Date",
     "myItem": "It is my item",
-    "titlePart1": "Search for a lost item",
+    "titlePart1": "Search for a Found item",
     "titlePart2": "Please fill in as many fields as possible so that we can display the items closest to your description !",
     "search": "Search"
   },
 
   "inscription": {
-    "name" : "Name:",
+    "title": "Registration",
     "yourName" : "Your name...",
-    "firstName" : "First name:",
     "yourFirstName" : "Your first name..",
-    "username": "Username:",
     "yourUsername": "Your username...",
-    "email": "Email:",
     "yourEmail": "Your email...",
-    "password": "Password:",
     "yourPassword": "Your password...",
-    "signUp": "Sign up"
+    "signUp": "Sign up",
+    "errorRegistration": "Email or username already used !",
+    "successRegistration": "Your account has been created !"
   },
 
   "connexion":{
@@ -71,6 +72,7 @@
     "decline": "Decline",
     "myLostItems": "My lost items",
     "myFoundItems": "My found items",
+    "myMatchItems": "My match items",
     "place": "Location"
   },
 
@@ -96,14 +98,31 @@
     "longitude": "Longitude: ",
     "latitude": "Latitude:",
     "zoom": "Zoom:",
-    "withinRadius": "Within a radius"
+    "withinRadius": "Within a radius",
+    "goThere": "Go there !"
   },
 
   "app": {
     "loadMessage": "Please be patient, loading may take a few moments..."
   },
+
   "mesRdv": {
     "title": "My appointments"
+  },
+
+  "errorMessage": {
+    "nameRequired" : "Please enter your name",
+    "firstNameRequired" : "Please enter your first name",
+    "usernameRequired" : "Please enter your username",
+    "emailRequired" : "Please enter your email",
+    "passwordRequired" : "Please enter your password"
+  },
+
+  "footer": {
+    "description": "We have all lost an object and thought that it would be great if someone found it and contacted us to return it, or even found an object and wanted to return it to the owner in a simple way. So we set up this project to answer this problem.",
+    "links": "Links",
+    "yourAccount": "Your account"
   }
+
 
 }

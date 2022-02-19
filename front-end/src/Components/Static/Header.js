@@ -1,35 +1,51 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, IconButton, Avatar} from '@material-ui/core';
+import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, IconButton, Avatar, Snackbar} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
-import imageAvatar from '../../images/Cartes.png';
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import logo from '../../images/logo.jpg'
-import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 import i18 from "../../Translation/i18n";
 import {UserContext} from "../Authentification/UserContext";
-import {getUser} from "../../Actions/UserAction";
+import {getUser, getAllRdv} from "../../Actions/UserAction";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import './styles.css';
 
 var _ = require('lodash');
 
 const Header = () =>{
 
-
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorElNotif, setAnchorElNotif] = useState(null);
   const [username, setUsername] = useState(null);
+  const countResponse = useSelector((state) => state.UserReducer.getAllRdvResponse);
+  const [count, setCount] = useState(null);
   const userID = useContext(UserContext);
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.UserReducer.getUserResponse);
 
   useEffect( async () => {
-    dispatch(getUser(userID));
+    if(userID) {
+      dispatch(getUser(userID));
+      dispatch(getAllRdv(userID));
+    }
   }, [userID])
+
+  useEffect(async () => {
+    if(userData)
+    {
+      setUsername(userData.username);
+    }
+    if(countResponse)
+    {
+      setCount(countResponse.nbRdv);
+    }
+  })
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -46,163 +62,191 @@ const Header = () =>{
     setAnchorElUser(null);
   };
 
-  return(
-    <AppBar position="static">
-      <Container maxWidth="xl" style={{flexDirection:'row'}}>
-        <Toolbar disableGutters>
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            href="/"
-            color="inherit"
-          >
-            <img src={logo} alt="logo"/>
-          </IconButton>
+  const handleOpenNotificationsMenu = (event) => {
+    setAnchorElNotif(event.currentTarget);
+  }
 
-          {!_.isEmpty(userData) ?
-              <div>
-                <Box sx={{ paddingLeft: 10, flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+  const handleCloseNotificationsMenu = () => {
+    setAnchorElNotif(null);
+  }
+
+  return(
+      <AppBar position="static">
+        <Container maxWidth="xl" style={{flexDirection:'row'}}>
+          <Toolbar disableGutters>
+            <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                href="/"
+                color="inherit"
+            >
+              <img src={logo} alt="logo"/>
+            </IconButton>
+
+            {!_.isEmpty(userData) ?
+                <div>
+                  <Box sx={{ paddingLeft: 10, flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleOpenNavMenu}
+                        color="inherit"
+                    >
+                      <MenuIcon />
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorElNav}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'left',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'left',
+                        }}
+                        open={Boolean(anchorElNav)}
+                        onClose={handleCloseNavMenu}
+                        sx={{
+                          display: { xs: 'block', md: 'none' },
+                        }}
+                    >
+                      <MenuItem component={Link} to={"/AjouterObjetPerdu"} >
+                        <Typography className="textPolice" textAlign="center">{i18.t('header.lostItem')}</Typography>
+                      </MenuItem>
+                      <MenuItem component={Link} to={"/AjouterObjetTrouve"}>
+                        <Typography className="textPolice" textAlign="center">{i18.t('header.foundItem')}</Typography>
+                      </MenuItem>
+                      <MenuItem component={Link} to={"/ChercherObjetPerdu"}>
+                        <Typography className="textPolice" textAlign="center">{i18.t('header.searchItem')}</Typography>
+                      </MenuItem>
+                    </Menu>
+                  </Box>
+                  <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    <Button className="textPolice" href="/AjouterObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                      {i18.t('header.lostItem')}
+                    </Button>
+                    <Button className="textPolice" href="/AjouterObjetTrouve" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                      {i18.t('header.foundItem')}
+                    </Button>
+                    <Button className="textPolice" href="/ChercherObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                      {i18.t('header.searchItem')}
+                    </Button>
+                  </Box>
+                </div>
+                : <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' }, width:'55%' }}/>}
+
+            <Box sx={{textAlign:'right', width:'40%'}}>
+              {!_.isEmpty(userData) ?
+                  <Tooltip className="textPolice" title={i18.t('header.notifications')}>
                   <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleOpenNavMenu}
-                    color="inherit"
+                      size="large"
+                      aria-label="show 17 new notifications"
+                      color="inherit"
+                      onClick={handleOpenNotificationsMenu}
                   >
-                    <MenuIcon />
+                    <Badge badgeContent={count} color="error">
+                      <NotificationsIcon/>
+                    </Badge>
                   </IconButton>
+                  </Tooltip>
+                : null
+              }
+              {!_.isEmpty(userData) ?
                   <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorElNav}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'left',
-                    }}
-                    open={Boolean(anchorElNav)}
-                    onClose={handleCloseNavMenu}
-                    sx={{
-                      display: { xs: 'block', md: 'none' },
-                    }}
+                      sx={{ mt: '45px' }}
+                      id="menu-appbar"
+                      anchorEl={anchorElNotif}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      open={Boolean(anchorElNotif)}
+                      onClose={handleCloseNotificationsMenu}
                   >
-                    <MenuItem component={Link} to={"/AjouterObjetPerdu"} >
-                      <Typography textAlign="center">{i18.t('header.lostItem')}</Typography>
+                    <MenuItem component={Link} to={"/MesRdv"}>
+                      <Typography className="textPolice">{i18.t('header.notificationsMessage')}</Typography>
                     </MenuItem>
-                    <MenuItem component={Link} to={"/AjouterObjetTrouve"}>
-                      <Typography textAlign="center">{i18.t('header.foundItem')}</Typography>
+
+                  </Menu> : null
+              }
+              <Tooltip className="textPolice" title={i18.t('header.profil')}>
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <AccountCircleIcon fontSize="large" color="primary" style={{color:"white"}}/>
+                </IconButton>
+              </Tooltip>
+
+
+              {!_.isEmpty(userData) ?
+                  <Menu
+                      sx={{ mt: '45px' }}
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem  component={Link} to={"/MesObjets"}>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.myItems')}</Typography>
                     </MenuItem>
-                    <MenuItem component={Link} to={"/ChercherObjetPerdu"}>
-                      <Typography textAlign="center">{i18.t('header.searchItem')}</Typography>
+                    <MenuItem  component={Link} to={"/MesRdv"}>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.myRdv')}</Typography>
+                    </MenuItem>
+                    <MenuItem  component={Link} to={"/MonSolde"}>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.myBalance')}</Typography>
+                    </MenuItem>
+                    <MenuItem  component={Link} to={"/Logout"}>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.logout')}</Typography>
                     </MenuItem>
                   </Menu>
-              </Box>
-              <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-              <Button href="/AjouterObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-                {i18.t('header.lostItem')}
-              </Button>
-              <Button href="/AjouterObjetTrouve" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-                {i18.t('header.foundItem')}
-              </Button>
-              <Button href="/ChercherObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
-                {i18.t('header.searchItem')}
-              </Button>
-          </Box>
-              </div>
-              : <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' }, width:'55%' }}/>}
-
-          <Box sx={{textAlign:'right', width:'40%'}}>
-          <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={2} color="error">
-                <EmojiEventsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={43} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <Tooltip title="Profil">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={username}  src={imageAvatar} />
-              </IconButton>
-            </Tooltip>
-            
-            
-              {!_.isEmpty(userData) ?
-              <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-                <MenuItem  component={Link} to={"/MesObjets"}>
-                  <Typography textAlign="center">{i18.t('header.myItems')}</Typography>
-                </MenuItem>
-                <MenuItem  component={Link} to={"/MesRdv"}>
-                  <Typography textAlign="center">{i18.t('header.myRdv')}</Typography>
-                </MenuItem>
-                <MenuItem  component={Link} to={"/MonSolde"}>
-                  <Typography textAlign="center">{i18.t('header.myBalance')}</Typography>
-                </MenuItem>
-                <MenuItem  component={Link} to={"/Logout"}>
-                  <Typography textAlign="center">{i18.t('header.logout')}</Typography>
-                </MenuItem>
-                </Menu>
-                :
-                <Menu
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-                <MenuItem  component={Link} to={"/Inscription"}>
-                  <Typography textAlign="center">{i18.t('header.registration')}</Typography>
-                </MenuItem>
-                <MenuItem  component={Link} to={"/Login"}>
-                  <Typography textAlign="center">{i18.t('header.login')}</Typography>
-                </MenuItem>
-                </Menu>
+                  :
+                  <Menu
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem  component={Link} to={"/Inscription"}>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.registration')}</Typography>
+                    </MenuItem>
+                    <MenuItem  component={Link} to={"/Login"}>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.login')}</Typography>
+                    </MenuItem>
+                  </Menu>
               }
-            
-          </Box>
-          <h4>{!_.isEmpty(userData) ? userData.username : null }</h4>
-        </Toolbar>
-      </Container>
-    </AppBar>
+
+            </Box>
+            <h4>{username}</h4>
+          </Toolbar>
+        </Container>
+      </AppBar>
   )
 }
 export default Header;

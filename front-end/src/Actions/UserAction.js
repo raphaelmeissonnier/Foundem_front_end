@@ -1,6 +1,7 @@
 export const GET_USER = "GET_USER";
 export const GET_HISTORIQUE = "GET_HISTORIQUE";
 export const GET_RDV = "GET_RDV";
+export const GET_ALL_RDV = "GET_ALL_RDV"
 
 /*API call getting user information*/
 export const getUser = (uid) => {
@@ -49,5 +50,20 @@ export const getRdv = (uid) => {
         }
     };
 };
+
+export const getAllRdv = (uid) => {
+    return async (dispatch) => {
+        try{
+            let response = await fetch('/users/'+uid+'/rdv/count');
+            let data = await response.json();
+            console.log("UserAction - count - getALLRdv: ", data);
+            dispatch({type: GET_ALL_RDV, payload: data});
+        }
+        catch (e)
+        {
+            alert(e);
+        }
+    };
+}
 
 

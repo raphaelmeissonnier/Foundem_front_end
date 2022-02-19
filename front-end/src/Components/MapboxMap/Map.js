@@ -7,6 +7,7 @@ import {Box, Card, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Slider
 import Stack from '@mui/material/Stack';
 import SuggestionObjetPerdu from '../Objet/SuggestionObjetPerdu';
 import i18n from "../../Translation/i18n";
+import moment from "moment";
 
 
 const {config} = require('../../config');
@@ -104,12 +105,16 @@ const Map = (props) => {
             const tab = tabValue[0];
 
             //Contenu de la pop-up
-            const innerHtmlContent = `<h3><b>Intitulé : ${tabValue[0].intitule}</b></h3>
-                            <p>Description : ${tabValue[0].description}</p>
-                            <p>Le <b>${tabValue[0].date}</b></p>`;
+            /*let date = moment(tabValue[0].date).format("L"); */
+            const innerHtmlContent = `
+                <div style="flex-direction: column; text-align:justify; font-family: Trebuchet MS;">
+                    <h6><b>${i18n.t('ajoutObjet.name')} ${tabValue[0].intitule}</b></h6>
+                    <p style="font-size: 15px">${i18n.t('ajoutObjet.description')} ${tabValue[0].description}</p>
+                    <p style="font-size: 15px">${i18n.t('suggestionObjetPerdu.lostOn')}${moment(tabValue[0].date).format("DD/MM/YYYY")}</p>
+                </div>`;
             const divElement = document.createElement('div');
             const assignBtn = document.createElement('div');
-            assignBtn.innerHTML = `<center><button class="btn btn-success btn-simple text-white"> Y Aller !</button></center>`;
+            assignBtn.innerHTML = `<button class="btn btn-success btn-simple text-white" style="font-size: 15px; font-family: Trebuchet MS;">${i18n.t('map.goThere')}</button>`;
             divElement.innerHTML = innerHtmlContent;
             divElement.appendChild(assignBtn);
             assignBtn.addEventListener('click', (e) => {
@@ -207,9 +212,9 @@ const Map = (props) => {
         for (const step of steps) {
             tripInstructions += `<li>${step.maneuver.instruction}</li>`;
         }
-        instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
+        instructions.innerHTML = `<p style="align-self: center;"><strong>Trip duration: ${Math.floor(
             data.duration / 60
-            )} min 🚴 </strong></p><ol>${tripInstructions}</ol>`;
+            )} min 🚴 </strong></p><ol style="text-align: justify">${tripInstructions}</ol>`;
 
         console.log("Markers crées",tripInstructions)
     }
@@ -227,15 +232,15 @@ const Map = (props) => {
             <Stack direction="row" spacing={2} style={{width:'95%', marginLeft:'10px', marginRight:'10px', marginBottom:'10px', marginTop:'10px', textAlign:'center'}}>
             <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
                 <div style={{flexDirection:"column", alignItems:'center', justifyItems:'center', display:'flex', width:'100%', marginTop:"10px", marginLeft:"10px"}} className="card">
-                    <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20}}>{i18n.t('map.results')} <b>{items.length}</b> {i18n.t('map.foundNearYou')}</FormLabel>
+                    <FormLabel style={{color:'black', fontFamily:'Trebuchet MS', fontSize:'18px', marginTop:'10px'}}>{i18n.t('map.results')} <b>{items.length}</b> {i18n.t('map.foundNearYou')}</FormLabel>
                     <Card style={{height:'500px', width:'90%', marginTop:'10px'}} ref={mapContainer}>
                         <div className="sidebar">
                             {i18n.t('map.longitude')} {lng} | {i18n.t('map.latitude')} {lat} | {i18n.t('map.zoom')} {zoom}
                         </div>
                     </Card>
-                    <Card id="instructions"/>
+                    <Card id="instructions" style={{ boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px", marginTop:"10px", fontFamily:"Trebuchet MS" }}/>
                     <div style={{flexDirection:"row", display:'flex', alignItems:'center', justifyContent:'center' }}>
-                        <FormLabel style={{color:'black', fontFamily:'Arvo', fontSize:20, marginRight:"10px"}}>{i18n.t('map.withinRadius')}</FormLabel>
+                        <FormLabel style={{color:'black', fontFamily:'Trebuchet MS', fontSize:'18px', marginRight:"10px"}}>{i18n.t('map.withinRadius')}</FormLabel>
                         <Box sx={{ width: 500 , marginTop:"15px"}}>
                             <Slider
                                 aria-label="Restricted values"

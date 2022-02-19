@@ -8,7 +8,10 @@
     "myBalance": "Mon solde",
     "logout": "Deconnexion",
     "registration": "Inscription",
-    "login": "Connexion"
+    "login": "Connexion",
+    "notificationsMessage" : "Vous avez reçu une nouvelle demande de rendez-vous",
+    "profil": "Profil",
+    "notifications": "Notifications"
   },
 
   "suggestionObjetPerdu": {
@@ -42,23 +45,21 @@
     "category": "Catégorie",
     "date": "Date",
     "myItem": "C'est mon objet",
-    "titlePart1": "Rechercher un objet perdu",
+    "titlePart1": "Rechercher un objet trouvé",
     "titlePart2": "Merci de renseigner un maximum de champs pour pouvoir vous afficher les articles les plus proches de votre description !",
     "search": "Rechercher"
   },
 
   "inscription": {
-    "name" : "Nom:",
+    "title": "Inscription",
     "yourName" : "Votre nom...",
-    "firstName" : "Prénom:",
     "yourFirstName" : "Votre prénom...",
-    "username": "Username:",
     "yourUsername": "Votre pseudo...",
-    "email": "Email:",
     "yourEmail": "Votre adresse mail...",
-    "password": "Mot de passe:",
     "yourPassword": "Votre mot de passe...",
-    "signUp": "S'inscrire"
+    "signUp": "S'inscrire",
+    "errorRegistration": "L'email ou username existant !",
+    "successRegistration": "Votre compte a bien été créé !"
   },
 
   "connexion":{
@@ -71,6 +72,7 @@
     "decline": "Refuser",
     "myLostItems": "Mes objets perdus",
     "myFoundItems": "Mes objets trouvés",
+    "myMatchItems": "Mes objets matchés",
     "place": "Lieu"
   },
 
@@ -96,7 +98,8 @@
     "longitude": "Longitude: ",
     "latitude": "Latitude:",
     "zoom": "Zoom:",
-    "withinRadius": "Dans un rayon de"
+    "withinRadius": "Dans un rayon de",
+    "goThere": "Y aller !"
   },
 
   "app": {
@@ -105,5 +108,19 @@
 
   "mesRdv": {
     "title": "Mes rendez-vous"
+  },
+
+  "errorMessage": {
+    "nameRequired" : "Veuillez entrer votre nom",
+    "firstNameRequired" : "Veuillez entrer votre prénom",
+    "usernameRequired" : "Veuillez entrer votre pseudo",
+    "emailRequired" : "Veuillez entrer votre email",
+    "passwordRequired" : "Veuillez entrer votre mot de passe"
+  },
+
+  "footer": {
+    "description": "Il nous est à tous arrivé de perdre un objet, se dire que ce serait génial qu’une personne le trouve et nous contacte pour nous le rendre, ou même de trouver un objet et de vouloir le rendre au propriétaire avec un moyen simple. Nous avons donc mis en place ce projet pour répondre à cette problématique.",
+    "links": "Liens",
+    "yourAccount": "Votre compte"
   }
 }
