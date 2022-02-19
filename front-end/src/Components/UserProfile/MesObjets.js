@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {UserContext} from "../Authentification/UserContext";
-import {getFoundItems, getLostItems} from "../../Actions/ObjetsAction";
-import _ from "lodash";
+import {getFoundItems, getLostItems, getMatchItems} from "../../Actions/ObjetsAction";
+import _, { random } from "lodash";
 import * as moment from "moment";
 import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "../Objet/AjoutObjet/styles";
 import ToggleButton from '@mui/material/ToggleButton';
@@ -16,10 +16,12 @@ const MesObjets  = () => {
 
     let objetsTrouvesResponse = useSelector((state) => state.ObjetsReducer.getFoundItemsResponse);
     let objetsPerdusResponse = useSelector((state) => state.ObjetsReducer.getLostItemsResponse);
+    let objetsMatchesResponse = useSelector((state) => state.ObjetsReducer.getMatchItemsResponse);
     const userID = useContext(UserContext);
     const dispatch = useDispatch();
     const [showFoundItems, setShowFoundItems] = useState(false);
     const [showLostItems, setShowLostItems] = useState(false);
+    const [showMatchItems, setShowMatchItems] = useState(false);
     const [alignment,setAlignment]=useState('1');
     const [value, setValue] = useState('1');
     const [accepted, setAccepted] = useState(false);
@@ -31,6 +33,7 @@ const MesObjets  = () => {
         {
             dispatch(getFoundItems(userID));
             dispatch(getLostItems(userID));
+            dispatch(getMatchItems(userID));
         }
     }, [userID, showFoundItems])
 
@@ -38,12 +41,21 @@ const MesObjets  = () => {
     {
         setShowFoundItems(true);
         setShowLostItems(false);
+        setShowMatchItems(false)
     }
 
     function handleClickLost()
     {
         setShowFoundItems(false);
+        setShowMatchItems(false)
         setShowLostItems(true);
+    }
+
+    function handleClickMatch()
+    {
+        setShowMatchItems(true)
+        setShowLostItems(false);
+        setShowFoundItems(false);
     }
 
     const handleChange = (event, parValue) => {
@@ -56,6 +68,11 @@ const MesObjets  = () => {
             handleClickFound();
             setAlignment('2');
             setValue('2')
+        }
+        else if (parValue=='3'){
+            handleClickMatch();
+            setAlignment('3');
+            setValue('3')
         }
       };
 
@@ -139,13 +156,13 @@ const MesObjets  = () => {
                         <tbody>
                         {items.map(item => {
                             return(
-                                <tr style={trChildStyle} key={item.id_objet}>
+                                <tr style={trChildStyle} key={random(999999999)}>
                                     <td style={tdStyle}>{_.capitalize(item.intitule)}</td>
                                     <td style={tdStyle}>{_.capitalize(item.description)}</td>
                                     <td style={tdStyle}>{_.capitalize(item.intitule_categorie)}</td>
                                     <td style={tdStyle}>{moment(item.date).format("L")}</td>
                                     <td style={tdStyle}>{_.capitalize(item.etat)}</td>
-                                    {showFoundItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>{i18n.t('mesObjets.accept')}</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t('mesObjets.decline')}</button></td> : null }
+                                    {showMatchItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>{i18n.t('mesObjets.accept')}</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t('mesObjets.decline')}</button></td> : null }
                                 </tr>
                             );
                         })}
@@ -169,12 +186,13 @@ const MesObjets  = () => {
                 >
                 <ToggleButton value="1">{i18n.t('mesObjets.myLostItems')}</ToggleButton>
                 <ToggleButton value="2">{i18n.t('mesObjets.myFoundItems')}</ToggleButton>
+                <ToggleButton value="3">{i18n.t('mesObjets.myMatchItems')}</ToggleButton>
             </ToggleButtonGroup>
             </center>
             <br></br>
             <Divider></Divider>
             <br></br>
-            {showFoundItems ? afficher(objetsTrouvesResponse) :  afficher(objetsPerdusResponse) }
+            {showFoundItems ? afficher(objetsTrouvesResponse) :  showMatchItems ? afficher(objetsMatchesResponse) : afficher(objetsPerdusResponse) }
             <br></br>
             <Divider></Divider>
             <br></br>
