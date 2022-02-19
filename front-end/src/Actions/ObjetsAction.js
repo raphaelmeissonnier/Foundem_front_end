@@ -1,5 +1,6 @@
 export const GET_LOST_ITEMS = "GET_LOST_ITEMS";
 export const GET_FOUND_ITEMS = "GET_FOUND_ITEMS";
+export const GET_MATCH_ITEMS = "GET_MATCH_ITEMS";
 
 
 export const getLostItems = (uid) => {
@@ -24,6 +25,21 @@ export const getFoundItems = (uid) => {
             let data = await response.json();
             console.log("ObjetsAction - data: ", data);
             dispatch({type: GET_FOUND_ITEMS, payload: data});
+        }
+        catch (e)
+        {
+            alert(e);
+        }
+    };
+};
+
+export const getMatchItems = (uid) => {
+    return async (dispatch) => {
+        try{
+            let response = await fetch('/objetsmatche/user/'+uid);
+            let data = await response.json();
+            console.log("ObjetsAction - data: ", data);
+            dispatch({type: GET_MATCH_ITEMS, payload: data});
         }
         catch (e)
         {
