@@ -3,7 +3,7 @@ import mapboxgl from 'mapbox-gl';
 import React, { useRef, useEffect, useState } from 'react';
 import './Map.css'
 import { styled } from '@material-ui/core/styles';
-import {Box, Card, FormControlLabel, FormLabel, Paper, Radio, RadioGroup, Slider} from '@material-ui/core';
+import {Box, Card, FormLabel, Paper, Slider} from '@material-ui/core';
 import Stack from '@mui/material/Stack';
 import SuggestionObjetPerdu from '../Objet/SuggestionObjetPerdu';
 import i18n from "../../Translation/i18n";
@@ -105,7 +105,6 @@ const Map = (props) => {
             const tab = tabValue[0];
 
             //Contenu de la pop-up
-            /*let date = moment(tabValue[0].date).format("L"); */
             const innerHtmlContent = `
                 <div style="flex-direction: column; text-align:justify; font-family: Trebuchet MS;">
                     <h6><b>${i18n.t('ajoutObjet.name')} ${tabValue[0].intitule}</b></h6>
@@ -140,9 +139,6 @@ const Map = (props) => {
     //Au chargement de la page, on récupère les objets perdus et trouvés depuis le back
     useEffect(async () => {
         if(longUser && latUser && rayon){
-            console.log("longUser: ", longUser);
-            console.log("latUser: ", latUser);
-            console.log("rayon: ", rayon);
             //On récupère les objets perdus
             let response_perdu = await fetch("/objetsperdus/"+longUser+"/"+latUser+"/"+rayon);
             let data_perdu = await response_perdu.json();
@@ -160,7 +156,6 @@ const Map = (props) => {
             setItems(objets_concat);
             console.log("MyMap.js - items: ", items);
             setChanged(changed+1);
-            console.log("Map.js - changed: ", changed);
         }
     }, [rayon]);
 
@@ -182,8 +177,6 @@ const Map = (props) => {
                 coordinates: route
             }
         }
-        console.log("getRoutes objet", objet)
-        console.log("getRoutes data", data)
         if (laMap.getSource('route')) {
             laMap.getSource('route').setData(geojson);
         }
@@ -223,7 +216,7 @@ const Map = (props) => {
     const _handleRayonChange = (event, newValue) =>
     {
         setRayon(newValue);
-        console.log("Rayon:", rayon);
+        console.log("Map.js - rayon:", newValue);
     }
     const Item = styled(Paper)(({ theme }) => ({}));
 
