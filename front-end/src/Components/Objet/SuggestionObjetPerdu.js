@@ -19,8 +19,8 @@ const SuggestionObjetPerdu = (props) => {
     const [itemsSuggeres, setItemsSuggeres] = useState(null); //SOURCE DE PB ??
     const userId = useContext(UserContext);
 
-    var longitude = props.longitude;
-    var latitude = props.latitude;
+    let longitude = props.longitude;
+    let latitude = props.latitude;
 
     useEffect(async () => {
         //Récupération des objets suggérés
