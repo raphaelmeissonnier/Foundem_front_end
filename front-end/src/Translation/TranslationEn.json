@@ -8,7 +8,10 @@
     "myBalance": "My balance",
     "logout": "Logout",
     "registration": "Registration",
-    "login": "Login"
+    "login": "Login",
+    "notificationsMessage" : "You have received a new appointment request",
+    "profil": "Profile",
+    "notifications": "Notifications"
   },
 
   "suggestionObjetPerdu": {
@@ -94,7 +97,8 @@
     "longitude": "Longitude: ",
     "latitude": "Latitude:",
     "zoom": "Zoom:",
-    "withinRadius": "Within a radius"
+    "withinRadius": "Within a radius",
+    "goThere": "Go there !"
   },
 
   "app": {

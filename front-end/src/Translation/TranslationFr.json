@@ -8,7 +8,10 @@
     "myBalance": "Mon solde",
     "logout": "Deconnexion",
     "registration": "Inscription",
-    "login": "Connexion"
+    "login": "Connexion",
+    "notificationsMessage" : "Vous avez reçu une nouvelle demande de rendez-vous",
+    "profil": "Profil",
+    "notifications": "Notifications"
   },
 
   "suggestionObjetPerdu": {
@@ -94,7 +97,8 @@
     "longitude": "Longitude: ",
     "latitude": "Latitude:",
     "zoom": "Zoom:",
-    "withinRadius": "Dans un rayon de"
+    "withinRadius": "Dans un rayon de",
+    "goThere": "Y aller !"
   },
 
   "app": {

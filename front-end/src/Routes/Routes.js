@@ -30,7 +30,7 @@ const Routes = () =>{
                     <Route exact path="/ObjetsMatche/:idObjet" component={ObjetsMatche} />
                     <Route exact path="/ChercherObjetPerdu" component={ChercherObjetPerdu} />
                     <Route exact path="/Agenda/:idObjetmatche/:firstUser/:secondUser" component={Agenda} />
-                    <Route exact path="/Mesrdv" component={MesRdv} />
+                    <Route exact path="/MesRdv" component={MesRdv} />
                     <Route exact path="/MonSolde" component={MonSolde} />
                 </Switch> :
                 <Switch>

@@ -4,7 +4,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
-import imageAvatar from '../../images/Cartes.png';
 import { Link } from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import logo from '../../images/logo.jpg'
@@ -13,6 +12,8 @@ import Badge from '@mui/material/Badge';
 import i18 from "../../Translation/i18n";
 import {UserContext} from "../Authentification/UserContext";
 import {getUser, getAllRdv} from "../../Actions/UserAction";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import './styles.css';
 
 var _ = require('lodash');
 
@@ -116,24 +117,24 @@ const Header = () =>{
                         }}
                     >
                       <MenuItem component={Link} to={"/AjouterObjetPerdu"} >
-                        <Typography textAlign="center">{i18.t('header.lostItem')}</Typography>
+                        <Typography className="textPolice" textAlign="center">{i18.t('header.lostItem')}</Typography>
                       </MenuItem>
                       <MenuItem component={Link} to={"/AjouterObjetTrouve"}>
-                        <Typography textAlign="center">{i18.t('header.foundItem')}</Typography>
+                        <Typography className="textPolice" textAlign="center">{i18.t('header.foundItem')}</Typography>
                       </MenuItem>
                       <MenuItem component={Link} to={"/ChercherObjetPerdu"}>
-                        <Typography textAlign="center">{i18.t('header.searchItem')}</Typography>
+                        <Typography className="textPolice" textAlign="center">{i18.t('header.searchItem')}</Typography>
                       </MenuItem>
                     </Menu>
                   </Box>
                   <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                    <Button href="/AjouterObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                    <Button className="textPolice" href="/AjouterObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                       {i18.t('header.lostItem')}
                     </Button>
-                    <Button href="/AjouterObjetTrouve" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                    <Button className="textPolice" href="/AjouterObjetTrouve" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                       {i18.t('header.foundItem')}
                     </Button>
-                    <Button href="/ChercherObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
+                    <Button className="textPolice" href="/ChercherObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                       {i18.t('header.searchItem')}
                     </Button>
                   </Box>
@@ -142,7 +143,7 @@ const Header = () =>{
 
             <Box sx={{textAlign:'right', width:'40%'}}>
               {!_.isEmpty(userData) ?
-                  <Tooltip title="Notifications">
+                  <Tooltip className="textPolice" title={i18.t('header.notifications')}>
                   <IconButton
                       size="large"
                       aria-label="show 17 new notifications"
@@ -173,12 +174,15 @@ const Header = () =>{
                       open={Boolean(anchorElNotif)}
                       onClose={handleCloseNotificationsMenu}
                   >
-                    <Typography>Ceci est la notif</Typography>
+                    <MenuItem component={Link} to={"/MesRdv"}>
+                      <Typography className="textPolice">{i18.t('header.notificationsMessage')}</Typography>
+                    </MenuItem>
+
                   </Menu> : null
               }
-              <Tooltip title="Profil">
+              <Tooltip className="textPolice" title={i18.t('header.profil')}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={username}  src={imageAvatar} />
+                    <AccountCircleIcon fontSize="large" color="primary" style={{color:"white"}}/>
                 </IconButton>
               </Tooltip>
 
@@ -201,16 +205,16 @@ const Header = () =>{
                       onClose={handleCloseUserMenu}
                   >
                     <MenuItem  component={Link} to={"/MesObjets"}>
-                      <Typography textAlign="center">{i18.t('header.myItems')}</Typography>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.myItems')}</Typography>
                     </MenuItem>
                     <MenuItem  component={Link} to={"/MesRdv"}>
-                      <Typography textAlign="center">{i18.t('header.myRdv')}</Typography>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.myRdv')}</Typography>
                     </MenuItem>
                     <MenuItem  component={Link} to={"/MonSolde"}>
-                      <Typography textAlign="center">{i18.t('header.myBalance')}</Typography>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.myBalance')}</Typography>
                     </MenuItem>
                     <MenuItem  component={Link} to={"/Logout"}>
-                      <Typography textAlign="center">{i18.t('header.logout')}</Typography>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.logout')}</Typography>
                     </MenuItem>
                   </Menu>
                   :
@@ -230,10 +234,10 @@ const Header = () =>{
                       onClose={handleCloseUserMenu}
                   >
                     <MenuItem  component={Link} to={"/Inscription"}>
-                      <Typography textAlign="center">{i18.t('header.registration')}</Typography>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.registration')}</Typography>
                     </MenuItem>
                     <MenuItem  component={Link} to={"/Login"}>
-                      <Typography textAlign="center">{i18.t('header.login')}</Typography>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.login')}</Typography>
                     </MenuItem>
                   </Menu>
               }
