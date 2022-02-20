@@ -36,7 +36,12 @@
     "address": "Address:",
     "radius": "Radius:",
     "chooseRadius": "Choose a radius",
-    "send": "Save"
+    "send": "Save",
+    "titleLost": "I lost an item",
+    "titleFound": "I found an item",
+    "fillField": "Please, enter this field",
+    "successAdding": "Your item has been added",
+    "errorAdding": "An error occurred while adding! Please try again... "
   },
 
   "chercherObjet": {
@@ -78,7 +83,14 @@
 
   "monSolde": {
     "myBalance": "My balance:",
-    "convertPoints": "Unlock a reward"
+    "convertPoints": "Unlock a reward",
+    "points": "points",
+    "historicPoints": "History of points",
+    "transactions": "Transactions made",
+    "emptyHistory": "You have not earned any points",
+    "emptyTransactions": "No transactions found",
+    "advantage": "Reward",
+    "advantageDescription": "From 100 points, you can unlock a coupon !"
   },
 
   "objetsMatche": {

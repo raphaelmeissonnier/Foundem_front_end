@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-import '../AjoutObjet/ajoutObjetTrouve.css'
+import '../AjoutObjet/style.css'
 import Geocoder from "react-mapbox-gl-geocoder"
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -23,9 +23,12 @@ const ChercherObjetPerdu =() =>{
     const [latitude, setLatitude] = useState(null);
     const [items, setItems] = useState([]);
     const userId = useContext(UserContext);
-
     const viewport2 = { width: 400, height: 400 };
 
+    //Input pour le geocoder
+    const MyInput = (props) => <input {...props} placeholder={i18n.t('ajoutObjet.address')} />
+
+    //Valeurs initiales du formulaire
     const initialValues = {
         intitule: "",
         categorie: "",
@@ -34,18 +37,15 @@ const ChercherObjetPerdu =() =>{
 
     //Contraintes de validation du formulaire
     const validationSchema = Yup.object().shape({
-        intitule: Yup.string().min(3, "Trop court").max(15).required("Veuillez saisir ce champs"),
-        date: Yup.date().required("Veuillez saisir ce champs").min(moment().subtract(365, 'days').calendar(), "Date invalide").max(moment(new Date()).format('yyyy-MM-DD'), "Date invalide"),
-        categorie: Yup.string().required("Veuillez saisir ce champs"),
+        intitule: Yup.string().min(3, "Trop court").max(15).required(i18n.t('ajoutObjet.fillField')),
+        date: Yup.date().required(i18n.t('ajoutObjet.fillField')).min(moment().subtract(365, 'days').calendar(), "Date invalide").max(moment(new Date()).format('yyyy-MM-DD'), "Date invalide"),
+        categorie: Yup.string().required(i18n.t('ajoutObjet.fillField')),
     })
 
     //Récupération de la longitude et latitude à partir de l'adresse
     function onSelected(viewport, item){
-        console.log("Item",item.place_name)
-        console.log("Item",item)
         setLongitude(item.center[0])
         setLatitude(item.center[1])
-        console.log("Item long",typeof(item.center[0]))
     }
 
     function afficher()
@@ -138,69 +138,74 @@ const ChercherObjetPerdu =() =>{
 
     return (
         <div>
-            <br></br><br></br><br></br><br></br><br></br>
-
-            <h1 className={classes.title}> {i18n.t('chercherObjet.titlePart1')} </h1>
-            <br></br>
-            <center>
-                <p>{i18n.t('chercherObjet.titlePart2')}</p>
-            </center>
-            <br></br>
 
             <Formik
                 initialValues={initialValues}
                 onSubmit={onSubmit}
                 validationSchema={validationSchema}
             >
-                <Form className="formContainer">
-                    <label>{i18n.t('ajoutObjet.name')}</label>
-                    <ErrorMessage name="intitule" component="span" />
-                    <Field
-                        autoComplete="off"
-                        id="inputCreatePost"
-                        name="intitule"
-                        placeholder="Bonnet noir"
-                    />
-                    <br></br>
+                <div className="registration-form">
+                    <Form className="formContainer">
+                        <div className="title">
+                            <h3> {i18n.t('chercherObjet.titlePart1')} </h3>
+                            <h6>{i18n.t('chercherObjet.titlePart2')}</h6>
+                        </div>
 
-                    {/* Effets personnels = clés, lunettes, ...*/}
-                    <label>{i18n.t('ajoutObjet.category')}</label>
-                    <Field as="select" name="categorie">
-                        <option value="Autres">{i18n.t('ajoutObjet.chooseCategory')}</option>
-                        <option value="PORTEFEUILLE">{i18n.t('ajoutObjet.wallet')}</option>
-                        <option value="PAPIERS">{i18n.t('ajoutObjet.documents')}</option>
-                        <option value="BAGAGES">{i18n.t('ajoutObjet.bags')}</option>
-                        <option value="ELECTRONIQUE">{i18n.t('ajoutObjet.hightech')}</option>
-                        <option value="ENFANTS">{i18n.t('ajoutObjet.kidsItems')}</option>
-                        <option value="VETEMENTS">{i18n.t('ajoutObjet.clothes')}</option>
-                        <option value="EFFETS PERSONNELS">{i18n.t('ajoutObjet.personnalItems')}</option>
-                    </Field>
-                    <br></br>
+                        <div className="form-group">
+                            <ErrorMessage name="intitule" component="span" className="text-danger"/>
+                            <Field
+                                autoComplete="off"
+                                id="inputCreatePost"
+                                name="intitule"
+                                placeholder={i18n.t('ajoutObjet.name')}
+                                className="form-control item"
+                            />
+                        </div>
 
-                    <label>{i18n.t('ajoutObjet.date')}</label>
-                    <ErrorMessage name="date" component="span" />
-                    <Field type="date" name="date"/>
-                    <br></br>
+                        {/* Effets personnels = clés, lunettes, ...*/}
+                        <div className="form-group">
+                            <ErrorMessage name="categorie" component="span" className="text-danger"/>
+                            <Field as="select" name="categorie" className="custom-select registration-form item">
+                                <option value="Autres">{i18n.t('ajoutObjet.chooseCategory')}</option>
+                                <option value="PORTEFEUILLE">{i18n.t('ajoutObjet.wallet')}</option>
+                                <option value="PAPIERS">{i18n.t('ajoutObjet.documents')}</option>
+                                <option value="BAGAGES">{i18n.t('ajoutObjet.bags')}</option>
+                                <option value="ELECTRONIQUE">{i18n.t('ajoutObjet.hightech')}</option>
+                                <option value="ENFANTS">{i18n.t('ajoutObjet.kidsItems')}</option>
+                                <option value="VETEMENTS">{i18n.t('ajoutObjet.clothes')}</option>
+                                <option value="EFFETS PERSONNELS">{i18n.t('ajoutObjet.personnalItems')}</option>
+                            </Field>
+                        </div>
 
-                    <label>{i18n.t('ajoutObjet.address')}</label>
-                    <Geocoder
-                        mapboxApiAccessToken={mapboxApiKey}
-                        hideOnSelect={true}
-                        onSelected={onSelected}
-                        viewport={viewport2}
-                        updateInputOnSelect={true}
-                        initialInputValue=" "
-                        queryParams={params}
-                    />
-                    <br></br>
+                        <div className="form-group">
+                            <ErrorMessage name="date" component="span" className="text-danger"/>
+                            <Field type="date" name="date" className="form-control item"/>
+                        </div>
 
-                    <button type="submit">{i18n.t('chercherObjet.search')}</button>
-                </Form>
+                        <div className="form-group">
+                            <Geocoder
+                                mapboxApiAccessToken={mapboxApiKey}
+                                hideOnSelect={true}
+                                onSelected={onSelected}
+                                viewport={viewport2}
+                                updateInputOnSelect={true}
+                                queryParams={params}
+                                inputComponent={MyInput}
+                            />
+                        </div>
+                        <center>
+                            <div className="form-group mb-3">
+                                <button type="submit" className="btn btn-block create-account">{i18n.t('chercherObjet.search')}</button>
+                            </div>
+                        </center>
+                    </Form>
+                </div>
             </Formik>
 
             <div>
                 {items.length ? afficher() : null}
             </div>
+
         </div>
     );
 }
