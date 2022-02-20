@@ -40,7 +40,6 @@ function handleChange(){
     <center><p>Changez votre profil ici :</p>
     <div>
         <p> Modifiez votre image de profil : <input type="file" onChange={handleChange} /></p>
-        <button> Upload </button>
     </div>
     </center>
     </div>);

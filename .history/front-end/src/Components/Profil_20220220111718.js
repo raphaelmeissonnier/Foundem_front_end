@@ -2,20 +2,19 @@ import React, {useContext, useEffect, useState} from "react";
 import { Box, Button } from '@material-ui/core';
 import {Link, NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {UserContext} from "../Authentification/UserContext";
-import {getUser} from "../../Actions/UserAction";
+import {UserContext} from "./UserContext";
+import {getUser} from "../Actions/UserAction";
 
 const Profil = () => {
 
 const user = useSelector((state) => state.UserReducer);
 
-function handleChange(){
-
-}
     return (
     <div className="Mes objets">
     <div>
-    
+    // À modifier c'était un test
+    <p> ok jdois enlever </p>
+    <p> test </p>
 
     <center><p> Bienvenue sur ton profil {user.username} ! </p>
 
@@ -35,14 +34,6 @@ function handleChange(){
                           </Link>
                           </center>
     </div>
-    <br></br>
-
-    <center><p>Changez votre profil ici :</p>
-    <div>
-        <p> Modifiez votre image de profil : <input type="file" onChange={handleChange} /></p>
-        <button> Upload </button>
-    </div>
-    </center>
     </div>);
 
 

@@ -9,9 +9,6 @@ const Profil = () => {
 
 const user = useSelector((state) => state.UserReducer);
 
-function handleChange(){
-
-}
     return (
     <div className="Mes objets">
     <div>
@@ -35,16 +32,19 @@ function handleChange(){
                           </Link>
                           </center>
     </div>
-    <br></br>
-
-    <center><p>Changez votre profil ici :</p>
-    <div>
-        <p> Modifiez votre image de profil : <input type="file" onChange={handleChange} /></p>
-        <button> Upload </button>
-    </div>
-    </center>
     </div>);
 
+   
+function handleChange(){
+        
+}
+return (
+
+    <div>
+        <input type="file" onChange={handleChange} />
+    </div>
+
+);
 
 
 }
