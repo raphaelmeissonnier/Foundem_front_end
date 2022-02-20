@@ -18,7 +18,7 @@ const Inscription = () => {
         vertical: 'top',
         horizontal: 'center',
     });
-    const { vertical, horizontal} = state;
+    const { vertical, horizontal } = state;
 
 
     //Valeurs initiales des champs du formulaire

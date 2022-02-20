@@ -36,7 +36,12 @@
     "address": "Adresse:",
     "radius": "Rayon:",
     "chooseRadius": "Choisir un rayon",
-    "send": "Valider"
+    "send": "Valider",
+    "titleLost": "J'ai perdu un objet",
+    "titleFound": "J'ai trouvé un objet",
+    "fillField": "Veuillez saisir ce champs",
+    "successAdding": "Votre objet a bien été ajouté",
+    "errorAdding": "Une erreur s'est produite lors de l'ajout ! Veuillez ressayer... "
   },
 
   "chercherObjet": {
@@ -78,7 +83,14 @@
 
   "monSolde": {
     "myBalance": "Mon solde:",
-    "convertPoints": "Débloquer une récompense"
+    "convertPoints": "Débloquer une récompense",
+    "points": "points",
+    "historicPoints": "Historique des points",
+    "transactions": "Transactions effectuées",
+    "emptyHistory": "Vous n'avez gagné aucun points",
+    "emptyTransactions": "Aucune transaction trouvée",
+    "advantage": "Récompense",
+    "advantageDescription": "À partir de 100 points, vous pouvez débloquer un bon de réduction !"
   },
 
   "objetsMatche": {
