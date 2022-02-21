@@ -35,6 +35,11 @@ useEffect(() => {
 
     if(user){
         setInitialValues({name:user.nom, firstName:user.firstName, username: user.username, email: user.email, password: user.mdp })
+        setFirstname(user.firstName)
+        setName(user.nom)
+        setUsername(user.username)
+        setEmail(user.email)
+        setPassword(user.mdp)
     }
 
 })

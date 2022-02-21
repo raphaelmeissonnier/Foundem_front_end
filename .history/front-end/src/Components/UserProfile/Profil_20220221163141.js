@@ -9,11 +9,9 @@ import i18n from "../../Translation/i18n";
 import * as Yup from "yup";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Redirect } from "react-router-dom";
-import { first } from "lodash";
 
 const Profil = () => {
 
-const [firstName, setFirstname] = useState(null)
 const [name, setName] = useState(null)
 const [email, setEmail] = useState(null)
 const [username, setUsername] = useState(null)
@@ -21,25 +19,25 @@ const [pic, setPic] = useState();
 const [password, setPassword] = useState(null);
 const [picMessage, setPicMessage] = useState();
 const [iscreated, setiscreated] = useState(null)
-const [initialValues, setInitialValues] = useState({
-    name: "",
-    firstName: "",
-    username: "",
-    email: "",
-    password: "",
-})
+
 
 const user = useSelector((state) => state.UserReducer.getUserResponse);
 
 useEffect(() => {
 
     if(user){
-        setInitialValues({name:user.nom, firstName:user.firstName, username: user.username, email: user.email, password: user.mdp })
+        setEmail(user.email)
     }
 
 })
 
+useEffect(() => {
 
+    if(user){
+        setpassword(user.mdp)
+    }
+
+})
 
 
 
@@ -48,6 +46,13 @@ useEffect(() => {
 //const userUpdate = useSelector((state) => state.userUpdate);
 //const { loading, error, success } = userUpdate;
 
+const initialValues = {
+    name: name,
+    firstName: "",
+    username: "",
+    email: "",
+    password: "",
+};
 
 function onSubmit() {
 

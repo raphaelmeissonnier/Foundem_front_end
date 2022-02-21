@@ -34,7 +34,12 @@ const user = useSelector((state) => state.UserReducer.getUserResponse);
 useEffect(() => {
 
     if(user){
-        setInitialValues({name:user.nom, firstName:user.firstName, username: user.username, email: user.email, password: user.mdp })
+        setInitialValues({name:user.nom, firstName:user.firstName, username: user.username, email: user.email, password: user.password })
+        setFirstname(user.firstName)
+        setName(user.nom)
+        setUsername(user.username)
+        setEmail(user.email)
+        setPassword(user.mdp)
     }
 
 })

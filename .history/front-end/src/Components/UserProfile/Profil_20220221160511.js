@@ -7,47 +7,47 @@ import {getUser} from "../../Actions/UserAction";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import i18n from "../../Translation/i18n";
 import * as Yup from "yup";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Redirect } from "react-router-dom";
-import { first } from "lodash";
 
 const Profil = () => {
 
-const [firstName, setFirstname] = useState(null)
-const [name, setName] = useState(null)
-const [email, setEmail] = useState(null)
-const [username, setUsername] = useState(null)
+const [name, setName] = useState("")
+const [email, setEmail] = useState("")
 const [pic, setPic] = useState();
-const [password, setPassword] = useState(null);
+const [password, setPassword] = useState("");
+const [confirmPassword, setConfirmPassword] = useState("");
 const [picMessage, setPicMessage] = useState();
-const [iscreated, setiscreated] = useState(null)
-const [initialValues, setInitialValues] = useState({
-    name: "",
-    firstName: "",
-    username: "",
-    email: "",
-    password: "",
-})
 
 const user = useSelector((state) => state.UserReducer.getUserResponse);
+useEffect(() => {
+
+    setEmail(user.email)
+
+})
 
 useEffect(() => {
 
-    if(user){
-        setInitialValues({name:user.nom, firstName:user.firstName, username: user.username, email: user.email, password: user.mdp })
-    }
+    setPassword(user.password)
 
 })
 
+useEffect(() => {
 
+    setConfirmPassword(user.confirmPassword)
 
-
+})
 
 //const userLogin = useSelector((state) => state.userLogin);
 //const { userInfo } = userLogin;
 //const userUpdate = useSelector((state) => state.userUpdate);
 //const { loading, error, success } = userUpdate;
 
+const initialValues = {
+    name: "",
+    firstName: "",
+    username: "",
+    email: "",
+    password: "",
+};
 
 function onSubmit() {
 
@@ -105,7 +105,7 @@ return (
     <div className="Mes objets">
     <div>
     
-    <center><p> Bienvenue sur ton profil  ! </p>
+    <center><p> Bienvenue sur ton profil {user.username} ! </p>
 
     <Link to="/MesObjets">
     <Button
@@ -144,13 +144,8 @@ return (
                         </div>
 
                         <div className="form-group row">
-                            
-                            <div className="form-icon" style={{flexDirection:"row"}}>
-                               
-                               <p><img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt= "Avatar" className="avatar"></img>
-                                <input type="file" onChange={handleChange} style = {{marginLeft:"20px"}}/></p>
-                               
-                            
+                            <div className="form-icon">
+                                <AccountCircleIcon fontSize={"large"}/>
                             </div>
 
                             <div className="form-group">

@@ -25,7 +25,7 @@
     border-radius: 50%;
     font-size: 20px;
     color: white;
-    width: 70px;
+    width: 100px;
     height: 20px;
     margin-bottom: 80px;
     line-height: 20px;
@@ -97,7 +97,7 @@
     width: 20px;
     height: 20px;
     border-radius: 100px;
-    border-width: 10px;
+    border-width: 5px;
     border-color: gray;
     border-style: outset;
     justify-content: center;
