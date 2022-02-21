@@ -12,7 +12,7 @@ import Divider from '@mui/material/Divider';
 import {Redirect} from "react-router-dom";
 import i18n from "../../Translation/i18n";
 import { EmailShareButton, FacebookShareButton, TwitterShareButton, EmailIcon, FacebookIcon,
- TwitterIcon} from "react-share";
+TwitterIcon} from "react-share";
 import { Card, CardActions, CardContent, CardMedia, Button, Typography} from '@mui/material';
 
 
@@ -31,6 +31,14 @@ const MesObjets  = () => {
     const [accepted, setAccepted] = useState(false);
     const [ObjetMatche, setObjetMatche] = useState(null);
     const [secondUser, setsecondUser] = useState(null);
+
+    const shareButtonProps = {
+        url: "https://github.com/greglobinski/react-custom-share",
+        network: "Facebook",
+        text: "Give it a try - react-custom-share component",
+        longtext:
+          "Social sharing buttons for React. Use one of the build-in themes or create a custom one from the scratch."
+      };
 
     useEffect(async () => {
         if(userID)
@@ -162,7 +170,7 @@ const MesObjets  = () => {
                         {items.map(item => {
                             return(
                                 <tr style={trChildStyle} key={random(999999999)}>
-                                    <td style={tdStyle}> <Link to="/Objet">{_.capitalize(item.intitule)} </Link> </td>
+                                    <td style={tdStyle}> <Link to={{pathname: '/MonObjet/'+item.id_objet }}>{_.capitalize(item.intitule)} </Link> </td>
                                     <td style={tdStyle}>{_.capitalize(item.description)}</td>
                                     <td style={tdStyle}>{_.capitalize(item.intitule_categorie)}</td>
                                     <td style={tdStyle}>{moment(item.date).format("L")}</td>
@@ -171,7 +179,7 @@ const MesObjets  = () => {
                                     <td style={tdStyle}>
                                         <FacebookShareButton
                                                 url={"https://www.youtube.com/"}
-                                                quote={"j'ai perdu mon objet"}
+                                                quote={"J'ai perdu mon objet, l'avez-vous vu ?"}
                                                 hashtag={"#Foundem"}
                                                 description={"objet perdu"}
 
@@ -180,7 +188,7 @@ const MesObjets  = () => {
                                          </FacebookShareButton>
                                         <TwitterShareButton
                                                 url={"https://www.youtube.com/"}
-                                                quote={"j'ai perdu mon objet"}
+                                                quote={"J'ai perdu mon objet, l'avez-vous vu ?"}
                                                 hashtag={"#Foundem"}
                                                 description={"objet perdu"}
 
@@ -189,7 +197,7 @@ const MesObjets  = () => {
                                          </TwitterShareButton>
                                         <EmailShareButton
                                                 url={"https://www.youtube.com/"}
-                                                quote={"j'ai perdu mon objet"}
+                                                quote={"J'ai perdu mon objet, l'avez-vous vu ?"}
                                                 hashtag={"#Foundem"}
                                                 description={"objet perdu"}
 
