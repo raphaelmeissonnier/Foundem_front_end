@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {Link, NavLink} from "react-router-dom";
 import {UserContext} from "../Authentification/UserContext";
 import {getFoundItems, getLostItems, getMatchItems} from "../../Actions/ObjetsAction";
 import _, { random } from "lodash";
@@ -161,7 +162,7 @@ const MesObjets  = () => {
                         {items.map(item => {
                             return(
                                 <tr style={trChildStyle} key={random(999999999)}>
-                                    <td style={tdStyle}>{_.capitalize(item.intitule)}</td>
+                                    <td style={tdStyle}> <Link to="/Objet">{_.capitalize(item.intitule)} </Link> </td>
                                     <td style={tdStyle}>{_.capitalize(item.description)}</td>
                                     <td style={tdStyle}>{_.capitalize(item.intitule_categorie)}</td>
                                     <td style={tdStyle}>{moment(item.date).format("L")}</td>
