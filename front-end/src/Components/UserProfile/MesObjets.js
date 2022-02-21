@@ -10,6 +10,7 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
 import {Redirect} from "react-router-dom";
 import i18n from "../../Translation/i18n";
+import { EmailShareButton, FacebookShareButton, TwitterShareButton, EmailIcon, FacebookIcon, TwitterIcon} from "react-share";
 
 
 const MesObjets  = () => {
@@ -151,6 +152,7 @@ const MesObjets  = () => {
                             <th style={thStyle}>{i18n.t('chercherObjet.category')}</th>
                             <th style={thStyle}>{i18n.t('chercherObjet.date')}</th>
                             <th style={thStyle}>{i18n.t('mesObjets.status')}</th>
+                            <th style={thStyle}>{i18n.t('mesObjets.share')}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -163,6 +165,36 @@ const MesObjets  = () => {
                                     <td style={tdStyle}>{moment(item.date).format("L")}</td>
                                     <td style={tdStyle}>{_.capitalize(item.etat)}</td>
                                     {showMatchItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>{i18n.t('mesObjets.accept')}</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t('mesObjets.decline')}</button></td> : null }
+                                    <td style={tdStyle}>
+                                        <FacebookShareButton
+                                                url={"https://www.youtube.com/"}
+                                                quote={"j'ai perdu mon objet"}
+                                                hashtag={"#Foundem"}
+                                                description={"objet perdu"}
+
+                                              >
+                                                <FacebookIcon size={32} round />
+                                         </FacebookShareButton>
+                                        <TwitterShareButton
+                                                url={"https://www.youtube.com/"}
+                                                quote={"j'ai perdu mon objet"}
+                                                hashtag={"#Foundem"}
+                                                description={"objet perdu"}
+
+                                              >
+                                                <TwitterIcon size={32} round />
+                                         </TwitterShareButton>
+                                        <EmailShareButton
+                                                url={"https://www.youtube.com/"}
+                                                quote={"j'ai perdu mon objet"}
+                                                hashtag={"#Foundem"}
+                                                description={"objet perdu"}
+
+                                              >
+                                                <EmailIcon size={32} round />
+                                         </EmailShareButton>
+
+                                    </td>
                                 </tr>
                             );
                         })}
