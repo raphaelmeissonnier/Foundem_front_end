@@ -22,7 +22,7 @@ export default function UserReducer (state = INITIAL_STATE, action) {
     }
 }
 
-export default function userUpdateReducer (state = {}, action){
+export const  userUpdateReducer = (state = {}, action) => {
 
     switch (action.type){
         case USER_UPDATE_REQUEST:

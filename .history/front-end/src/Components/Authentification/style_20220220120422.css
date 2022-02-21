@@ -81,16 +81,6 @@
     line-height: 45px;
 }
 
-.avatar {
-    vertical-align: middle;
-    width: 80px;
-    height: 80px;
-    border-radius: 50px;
-    border-width: 5px;
-    border-color: gray;
-    border-style: outset;
-}
-
 .registration-form .social-icons a:hover{
     text-decoration: none;
     opacity: 0.6;

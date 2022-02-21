@@ -111,7 +111,16 @@ function handleClick(){
                     {picMessage && (
                         <ErrorMessage variant= "danger">{picMessage}</ErrorMessage>   
                     )}
-                        
+
+                    <Form.Group controlId="pic">
+                        <Form.Label>Changez votre photo de profil !</Form.Label>
+                        <Form.File
+                            onChange={(e) => postDetails(e.target.files[0])}
+                            id="custom-file"
+                            type="image/png"
+                            label="Upload Profile Picture"
+                       
+                    </Form.Group>
 
                 </Form>
 

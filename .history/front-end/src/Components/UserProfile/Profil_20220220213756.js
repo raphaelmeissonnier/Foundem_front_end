@@ -6,7 +6,7 @@ import {UserContext} from "../Authentification/UserContext";
 import {getUser} from "../../Actions/UserAction";
 import "./style.css";
 import { Row,Col, Form } from "react-bootstrap";
-import { ErrorMessage } from "formik";
+import { useState } from "react";
 
 const Profil = () => {
 
@@ -60,11 +60,10 @@ function handleClick(){
     <br></br>
 
     <center><p>Changez votre profil ici :</p>
-    <input type="file" onChange={handleChange} />
-                            <button onClick={handleClick}> Upload </button>
-                             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt= "Avatar" className="avatar"></img>
-    
     <div>
+        <p> Modifiez votre image de profil : <input type="file" onChange={handleChange} /></p>
+        <button onClick={handleClick}> Upload </button>
+        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt= "Avatar" className="avatar"></img>
     
         <Row className='profileContainer'>
 
@@ -107,11 +106,6 @@ function handleClick(){
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     ></Form.Control>
                     </Form.Group>
-
-                    {picMessage && (
-                        <ErrorMessage variant= "danger">{picMessage}</ErrorMessage>   
-                    )}
-                        
 
                 </Form>
 
