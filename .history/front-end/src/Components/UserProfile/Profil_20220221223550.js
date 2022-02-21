@@ -36,35 +36,17 @@ useEffect(() => {
     }
 })
 
-function onSubmit(values) {
+function onSubmit() {
 
-    
-    if(!values.email || values.email || values.password){
-        console.log("parametres requires")
-
-    }
-
-    else {
-        const requestOptions = {
-            port: 3001,
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({nom: values.name, prenom: values.firstName, username: values.username})
-        }
-
-        fetch('/users/'+ user.id_utilisateur, requestOptions) 
-
-    }
 }
 
 const validationSchema = Yup.object().shape({
-
+    name: Yup.string().min(3).max(30).required(i18n.t('errorMessage.nameRequired')),
+    firstName: Yup.string().min(3).max(30).required(i18n.t('errorMessage.firstNameRequired')),
     username: Yup.string().min(3).max(15).required(i18n.t('errorMessage.usernameRequired')),
     email: Yup.string().email().required(i18n.t('errorMessage.emailRequired')),
     password: Yup.string().min(4).max(20).required(i18n.t('errorMessage.passwordRequired')),
 })
-
-
 
 const postDetails = (pics) => {
 
@@ -182,7 +164,6 @@ return (
                                 id="inputCreatePost"
                                 name="firstName"
                                 placeholder={i18n.t('inscription.yourFirstName')}
-                                disabled={true}
                             />
                         </div>
 
@@ -194,6 +175,7 @@ return (
                                 id="inputCreatePost"
                                 name="username"
                                 placeholder={i18n.t('inscription.yourUsername')}
+                                disabled={true}
                             />
                         </div>
 

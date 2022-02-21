@@ -51,9 +51,6 @@ function onSubmit(values) {
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({nom: values.name, prenom: values.firstName, username: values.username})
         }
-
-        fetch('/users/'+ user.id_utilisateur, requestOptions) 
-
     }
 }
 
@@ -64,6 +61,7 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().min(4).max(20).required(i18n.t('errorMessage.passwordRequired')),
 })
 
+fetch('/users/'+ user.id_utilisateur, requestOptions) 
 
 
 const postDetails = (pics) => {

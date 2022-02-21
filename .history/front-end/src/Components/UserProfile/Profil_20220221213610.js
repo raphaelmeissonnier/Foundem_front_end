@@ -13,58 +13,53 @@ import { first } from "lodash";
 
 const Profil = () => {
 
-    const user = useSelector((state) => state.UserReducer.getUserResponse);
-    const [firstName, setFirstname] = useState(null)
-    const [name, setName] = useState(null)
-    const [email, setEmail] = useState(null)
-    const [username, setUsername] = useState(null)
-    const [password, setPassword] = useState(null);
-    const [pic, setPic] = useState();
-    const [picMessage, setPicMessage] = useState(null);
-    const [iscreated, setiscreated] = useState(null)
-
-
-//Récupération des informations de l'utilisateur
-useEffect(() => {
-    if(user)
-    {
-        setFirstname(user.prenom);
-        setName(user.nom);
-        setUsername(user.username);
-        setPassword(user.mdp);
-        setEmail(user.email);
-    }
+const [firstName, setFirstname] = useState(null)
+const [name, setName] = useState(null)
+const [email, setEmail] = useState(null)
+const [username, setUsername] = useState(null)
+const [pic, setPic] = useState();
+const [password, setPassword] = useState(null);
+const [picMessage, setPicMessage] = useState();
+const [iscreated, setiscreated] = useState(null)
+const [initialValues, setInitialValues] = useState({
+    name: "",
+    firstName: "",
+    username: "",
+    email: "",
+    password: "",
 })
 
-function onSubmit(values) {
+const user = useSelector((state) => state.UserReducer.getUserResponse);
 
-    
-    if(!values.email || values.email || values.password){
-        console.log("parametres requires")
+useEffect(() => {
 
+    if(user){
+        setInitialValues({name:user.nom, firstName:user.firstName, username: user.username, email: user.email, password: user.mdp })
     }
 
-    else {
-        const requestOptions = {
-            port: 3001,
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({nom: values.name, prenom: values.firstName, username: values.username})
-        }
+})
 
-        fetch('/users/'+ user.id_utilisateur, requestOptions) 
 
-    }
+
+
+
+//const userLogin = useSelector((state) => state.userLogin);
+//const { userInfo } = userLogin;
+//const userUpdate = useSelector((state) => state.userUpdate);
+//const { loading, error, success } = userUpdate;
+
+
+function onSubmit() {
+
 }
 
 const validationSchema = Yup.object().shape({
-
+    name: Yup.string().min(3).max(30).required(i18n.t('errorMessage.nameRequired')),
+    firstName: Yup.string().min(3).max(30).required(i18n.t('errorMessage.firstNameRequired')),
     username: Yup.string().min(3).max(15).required(i18n.t('errorMessage.usernameRequired')),
     email: Yup.string().email().required(i18n.t('errorMessage.emailRequired')),
     password: Yup.string().min(4).max(20).required(i18n.t('errorMessage.passwordRequired')),
 })
-
-
 
 const postDetails = (pics) => {
 
@@ -137,14 +132,11 @@ return (
                              <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt= "Avatar" className="avatar"></img></p>
     
                              <div>
-                             <Formik
-            onSubmit={onSubmit}
-            validationSchema={validationSchema}
-            initialValues={{firstName: firstName, name: name, password: password, email: email, username: username}}
-            enableReinitialize={true}
-        >
-          
-        
+            <Formik
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                validationSchema={validationSchema}
+            >
                 <div className="registration-form">
                     <Form>
                         <div className="title">
@@ -169,7 +161,6 @@ return (
                                     id="inputCreatePost"
                                     name="name"
                                     placeholder={i18n.t('inscription.yourName')}
-                                    disabled={true}
                                 />
                             </div>
                         </div>
@@ -182,7 +173,6 @@ return (
                                 id="inputCreatePost"
                                 name="firstName"
                                 placeholder={i18n.t('inscription.yourFirstName')}
-                                disabled={true}
                             />
                         </div>
 
@@ -222,7 +212,7 @@ return (
 
                         <center>
                             <div className="form-group mb-3">
-                                <button type="submit" className="btn btn-block create-account">{i18n.t('Modifiez')}</button>
+                                <button type="submit" className="btn btn-block create-account">{}</button>
                             </div>
                         </center>
                     </Form>
