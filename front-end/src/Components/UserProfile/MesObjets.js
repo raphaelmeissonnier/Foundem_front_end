@@ -179,7 +179,7 @@ const MesObjets  = () => {
                                     <td style={tdStyle}>
                                         <FacebookShareButton
                                                 url={"https://www.youtube.com/"}
-                                                quote={"J'ai perdu mon objet, l'avez-vous vu ?"}
+                                                quote={"J'ai erdu mon objet, l'avez-vous vu ?"}
                                                 hashtag={"#Foundem"}
                                                 description={"objet perdu"}
 
