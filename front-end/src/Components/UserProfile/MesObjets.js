@@ -10,7 +10,9 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
 import {Redirect} from "react-router-dom";
 import i18n from "../../Translation/i18n";
-import { EmailShareButton, FacebookShareButton, TwitterShareButton, EmailIcon, FacebookIcon, TwitterIcon} from "react-share";
+import { EmailShareButton, FacebookShareButton, TwitterShareButton, EmailIcon, FacebookIcon,
+ TwitterIcon} from "react-share";
+import { Card, CardActions, CardContent, CardMedia, Button, Typography} from '@mui/material';
 
 
 const MesObjets  = () => {
@@ -200,6 +202,33 @@ const MesObjets  = () => {
                         })}
                         </tbody>
                     </table>
+                    {/*
+                    <div>
+                    {items.map(item => {
+                    <Card sx={{ maxWidth: 345 }}>
+                          <CardMedia
+                            component="img"
+                            height="140"
+                            image="/images/objetimg.jpg"
+                            alt="green iguana"
+                          />
+                          <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">
+                              {_.capitalize(item.intitule)}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              {_.capitalize(item.description)}
+                              {moment(item.date).format("L")}
+                            </Typography>
+                          </CardContent>
+                          <CardActions>
+                            <Button size="small">Share</Button>
+                            <Button size="small">Learn More</Button>
+                          </CardActions>
+                        </Card>
+                        })}
+                    </div>
+                    */}
                 </div>
             );
         }
