@@ -70,7 +70,7 @@ function onSubmit(values) {
            Si l'attribut 'result'==0 alors je ne fais rien sinon je redirige l'user vers l'accueil + message
          */
          .then(data => data.result ? setOpenSuccess(true) : setOpenError(true)));
-        //Snackbar réussite + Redirection vers connexion
+ //Snackbar réussite + Redirection vers connexion
 
     }
 }

@@ -64,14 +64,6 @@ function onSubmit(values) {
 
         fetch('/users/'+ user.id_utilisateur, requestOptions) 
 
-         //Je récupère la réponse émise par le back
-         .then(response => response.json()
-         /*Je regarde l'attribut 'result' de la variable 'response'(qui contient la réponse émise par le back)
-           Si l'attribut 'result'==0 alors je ne fais rien sinon je redirige l'user vers l'accueil + message
-         */
-         .then(data => data.result ? setOpenSuccess(true) : setOpenError(true)));
-        //Snackbar réussite + Redirection vers connexion
-
     }
 }
 
@@ -147,7 +139,6 @@ return (
                           </center>
     </div>
     <br></br>
-    
     
 
     <center><p>Changez votre profil ici :</p>

@@ -25,14 +25,6 @@ const Profil = () => {
     const [picMessage, setPicMessage] = useState(null);
     const [iscreated, setiscreated] = useState(null)
 
-    const [openError, setOpenError] = useState(false);
-    const [openSuccess, setOpenSuccess] = useState(false);
-    const [state, setState] = useState({
-        vertical: 'top',
-        horizontal: 'center',
-    });
-    const { vertical, horizontal} = state;
-
 
 //Récupération des informations de l'utilisateur
 useEffect(() => {
@@ -63,14 +55,6 @@ function onSubmit(values) {
         }
 
         fetch('/users/'+ user.id_utilisateur, requestOptions) 
-
-         //Je récupère la réponse émise par le back
-         .then(response => response.json()
-         /*Je regarde l'attribut 'result' de la variable 'response'(qui contient la réponse émise par le back)
-           Si l'attribut 'result'==0 alors je ne fais rien sinon je redirige l'user vers l'accueil + message
-         */
-         .then(data => data.result ? setOpenSuccess(true) : setOpenError(true)));
-        //Snackbar réussite + Redirection vers connexion
 
     }
 }
@@ -147,7 +131,6 @@ return (
                           </center>
     </div>
     <br></br>
-    
     
 
     <center><p>Changez votre profil ici :</p>
@@ -245,7 +228,7 @@ return (
                             </div>
                         </center>
                     </Form>
-                    <Snackbar anchorOrigin={{ vertical, horizontal }} open={openSuccess} autoHideDuration={2000} onClose={() => {setOpenSuccess(false); setiscreated(true) }}>
+                    <Snackbar anchorOrigin={{ vertical, horizontal }} open={openSuccess} autoHideDuration={2000} onClose={() => {setOpenSuccess(false); setcreated(true) }}>
                         <Alert severity="success" variant="filled" sx={{ width: '100%' }}>
                             {i18n.t("inscription.successRegistration")}
                         </Alert>
