@@ -163,7 +163,7 @@ const MesObjets  = () => {
                             <th style={thStyle}>{i18n.t('chercherObjet.category')}</th>
                             <th style={thStyle}>{i18n.t('chercherObjet.date')}</th>
                             <th style={thStyle}>{i18n.t('mesObjets.status')}</th>
-                            <th style={thStyle}>{i18n.t('mesObjets.share')}</th>
+                            {showLostItems ? <th style={thStyle}>{i18n.t('mesObjets.share')}</th> : null}
                         </tr>
                         </thead>
                         <tbody>
@@ -176,10 +176,11 @@ const MesObjets  = () => {
                                     <td style={tdStyle}>{moment(item.date).format("L")}</td>
                                     <td style={tdStyle}>{_.capitalize(item.etat)}</td>
                                     {showMatchItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>{i18n.t('mesObjets.accept')}</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t('mesObjets.decline')}</button></td> : null }
+                                   {showLostItems ?
                                     <td style={tdStyle}>
                                         <FacebookShareButton
                                                 url={"https://www.youtube.com/"}
-                                                quote={"J'ai erdu mon objet, l'avez-vous vu ?"}
+                                                quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
                                                 hashtag={"#Foundem"}
                                                 description={"objet perdu"}
 
@@ -188,7 +189,7 @@ const MesObjets  = () => {
                                          </FacebookShareButton>
                                         <TwitterShareButton
                                                 url={"https://www.youtube.com/"}
-                                                quote={"J'ai perdu mon objet, l'avez-vous vu ?"}
+                                                quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
                                                 hashtag={"#Foundem"}
                                                 description={"objet perdu"}
 
@@ -197,7 +198,7 @@ const MesObjets  = () => {
                                          </TwitterShareButton>
                                         <EmailShareButton
                                                 url={"https://www.youtube.com/"}
-                                                quote={"J'ai perdu mon objet, l'avez-vous vu ?"}
+                                                quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
                                                 hashtag={"#Foundem"}
                                                 description={"objet perdu"}
 
@@ -205,7 +206,7 @@ const MesObjets  = () => {
                                                 <EmailIcon size={32} round />
                                          </EmailShareButton>
 
-                                    </td>
+                                    </td> : null}
                                 </tr>
                             );
                         })}
