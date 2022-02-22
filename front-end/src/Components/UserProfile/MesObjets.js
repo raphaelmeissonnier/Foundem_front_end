@@ -179,7 +179,7 @@ const MesObjets  = () => {
                                    {showLostItems ?
                                     <td style={tdStyle}>
                                         <FacebookShareButton
-                                                url={"https://www.youtube.com/"}
+                                                url={"https://raphaelmeissonnier.github.io/Foundem_back_end/"}
                                                 quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
                                                 hashtag={"#Foundem"}
                                                 description={"objet perdu"}
@@ -188,7 +188,7 @@ const MesObjets  = () => {
                                                 <FacebookIcon size={32} round />
                                          </FacebookShareButton>
                                         <TwitterShareButton
-                                                url={"https://www.youtube.com/"}
+                                                url={"https://raphaelmeissonnier.github.io/Foundem_back_end/"}
                                                 quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
                                                 hashtag={"#Foundem"}
                                                 description={"objet perdu"}
@@ -196,15 +196,7 @@ const MesObjets  = () => {
                                               >
                                                 <TwitterIcon size={32} round />
                                          </TwitterShareButton>
-                                        <EmailShareButton
-                                                url={"https://www.youtube.com/"}
-                                                quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
-                                                hashtag={"#Foundem"}
-                                                description={"objet perdu"}
 
-                                              >
-                                                <EmailIcon size={32} round />
-                                         </EmailShareButton>
 
                                     </td> : null}
                                 </tr>
