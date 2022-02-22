@@ -124,14 +124,14 @@
     "yourAccount": "Votre compte"
   },
 
-  "profil": {
-    "title": "Modifiez votre profil",
+  "Update": {
+    "title": "Inscription",
     "yourName" : "Votre nom...",
     "yourFirstName" : "Votre prénom...",
     "yourUsername": "Votre pseudo...",
     "yourEmail": "Votre adresse mail...",
     "yourPassword": "Votre mot de passe...",
-    "update": "Modifiez",
+    "signUp": "S'inscrire",
     "errorRegistration": "L'email ou username existant !",
     "successRegistration": "Votre compte a bien été modifié !"
   }

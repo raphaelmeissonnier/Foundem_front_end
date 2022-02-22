@@ -125,13 +125,13 @@
   },
 
   "profil": {
-    "title": "Modifiez votre profil",
+    "title": "Modification",
     "yourName" : "Votre nom...",
     "yourFirstName" : "Votre prénom...",
     "yourUsername": "Votre pseudo...",
     "yourEmail": "Votre adresse mail...",
     "yourPassword": "Votre mot de passe...",
-    "update": "Modifiez",
+    "Update": "Modifiez",
     "errorRegistration": "L'email ou username existant !",
     "successRegistration": "Votre compte a bien été modifié !"
   }

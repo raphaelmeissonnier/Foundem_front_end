@@ -147,10 +147,14 @@ return (
                           </center>
     </div>
     <br></br>
-
+    
     
 
-    <center>
+    <center><p>Changez votre profil ici :</p>
+    <p> Choisissez une nouvelle photo de profil : <input type="file" onChange={handleChange} />
+                            <button onClick={handleClick}> Upload </button>
+                             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt= "Avatar" className="avatar"></img></p>
+    
                              <div>
                              <Formik
             onSubmit={onSubmit}
@@ -163,12 +167,18 @@ return (
                 <div className="registration-form">
                     <Form>
                         <div className="title">
-                            <h3>{i18n.t('profil.title')}</h3>
+                            <h3>{i18n.t('inscription.title')}</h3>
                         </div>
 
                         <div className="form-group row">
                             
+                            <div className="form-icon" style={{flexDirection:"row"}}>
+                               
+                               <p><img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt= "Avatar" className="avatar"></img>
+                                <input type="file" onChange={handleChange} style = {{marginLeft:"20px"}}/></p>
+                               
                             
+                            </div>
 
                             <div className="form-group">
                                 <ErrorMessage name="name" component="span" className="text-danger"/>
@@ -231,18 +241,18 @@ return (
 
                         <center>
                             <div className="form-group mb-3">
-                                <button type="submit" className="btn btn-block create-account">{i18n.t('profil.update')}</button>
+                                <button type="submit" className="btn btn-block create-account">{i18n.t('Modifiez')}</button>
                             </div>
                         </center>
                     </Form>
                     <Snackbar anchorOrigin={{ vertical, horizontal }} open={openSuccess} autoHideDuration={2000} onClose={() => {setOpenSuccess(false); setiscreated(true) }}>
                         <Alert severity="success" variant="filled" sx={{ width: '100%' }}>
-                            {i18n.t("profil.successRegistration")}
+                            {i18n.t("inscription.successRegistration")}
                         </Alert>
                     </Snackbar>
                     <Snackbar anchorOrigin={{ vertical, horizontal }} open={openError} autoHideDuration={2000} onClose={() => setOpenError(false)}>
                         <Alert severity="error" variant="filled" sx={{ width: '100%' }}>
-                            {i18n.t("profil.errorRegistration")}
+                            {i18n.t("inscription.errorRegistration")}
                         </Alert>
                     </Snackbar>
                     

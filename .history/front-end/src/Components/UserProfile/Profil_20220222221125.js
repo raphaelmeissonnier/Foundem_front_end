@@ -150,7 +150,7 @@ return (
 
     
 
-    <center>
+    <center><p>Changez votre profil ici :</p>
                              <div>
                              <Formik
             onSubmit={onSubmit}

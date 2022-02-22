@@ -131,7 +131,7 @@
     "yourUsername": "Your username...",
     "yourEmail": "Your email...",
     "yourPassword": "Your password...",
-    "update": "Update",
+    "Update": "Update",
     "errorRegistration": "Email or username already used !",
     "successRegistration": "Your account has been updated !"
   }

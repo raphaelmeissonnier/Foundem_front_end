@@ -122,18 +122,6 @@
     "description": "We have all lost an object and thought that it would be great if someone found it and contacted us to return it, or even found an object and wanted to return it to the owner in a simple way. So we set up this project to answer this problem.",
     "links": "Links",
     "yourAccount": "Your account"
-  },
-
-  "profil": {
-    "title": "Update",
-    "yourName" : "Your name...",
-    "yourFirstName" : "Your first name..",
-    "yourUsername": "Your username...",
-    "yourEmail": "Your email...",
-    "yourPassword": "Your password...",
-    "update": "Update",
-    "errorRegistration": "Email or username already used !",
-    "successRegistration": "Your account has been updated !"
   }
 
 
