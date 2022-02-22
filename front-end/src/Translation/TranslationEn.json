@@ -10,7 +10,7 @@
     "registration": "Registration",
     "login": "Login",
     "notificationsMessage" : "You have received a new appointment request",
-    "profil": "Profile",
+    "profil": " My profile",
     "notifications": "Notifications"
   },
 
@@ -125,7 +125,7 @@
   },
 
   "profil": {
-    "title": "Update",
+    "title": "Update your profile",
     "yourName" : "Your name...",
     "yourFirstName" : "Your first name..",
     "yourUsername": "Your username...",

@@ -248,7 +248,7 @@ return (
                     
                 </div>
             </Formik>
-            {iscreated ? <Redirect to = "/Login"/> : console.log("not redirect")}
+            {iscreated ? <Redirect to = "/"/> : console.log("not redirect")}
         </div>
 
   
