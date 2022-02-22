@@ -224,7 +224,5 @@ return (
             {iscreated ? <Redirect to = "/"/> : console.log("not redirect")}
     </div>);
 
-
-
 }
 export default Profil;
