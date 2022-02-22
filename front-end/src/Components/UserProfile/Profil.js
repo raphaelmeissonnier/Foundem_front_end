@@ -1,17 +1,15 @@
-import React, {useContext, useEffect, useState} from "react";
-import { Box, Button } from '@material-ui/core';
-import {Link, NavLink} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {UserContext} from "../Authentification/UserContext";
-import {getUser} from "../../Actions/UserAction";
+import React, {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import i18n from "../../Translation/i18n";
 import * as Yup from "yup";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Redirect } from "react-router-dom";
-import { first } from "lodash";
-import {Snackbar} from "@material-ui/core";
+import {Avatar, Snackbar} from "@material-ui/core";
 import {Alert} from "@mui/material";
+import '../Authentification/style.css';
+import "bootstrap/dist/css/bootstrap.css";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 
 const Profil = () => {
 
@@ -125,143 +123,105 @@ function handleClick(){
 }
 
 return (
-    <div className="Mes objets">
     <div>
-    
-    <center><p> Bienvenue sur ton profil  ! </p>
-
-    <Link to="/MesObjets">
-    <Button
-                                  variant="outlined"
-                                  style={{
-                                      borderRadius: 2,
-                                      backgroundColor: "#5fa082",
-                                      padding: "5px 20px",
-                                      fontSize: "15px"
-                                  }}
-                                  variant="contained"
-                              >
-                                  Mes objets
-                              </Button>
-                          </Link>
-                          </center>
-    </div>
-    <br></br>
-
-    
-
-    <center>
-                             <div>
-                             <Formik
+        <Formik
             onSubmit={onSubmit}
             validationSchema={validationSchema}
             initialValues={{firstName: firstName, name: name, password: password, email: email, username: username}}
             enableReinitialize={true}
         >
-          
-        
-                <div className="registration-form">
-                    <Form>
-                        <div className="title">
-                            <h3>{i18n.t('profil.title')}</h3>
+            <div className="registration-form">
+                <Form>
+                    <div className="title">
+                        <h3>{i18n.t('profil.title')}</h3>
+                    </div>
+
+                    <div className="form-group row">
+                        <div className="form-icon">
+                            <Avatar src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" />
                         </div>
 
-                        <div className="form-group row">
-                            
-                            <div className="form-icon" style={{flexDirection:"row"}}>
-                               
-                            <p> Choisissez une nouvelle photo de profil : <input type="file" onChange={handleChange} />
-                            <button onClick={handleClick}> Upload </button>
-                             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt= "Avatar" className="avatar"></img></p>
-    
-                               
-                            
-                            </div>
-
-                            <div className="form-group">
-                                <ErrorMessage name="name" component="span" className="text-danger"/>
-                                <Field
-                                    className="form-control item"
-                                    autoComplete="off"
-                                    id="inputCreatePost"
-                                    name="name"
-                                    placeholder={i18n.t('profil.yourName')}
-                                    disabled={true}
-                                />
-                            </div>
-                        </div>
+                        <input type="file" onChange={handleChange} className="input"/>
 
                         <div className="form-group">
-                            <ErrorMessage name="firstName" component="span" className="text-danger"/>
+                            <ErrorMessage name="name" component="span" className="text-danger"/>
                             <Field
                                 className="form-control item"
                                 autoComplete="off"
                                 id="inputCreatePost"
-                                name="firstName"
-                                placeholder={i18n.t('profil.yourFirstName')}
+                                name="name"
+                                placeholder={i18n.t('profil.yourName')}
                                 disabled={true}
                             />
                         </div>
+                    </div>
 
-                        <div className="form-group">
-                            <ErrorMessage name="username" component="span" className="text-danger"/>
-                            <Field
-                                className="form-control item"
-                                autoComplete="off"
-                                id="inputCreatePost"
-                                name="username"
-                                placeholder={i18n.t('profil.yourUsername')}
-                            />
+                    <div className="form-group">
+                        <ErrorMessage name="firstName" component="span" className="text-danger"/>
+                        <Field
+                            className="form-control item"
+                            autoComplete="off"
+                            id="inputCreatePost"
+                            name="firstName"
+                            placeholder={i18n.t('profil.yourFirstName')}
+                            disabled={true}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <ErrorMessage name="username" component="span" className="text-danger"/>
+                        <Field
+                            className="form-control item"
+                            autoComplete="off"
+                            id="inputCreatePost"
+                            name="username"
+                            placeholder={i18n.t('profil.yourUsername')}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <ErrorMessage name="email" component="span" className="text-danger"/>
+                        <Field
+                            className="form-control item"
+                            autoComplete="off"
+                            id="inputCreatePost"
+                            name="email"
+                            placeholder={i18n.t('profil.yourEmail')}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <ErrorMessage name="password" component="span" className="text-danger"/>
+                        <Field
+                            className="form-control item"
+                            autoComplete="off"
+                            type="password"
+                            id="inputCreatePost"
+                            name="password"
+                            placeholder={i18n.t('profil.yourPassword')}
+                        />
+                    </div>
+
+                    <center>
+                        <div className="form-group mb-3">
+                            <button type="submit" className="btn btn-block create-account">{i18n.t('profil.update')}</button>
                         </div>
+                    </center>
+                </Form>
+                <Snackbar anchorOrigin={{ vertical, horizontal }} open={openSuccess} autoHideDuration={2000} onClose={() => {setOpenSuccess(false); setiscreated(true) }}>
+                    <Alert severity="success" variant="filled" sx={{ width: '100%' }}>
+                        {i18n.t("profil.successRegistration")}
+                    </Alert>
+                </Snackbar>
+                <Snackbar anchorOrigin={{ vertical, horizontal }} open={openError} autoHideDuration={2000} onClose={() => setOpenError(false)}>
+                    <Alert severity="error" variant="filled" sx={{ width: '100%' }}>
+                        {i18n.t("profil.errorRegistration")}
+                    </Alert>
+                </Snackbar>
 
-                        <div className="form-group">
-                            <ErrorMessage name="email" component="span" className="text-danger"/>
-                            <Field
-                                className="form-control item"
-                                autoComplete="off"
-                                id="inputCreatePost"
-                                name="email"
-                                placeholder={i18n.t('profil.yourEmail')}
-                            />
-                        </div>
-
-                        <div className="form-group">
-                            <ErrorMessage name="password" component="span" className="text-danger"/>
-                            <Field
-                                className="form-control item"
-                                autoComplete="off"
-                                type="password"
-                                id="inputCreatePost"
-                                name="password"
-                                placeholder={i18n.t('profil.yourPassword')}
-                            />
-                        </div>
-
-                        <center>
-                            <div className="form-group mb-3">
-                                <button type="submit" className="btn btn-block create-account">{i18n.t('profil.update')}</button>
-                            </div>
-                        </center>
-                    </Form>
-                    <Snackbar anchorOrigin={{ vertical, horizontal }} open={openSuccess} autoHideDuration={2000} onClose={() => {setOpenSuccess(false); setiscreated(true) }}>
-                        <Alert severity="success" variant="filled" sx={{ width: '100%' }}>
-                            {i18n.t("profil.successRegistration")}
-                        </Alert>
-                    </Snackbar>
-                    <Snackbar anchorOrigin={{ vertical, horizontal }} open={openError} autoHideDuration={2000} onClose={() => setOpenError(false)}>
-                        <Alert severity="error" variant="filled" sx={{ width: '100%' }}>
-                            {i18n.t("profil.errorRegistration")}
-                        </Alert>
-                    </Snackbar>
-                    
-                </div>
-            </Formik>
+            </div>
+        </Formik>
             {iscreated ? <Redirect to = "/"/> : console.log("not redirect")}
-        </div>
-
-  
-    </center>
-
     </div>);
 
 
