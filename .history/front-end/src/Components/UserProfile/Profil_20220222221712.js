@@ -150,7 +150,11 @@ return (
 
     
 
-    <center>
+    <center><p>Changez votre profil ici :</p>
+    <p> Choisissez une nouvelle photo de profil : <input type="file" onChange={handleChange} />
+                            <button onClick={handleClick}> Upload </button>
+                             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt= "Avatar" className="avatar"></img></p>
+    
                              <div>
                              <Formik
             onSubmit={onSubmit}
@@ -170,10 +174,8 @@ return (
                             
                             <div className="form-icon" style={{flexDirection:"row"}}>
                                
-                            <p> Choisissez une nouvelle photo de profil : <input type="file" onChange={handleChange} />
-                            <button onClick={handleClick}> Upload </button>
-                             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt= "Avatar" className="avatar"></img></p>
-    
+                               <p><img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" alt= "Avatar" className="avatar"></img>
+                                <input type="file" onChange={handleChange} style = {{marginLeft:"20px"}}/></p>
                                
                             
                             </div>
