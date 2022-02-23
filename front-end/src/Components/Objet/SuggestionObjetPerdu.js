@@ -19,7 +19,7 @@ const SuggestionObjetPerdu = (props) => {
     const [items2, setItems2] = useState([]);
     const [itemsSuggeres, setItemsSuggeres] = useState(null); //SOURCE DE PB ??
     const userId = useContext(UserContext);
-    const cheminImg = "front-end/public/"
+    const cheminImg = "./public/"
     
  //"D:/MIAGE NANTERRE/M1/projetDevOps/Foundem_back_end/perdupn_back_end/public/"
     let longitude = props.longitude;
