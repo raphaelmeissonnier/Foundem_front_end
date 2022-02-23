@@ -24,7 +24,7 @@ const MesObjets  = () => {
     const userID = useContext(UserContext);
     const dispatch = useDispatch();
     const [showFoundItems, setShowFoundItems] = useState(false);
-    const [showLostItems, setShowLostItems] = useState(false);
+    const [showLostItems, setShowLostItems] = useState(true);
     const [showMatchItems, setShowMatchItems] = useState(false);
     const [alignment,setAlignment]=useState('1');
     const [value, setValue] = useState('1');
@@ -162,8 +162,8 @@ const MesObjets  = () => {
                             <th style={thStyle}>{i18n.t('chercherObjet.description')}</th>
                             <th style={thStyle}>{i18n.t('chercherObjet.category')}</th>
                             <th style={thStyle}>{i18n.t('chercherObjet.date')}</th>
-                            <th style={thStyle}>{i18n.t('mesObjets.status')}</th>
-                            {showLostItems ? <th style={thStyle}>{i18n.t('mesObjets.share')}</th> : null}
+                            {showMatchItems ? <th style={thStyle}>{i18n.t('mesObjets.status')}</th> : null }
+                            {showLostItems ? <th style={thStyle}>{i18n.t('mesObjets.share')}</th> : null }
                         </tr>
                         </thead>
                         <tbody>
@@ -176,29 +176,25 @@ const MesObjets  = () => {
                                     <td style={tdStyle}>{moment(item.date).format("L")}</td>
                                     <td style={tdStyle}>{_.capitalize(item.etat)}</td>
                                     {showMatchItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>{i18n.t('mesObjets.accept')}</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t('mesObjets.decline')}</button></td> : null }
-                                   {showLostItems ?
-                                    <td style={tdStyle}>
-                                        <FacebookShareButton
+                                    {showLostItems ?
+                                        <td style={tdStyle}>
+                                            <FacebookShareButton
                                                 url={"https://raphaelmeissonnier.github.io/Foundem_back_end/"}
                                                 quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
                                                 hashtag={"#Foundem"}
                                                 description={"objet perdu"}
-
-                                              >
+                                            >
                                                 <FacebookIcon size={32} round />
-                                         </FacebookShareButton>
-                                        <TwitterShareButton
+                                            </FacebookShareButton>
+                                            <TwitterShareButton
                                                 url={"https://raphaelmeissonnier.github.io/Foundem_back_end/"}
                                                 quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
                                                 hashtag={"#Foundem"}
                                                 description={"objet perdu"}
-
-                                              >
+                                            >
                                                 <TwitterIcon size={32} round />
-                                         </TwitterShareButton>
-
-
-                                    </td> : null}
+                                            </TwitterShareButton>
+                                        </td> : null}
                                 </tr>
                             );
                         })}
