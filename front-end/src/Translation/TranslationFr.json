@@ -78,7 +78,8 @@
     "myLostItems": "Mes objets perdus",
     "myFoundItems": "Mes objets trouvés",
     "myMatchItems": "Mes objets matchés",
-    "place": "Lieu"
+    "place": "Lieu",
+    "share": "Partager"
   },
 
   "monSolde": {

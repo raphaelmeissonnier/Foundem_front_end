@@ -83,7 +83,7 @@ const MonSolde = () => {
 
     return(
         <div>
-            <h3>{i18n.t('monSolde.myBalance')} {solde}</h3>
+            <h3>{i18n.t('monSolde.myBalance')} {solde}</h3> {/* afficher le solde */}
             <button onClick={()=>convertir()}>{i18n.t('monSolde.convertPoints')}</button>
             <div>{ hists ? affiche_tableau() : console.log("RES NULL")}</div>
         </div>

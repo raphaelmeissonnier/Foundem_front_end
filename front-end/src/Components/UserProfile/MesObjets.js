@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {Link, NavLink} from "react-router-dom";
 import {UserContext} from "../Authentification/UserContext";
 import {getFoundItems, getLostItems, getMatchItems} from "../../Actions/ObjetsAction";
 import _, { random } from "lodash";
@@ -10,6 +11,9 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
 import {Redirect} from "react-router-dom";
 import i18n from "../../Translation/i18n";
+import { EmailShareButton, FacebookShareButton, TwitterShareButton, EmailIcon, FacebookIcon,
+TwitterIcon} from "react-share";
+import { Card, CardActions, CardContent, CardMedia, Button, Typography} from '@mui/material';
 
 
 const MesObjets  = () => {
@@ -20,13 +24,21 @@ const MesObjets  = () => {
     const userID = useContext(UserContext);
     const dispatch = useDispatch();
     const [showFoundItems, setShowFoundItems] = useState(false);
-    const [showLostItems, setShowLostItems] = useState(false);
+    const [showLostItems, setShowLostItems] = useState(true);
     const [showMatchItems, setShowMatchItems] = useState(false);
     const [alignment,setAlignment]=useState('1');
     const [value, setValue] = useState('1');
     const [accepted, setAccepted] = useState(false);
     const [ObjetMatche, setObjetMatche] = useState(null);
     const [secondUser, setsecondUser] = useState(null);
+
+    const shareButtonProps = {
+        url: "https://github.com/greglobinski/react-custom-share",
+        network: "Facebook",
+        text: "Give it a try - react-custom-share component",
+        longtext:
+          "Social sharing buttons for React. Use one of the build-in themes or create a custom one from the scratch."
+      };
 
     useEffect(async () => {
         if(userID)
@@ -150,24 +162,71 @@ const MesObjets  = () => {
                             <th style={thStyle}>{i18n.t('chercherObjet.description')}</th>
                             <th style={thStyle}>{i18n.t('chercherObjet.category')}</th>
                             <th style={thStyle}>{i18n.t('chercherObjet.date')}</th>
-                            <th style={thStyle}>{i18n.t('mesObjets.status')}</th>
+                            {showMatchItems ? <th style={thStyle}>{i18n.t('mesObjets.status')}</th> : null }
+                            {showLostItems ? <th style={thStyle}>{i18n.t('mesObjets.share')}</th> : null }
                         </tr>
                         </thead>
                         <tbody>
                         {items.map(item => {
                             return(
                                 <tr style={trChildStyle} key={random(999999999)}>
-                                    <td style={tdStyle}>{_.capitalize(item.intitule)}</td>
+                                    <td style={tdStyle}> <Link to={{pathname: '/MonObjet/'+item.id_objet }}>{_.capitalize(item.intitule)} </Link> </td>
                                     <td style={tdStyle}>{_.capitalize(item.description)}</td>
                                     <td style={tdStyle}>{_.capitalize(item.intitule_categorie)}</td>
                                     <td style={tdStyle}>{moment(item.date).format("L")}</td>
                                     <td style={tdStyle}>{_.capitalize(item.etat)}</td>
                                     {showMatchItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>{i18n.t('mesObjets.accept')}</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t('mesObjets.decline')}</button></td> : null }
+                                    {showLostItems ?
+                                        <td style={tdStyle}>
+                                            <FacebookShareButton
+                                                url={"https://raphaelmeissonnier.github.io/Foundem_back_end/"}
+                                                quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
+                                                hashtag={"#Foundem"}
+                                                description={"objet perdu"}
+                                            >
+                                                <FacebookIcon size={32} round />
+                                            </FacebookShareButton>
+                                            <TwitterShareButton
+                                                url={"https://raphaelmeissonnier.github.io/Foundem_back_end/"}
+                                                quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
+                                                hashtag={"#Foundem"}
+                                                description={"objet perdu"}
+                                            >
+                                                <TwitterIcon size={32} round />
+                                            </TwitterShareButton>
+                                        </td> : null}
                                 </tr>
                             );
                         })}
                         </tbody>
                     </table>
+                    {/*
+                    <div>
+                    {items.map(item => {
+                    <Card sx={{ maxWidth: 345 }}>
+                          <CardMedia
+                            component="img"
+                            height="140"
+                            image="/images/objetimg.jpg"
+                            alt="green iguana"
+                          />
+                          <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">
+                              {_.capitalize(item.intitule)}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              {_.capitalize(item.description)}
+                              {moment(item.date).format("L")}
+                            </Typography>
+                          </CardContent>
+                          <CardActions>
+                            <Button size="small">Share</Button>
+                            <Button size="small">Learn More</Button>
+                          </CardActions>
+                        </Card>
+                        })}
+                    </div>
+                    */}
                 </div>
             );
         }
