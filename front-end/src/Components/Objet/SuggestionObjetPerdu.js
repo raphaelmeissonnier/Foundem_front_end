@@ -19,7 +19,7 @@ const SuggestionObjetPerdu = (props) => {
     const [items2, setItems2] = useState([]);
     const [itemsSuggeres, setItemsSuggeres] = useState(null); //SOURCE DE PB ??
     const userId = useContext(UserContext);
-    const cheminImg = "./public/"
+    const cheminImg = "/"
     
  //"D:/MIAGE NANTERRE/M1/projetDevOps/Foundem_back_end/perdupn_back_end/public/"
     let longitude = props.longitude;
@@ -52,17 +52,6 @@ const SuggestionObjetPerdu = (props) => {
         return tableau;
     }
 
-    /*async function afficheImage(results) {
-        console.log("RESULT", results.data)
-        const base64String = btoa(String.fromCharCode(...new Uint8Array(results.data)));  
-        var str = `data:image/png;base64,${base64String}`
-        console.log("IMAGE converti",base64String)
-        console.log("STR",str.toString('ascii'))
-        return str
-        
-        
-    }*/
-
     const Item = styled(Paper)(({ theme }) => ({}));
 
     return(
@@ -73,13 +62,20 @@ const SuggestionObjetPerdu = (props) => {
             {items2 !=null ? items2.map(item =>{
                 return(
                     <div style={{marginLeft:'auto', marginRight:'auto', width:'90%'}}>
-                        <Card style={{boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px", marginTop:'10px', marginBottom:'10px'}}>
+                        <Card sx={{ maxWidth: 345 }} style={{boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px", marginTop:'10px', marginBottom:'10px'}}>
+                            {item[0].img ?
+                                <CardMedia
+                                    component="img"
+                                    height="140"
+                                    image= {cheminImg+item[0].img}
+                                    alt="img"
+                                /> : null
+                            }
                             <CardContent>
                                 <Typography paragraph={true} component="h6" style={{ textAlign:'justify', color:'black', fontFamily:'Trebuchet MS', fontSize:'16px', fontWeight:"bold"}}>{_.capitalize(item[0].intitule)}</Typography>
                                 <Typography style={{ textAlign:'justify', color:'black', fontFamily:'Trebuchet MS', fontSize:'14px'}}>{_.capitalize(item[0].description) }</Typography>
                                 <Typography style={{ textAlign:'justify', color:'black', fontFamily:'Trebuchet MS', fontSize:'14px'}}>{i18.t('suggestionObjetPerdu.lostOn')} {(moment(item[0].date).format('DD/MM/YYYY'))}</Typography>
                                 <Typography style={{ textAlign:'justify', color:'black', fontFamily:'Trebuchet MS', fontSize:'14px'}}>{(item[1])}</Typography>
-                                {item[0].img ? <img src={cheminImg+item[0].img} alt="img"/> : null}
                                 <Link to="/ChercherObjetPerdu"><Button variant="contained" color="primary" style={{ marginTop:'10px', fontFamily:'Trebuchet MS', float:'right', marginBottom:'10px'}}>{i18.t('suggestionObjetPerdu.foundIt')}</Button></Link>
                             </CardContent>
                         </Card>
