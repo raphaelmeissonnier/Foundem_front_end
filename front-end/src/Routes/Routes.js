@@ -14,6 +14,8 @@ import Agenda from "../Components/Objet/ParcoursMatching/Agenda";
 import MesRdv from "../Components/UserProfile/MesRdv";
 import MonSolde from "../Components/UserProfile/MonSolde";
 import MonObjet from "../Components/Objet/MonObjet";
+import Profil from "../Components/UserProfile/Profil";
+
 
 const Routes = () =>{
 
@@ -34,6 +36,7 @@ const Routes = () =>{
                     <Route exact path="/MesRdv" component={MesRdv} />
                     <Route exact path="/MonSolde" component={MonSolde} />
                     <Route exact path="/MonObjet/:idObjet" component={MonObjet} />
+                    <Route exact path="/Profil" component={Profil} />
                 </Switch> :
                 <Switch>
                     <Route exact path="/" component={App} />

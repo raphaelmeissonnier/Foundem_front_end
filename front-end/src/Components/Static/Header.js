@@ -204,6 +204,9 @@ const Header = () =>{
                       open={Boolean(anchorElUser)}
                       onClose={handleCloseUserMenu}
                   >
+                    <MenuItem  component={Link} to={"/Profil"}>
+                      <Typography className="textPolice" textAlign="center">{i18.t('header.profil')}</Typography>
+                    </MenuItem>
                     <MenuItem  component={Link} to={"/MesObjets"}>
                       <Typography className="textPolice" textAlign="center">{i18.t('header.myItems')}</Typography>
                     </MenuItem>
