@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useContext } from "react";
 import {UserContext} from "../Authentification/UserContext";
 import {styled} from "@material-ui/core/styles";
-import {Card, Paper} from "@material-ui/core";
+import {Card, Paper, CardMedia} from "@material-ui/core";
 import {CardContent, FormLabel, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import _ from "lodash";

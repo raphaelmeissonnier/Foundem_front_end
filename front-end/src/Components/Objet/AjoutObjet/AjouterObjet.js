@@ -99,7 +99,7 @@ const AjouterObjet =({objet}) =>{
                         port: 3001,
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json'},
-                        body: JSON.stringify( {intitule: values.intitule, description: values.description, date: values.date, longitude: longitude, latitude: latitude, user_id: userId, categorie: values.categorie })
+                        body: JSON.stringify( {intitule: values.intitule, description: values.description, date: values.date, img: image, longitude: longitude, latitude: latitude, user_id: userId, categorie: values.categorie })
                     };
                     fetch('/objetstrouves', requestOptions)
                         //Je récupère la réponse émise par le back
@@ -132,7 +132,13 @@ const AjouterObjet =({objet}) =>{
     function handleFileUpload(event){
         let reader = new FileReader();
         let file = event.target.files[0];
-        console.log("EVENT",event.target.files[0])
+        console.log("EVENT",event.target.files[0].size)
+        //On limite la taille des images choisis
+        if(event.target.files[0].size>100000){
+            alert("Veuillez choisir une image moins lourde !");
+            document.getElementById("img").value ="" ;
+            return ;
+        }
         reader.onloadend = () => {
             var nameImg = file.name
             console.log("NOM IMG", nameImg)
