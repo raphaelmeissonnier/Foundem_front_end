@@ -6,10 +6,7 @@ import {UserContext} from "../Authentification/UserContext";
 import {getUser, getHistorique} from "../../Actions/UserAction";
 import Stack from '@mui/material/Stack';
 import { styled } from '@material-ui/core/styles';
-import {
-    Button, Paper, Divider, Grid, Card, CardActions, CardContent, Box,
-    Typography, ListItem, ListItemText, ListItemAvatar, Avatar, List
-} from '@material-ui/core';
+import { Button, Paper, Divider, Grid, Card, CardActions, CardContent, Box, Typography, ListItem, ListItemText, ListItemAvatar, Avatar, List,} from '@material-ui/core';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -22,7 +19,8 @@ const MonSolde = () => {
     const dispatch = useDispatch();
     const [solde, setSolde] = useState(null);
     const [activeStep, setActiveStep] = useState(0);
-    const [changed, setChanged] = useState(false);
+    const [historiquePoints, setHistoriquePoints] = useState([]);
+    const [historiqueTransactions, setHistoriqueTransactions] = useState([]);
     const userID = useContext(UserContext);
 
     //Récupérer le solde du user
@@ -39,12 +37,19 @@ const MonSolde = () => {
         //Récupération du solde
         if(user)
         {
-            console.log("Dans useEffect 2")
             setSolde(user.solde);
             //Récupération du step
             setActiveStep(recuperationActiveStep(user.solde));
         }
+
+        //Récupération de l'historique des points + historique des transactions
+        if(hists)
+        {
+            setHistoriquePoints(hists);
+            setHistoriqueTransactions(hists);
+        }
     }, [user])
+
 
     //Récupération de l'active step à partir du solde de l'utilisateur
     function recuperationActiveStep(soldeuser)
@@ -79,43 +84,91 @@ const MonSolde = () => {
         }
     }
 
-    function affiche_tableau(typeHistorique){
-        console.log("Je rentre dans l'affichage");
-        let exists = false;
-        for(let item of hists)
-        {
-            if(item.type_historique === typeHistorique) {
-                console.log("trouvé:", item.type_historique);
-                exists = true;
-                let valeur = item.valeur_neg || item.valeur_pos;
-                let signe = typeHistorique ? "+" : "-";
-                let date = moment(item.date).format('LL');
-                return (
-                    <ListItem alignItems="flex-start">
-                        <ListItemAvatar>
-                            <Avatar alt={item.categorieNom || item.intituleRecompense} /*src="/static/images/avatar/1.jpg"*//>
-                        </ListItemAvatar>
-                        <ListItemText primary={ (signe.concat(valeur.toString())).concat(" ", i18n.t('monSolde.points'), " - ").concat(date) }/>
-                    </ListItem>
-                )
-            }
-        }
-        if(!exists)
-        {
-            if(typeHistorique)
-            {
-                return
-                (
-                    <h5 style = {{marginTop: '4vh', marginLeft: '5vh'}}>{i18n.t('monSolde.emptyHistory')}</h5>
-                )
-            }
-            else {
-                return (
-                    <h5 style = {{marginTop: '4vh', marginLeft: '5vh'}}>{i18n.t('monSolde.emptyTransactions')}</h5>
-                )
-            }
-        }
+
+    function afficher_historiquePoints() {
+        let result = historiquePoints.filter(obj => { return obj.type_historique === 1 });
+        console.log("Results: ", result);
+        return (
+            <div>
+                <Item>
+                    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                        {result ? result.map(item => {
+                            console.log("item:", item);
+                            return (
+                                <div>
+                                    <ListItem alignItems="flex-start">
+                                        <ListItemAvatar>
+                                            <Avatar
+                                                alt={item.categorieNom} />
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            disableTypography={true}
+                                            primary={
+                                                <Box sx={{ bgcolor: "#c5e1a5", width: "100px", borderRadius:8 }}>
+                                                    <Typography style={{ color: '#689f38', fontWeight:"bold", textAlign:"center" }}>
+                                                        {("+".concat(item.valeur_pos.toString())).concat(" ", i18n.t('monSolde.points'))}
+                                                    </Typography>
+                                                </Box>
+                                            }
+                                            secondary={(moment(item.date).format('LL'))}
+                                        />
+                                    </ListItem>
+                                    <Divider variant="inset" component="li" />
+                                </div>)
+                        })
+                        :
+                            <h5 style = {{marginTop: '4vh', marginLeft: '5vh'}}>{i18n.t('monSolde.emptyHistory')}</h5>
+                        }
+                    </List>
+                </Item>
+            </div>
+        );
     }
+
+    function afficher_historiqueTransactions()
+    {
+        let result = historiqueTransactions.filter(obj => { return obj.type_historique === 0 });
+        console.log("Results: ", result);
+        return (
+            <div>
+                <Item>
+                    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                        {result ? result.map(item => {
+                            console.log("item:", item);
+                            return (
+                                <div>
+                                    <ListItem alignItems="flex-start">
+                                        <ListItemAvatar>
+                                            <Avatar
+                                                alt={item.intituleRecompense}
+                                            />
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            disableTypography={true}
+                                            primary={
+                                                <Box sx={{ bgcolor: "#ffa4a2", width: "100px", borderRadius:8 }}>
+                                                    <Typography style={{ color: '#d32f2f', fontWeight:"bold", textAlign:"center" }}>
+                                                        {("-".concat(item.valeur_neg.toString())).concat(" ", i18n.t('monSolde.points'))}
+                                                    </Typography>
+                                                </Box>
+                                            }
+                                            secondary={(moment(item.date).format('LL'))}
+                                        />
+                                    </ListItem>
+                                    <Divider variant="inset" component="li" />
+                                </div>
+                            )
+                        })
+                        :
+                            <h5 style = {{marginTop: '4vh', marginLeft: '5vh'}}>{i18n.t('monSolde.emptyTransactions')}</h5>
+                        }
+                    </List>
+                </Item>
+            </div>
+        );
+    }
+
+
 
     const Item = styled(Paper)(({ theme }) => ({
         ...theme.typography.body2,
@@ -133,14 +186,6 @@ const MonSolde = () => {
         '400 points'
     ];
 
-    const bull = (
-        <Box
-            component="span"
-            sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-        >
-            •
-        </Box>
-    );
 
     return (
         <div>
@@ -162,22 +207,28 @@ const MonSolde = () => {
                 direction="row"
                 style={{marginTop:"10px"}}
                 spacing={45}
-                divider={<Divider orientation="vertical" flexItem
-                />}
+                divider={<Divider orientation="vertical" flexItem/>}
             >
 
-                <Grid container spacing={2} columns={10}>
+                <Grid container spacing={2} columns={2}>
                     {/*Historique des points*/}
                     <Grid item xs={6}>
                         <Item>
                             <h2 style = {{marginLeft: '5vh'}}>{i18n.t('monSolde.historicPoints')}</h2>
-                                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                                    { hists ? affiche_tableau(1) : null }
-                                </List>
+                            <h5 style = {{marginLeft: '5vh'}}>{i18n.t('monSolde.historicPointsDescription')}</h5>
+                            { historiquePoints ? afficher_historiquePoints() : null }
+                        </Item>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Item>
+                            <h2 style = {{marginLeft: '5vh'}}>{i18n.t('monSolde.transactions')}</h2>
+                            <h5 style = {{marginLeft: '5vh'}}>{i18n.t('monSolde.transactionsDescription')}</h5>
+                            { historiqueTransactions ? afficher_historiqueTransactions() : null }
                         </Item>
                     </Grid>
                 </Grid>
             </Stack>
+
 
             <br/>
 

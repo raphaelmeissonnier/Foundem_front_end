@@ -90,7 +90,9 @@
     "emptyHistory": "Vous n'avez gagné aucun points",
     "emptyTransactions": "Aucune transaction trouvée",
     "advantage": "Récompense",
-    "advantageDescription": "À partir de 100 points, vous pouvez débloquer un bon de réduction !"
+    "advantageDescription": "À partir de 100 points, vous pouvez débloquer un bon de réduction !",
+    "historicPointsDescription": "Cette section affiche les points gagnés en restituant des objets à leur propriétaire",
+    "transactionsDescription": "Cette section affiche les points dépensés (acquisition de récompenses)"
   },
 
   "objetsMatche": {
