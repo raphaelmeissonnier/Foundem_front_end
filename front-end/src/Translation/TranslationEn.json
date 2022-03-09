@@ -91,7 +91,9 @@
     "emptyHistory": "You have not earned any points",
     "emptyTransactions": "No transactions found",
     "advantage": "Reward",
-    "advantageDescription": "From 100 points, you can unlock a coupon !"
+    "advantageDescription": "From 100 points, you can unlock a coupon !",
+    "historicPointsDescription": "This section displays the points earned by returning items to their owners",
+    "transactionsDescription": "This section displays the points spent (acquisition of rewards)"
   },
 
   "objetsMatche": {
