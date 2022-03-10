@@ -20,7 +20,6 @@ const Profil = () => {
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState(null);
     const [image, setImage] = useState(null);
-    const [picMessage, setPicMessage] = useState(null);
     const [iscreated, setiscreated] = useState(null)
 
     const [openError, setOpenError] = useState(false);
@@ -123,7 +122,10 @@ return (
 
                     <div className="form-group row">
                         <div className="form-icon">
-                            <Avatar src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" />
+                            {user ? 
+                            <Avatar src={"/"+user.id_utilisateur+"_user_"+user.img} />:
+                            null
+                            }
                         </div>
 
                         <div className="form-group">

@@ -182,8 +182,8 @@ const Header = () =>{
               }
               <Tooltip className="textPolice" title={i18.t('header.profil')}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  {userData.img ?
-                    <Avatar alt="Remy Sharp" src={"/"+userData.id_utilisateur+"_"+userData.img} />:
+                  {userData ?
+                    <Avatar alt={userData.username} src={"/"+userData.id_utilisateur+"_user_"+userData.img} />:
                     <AccountCircleIcon fontSize="large" color="primary" style={{color:"white"}}/>
                   }
                 </IconButton>
