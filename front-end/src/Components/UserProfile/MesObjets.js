@@ -3,17 +3,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, NavLink} from "react-router-dom";
 import {UserContext} from "../Authentification/UserContext";
 import {getFoundItems, getLostItems, getMatchItems} from "../../Actions/ObjetsAction";
-import _, { random } from "lodash";
 import * as moment from "moment";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
 import {Redirect} from "react-router-dom";
 import i18n from "../../Translation/i18n";
-import { EmailShareButton, FacebookShareButton, TwitterShareButton, EmailIcon, FacebookIcon,
-TwitterIcon} from "react-share";
-import { Card, CardActions, CardContent, CardMedia, Button, Typography} from '@mui/material';
-import {Button, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography} from "@material-ui/core";
+import { EmailShareButton, FacebookShareButton, TwitterShareButton, EmailIcon, FacebookIcon, TwitterIcon} from "react-share";
+import { List, ListItem, ListItemAvatar, ListItemText, Paper, Card, CardActions, CardContent, CardMedia, Button, Typography} from '@mui/material';
 import TodayRoundedIcon from "@mui/icons-material/TodayRounded";
 import {styled} from "@material-ui/core/styles";
 import _ from "lodash";
@@ -203,22 +200,24 @@ const MesObjets  = () => {
                                                             </div>
                                                         : null }
                                                         {showLostItems ?
-                                                            <FacebookShareButton
-                                                                url={"https://raphaelmeissonnier.github.io/Foundem_back_end/"}
-                                                                quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
-                                                                hashtag={"#Foundem"}
-                                                                description={"objet perdu"}
-                                                            >
-                                                                <FacebookIcon size={32} round />
-                                                            </FacebookShareButton>
-                                                            <TwitterShareButton
-                                                                url={"https://raphaelmeissonnier.github.io/Foundem_back_end/"}
-                                                                quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
-                                                                hashtag={"#Foundem"}
-                                                                description={"objet perdu"}
-                                                            >
-                                                                <TwitterIcon size={32} round />
-                                                            </TwitterShareButton>
+                                                            <div>
+                                                                <FacebookShareButton
+                                                                    url={"https://raphaelmeissonnier.github.io/Foundem_back_end/"}
+                                                                    quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
+                                                                    hashtag={"#Foundem"}
+                                                                    description={"objet perdu"}
+                                                                >
+                                                                    <FacebookIcon size={32} round />
+                                                                </FacebookShareButton>
+                                                                <TwitterShareButton
+                                                                    url={"https://raphaelmeissonnier.github.io/Foundem_back_end/"}
+                                                                    quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
+                                                                    hashtag={"#Foundem"}
+                                                                    description={"objet perdu"}
+                                                                >
+                                                                    <TwitterIcon size={32} round />
+                                                                </TwitterShareButton>
+                                                            </div>
                                                         : null}
                                                     </div>
                                                 }
