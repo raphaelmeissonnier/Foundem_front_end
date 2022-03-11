@@ -19,8 +19,7 @@ const Profil = () => {
     const [email, setEmail] = useState(null)
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState(null);
-    const [pic, setPic] = useState();
-    const [picMessage, setPicMessage] = useState(null);
+    const [image, setImage] = useState(null);
     const [iscreated, setiscreated] = useState(null)
 
     const [openError, setOpenError] = useState(false);
@@ -57,7 +56,7 @@ function onSubmit(values) {
             port: 3001,
             method: 'PUT',
             headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({nom: values.name, prenom: values.firstName, username: values.username, email: values.email, mdp: values.password})
+            body: JSON.stringify({nom: values.name, prenom: values.firstName, username: values.username, img: image, email: values.email, mdp: values.password})
         }
 
         fetch('/users/'+ user.id_utilisateur, requestOptions) 
@@ -81,44 +80,29 @@ const validationSchema = Yup.object().shape({
 })
 
 
-
-const postDetails = (pics) => {
-
-    if(!pics){
-        return setPicMessage("Sélectionnez une image");
+function handleFileUpload(event){
+    let reader = new FileReader();
+    let file = event.target.files[0];
+    console.log("EVENT",event.target.files[0].size)
+    //On limite la taille des images choisis
+    if(event.target.files[0].size>100000){
+        alert("Veuillez choisir une image moins lourde !");
+        document.getElementById("img").value ="" ;
+        return ;
     }
-    setPicMessage(null);
-
-    if (pics.type === "image/jpeg" || pics.type === "image/png"){
-        const data = new FormData();
-        data.append("file", pics);
-        data.append("upload_preset", "notezipper");
-        data.append("cloud_name", "roadsidecoder");
-        fetch("https://api.cloudinary.com/v1_1/roadsidecoder/image/upload" , {
-            method: "post",
-            body: data,
-        })
-
-        .then((res) => res.json())
-        .then((data) => {
-
-            console.log(data);
-            setPic(data.url.toString());
-        })
-        .catch((err) => {
-            console.log(err);
+    reader.onloadend = () => {
+        var nameImg = file.name
+        console.log("NOM IMG", nameImg)
+        setImage({
+            img: reader.result,
+            name: nameImg
         });
-    } else {
-        return setPicMessage("Veuillez sélectionner une image");
-    }
-};
-
-
-function handleChange(){
-
+    };
+    reader.readAsDataURL(file);
 }
 
-function handleClick(){
+if (image){
+    console.log("VALEUR IMG",image);
 
 }
 
@@ -138,10 +122,15 @@ return (
 
                     <div className="form-group row">
                         <div className="form-icon">
-                            <Avatar src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" />
+                            {user ? 
+                            <Avatar src={"/"+user.id_utilisateur+"_user_"+user.img} />:
+                            null
+                            }
                         </div>
 
-                        <input type="file" onChange={handleChange} className="input"/>
+                        <div className="form-group">
+                            <input id="img" name="img" type="file" accept="image/*" onChange={handleFileUpload} className="form-control item" />
+                        </div>
 
                         <div className="form-group">
                             <ErrorMessage name="name" component="span" className="text-danger"/>
