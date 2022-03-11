@@ -127,6 +127,7 @@ const Header = () =>{
                       </MenuItem>
                     </Menu>
                   </Box>
+
                   <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                     <Button className="textPolice" href="/AjouterObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                       {i18.t('header.lostItem')}

@@ -16,6 +16,8 @@ import MonSolde from "../Components/UserProfile/MonSolde";
 import MonObjet from "../Components/Objet/MonObjet";
 import Profil from "../Components/UserProfile/Profil";
 
+import UserProfile from "../Components/UserProfile";
+
 
 const Routes = () =>{
 
@@ -37,6 +39,7 @@ const Routes = () =>{
                     <Route exact path="/MonSolde" component={MonSolde} />
                     <Route exact path="/MonObjet/:idObjet" component={MonObjet} />
                     <Route exact path="/Profil" component={Profil} />
+                    <Route exact path="/UserProfile/:id_utilisateur" component={UserProfile} />
                 </Switch> :
                 <Switch>
                     <Route exact path="/" component={App} />

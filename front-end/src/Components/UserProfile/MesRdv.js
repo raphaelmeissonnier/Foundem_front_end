@@ -1,12 +1,25 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {UserContext} from "../Authentification/UserContext";
-import {tableStyle, tdStyle, thStyle, trChildStyle, trHoverStyle} from "../Objet/AjoutObjet/styles";
 import _ from "lodash";
 import * as moment from "moment";
 import {config} from "../../config";
 import i18n from "../../Translation/i18n";
 import {getRdv} from "../../Actions/UserAction";
+import {
+    Paper,
+    Divider,
+    Typography,
+    ListItem,
+    ListItemText,
+    ListItemAvatar,
+    List,
+    Button,
+    Grid,
+} from '@material-ui/core';
+import { styled } from '@material-ui/core/styles';
+import TodayRoundedIcon from '@mui/icons-material/TodayRounded';
+import { Link } from "react-router-dom";
 
 
 const MesRdv = () => {
@@ -16,23 +29,32 @@ const MesRdv = () => {
     const dispatch = useDispatch();
     const mapboxApiKey = config.MY_API_TOKEN;
     const [accepted, setAccepted] = useState(false);
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState(null);
 
-    //Récupération ds rdv
+    const Item = styled(Paper)(({ theme }) => ({
+        ...theme.typography.body2,
+        padding: theme.spacing(5),
+        textAlign: 'center',
+        backgroundColor: 'transparent',
+        border: 'none',
+    }));
+
+    //Récupération des rdv
     useEffect(async () => {
         if (userID) {
             dispatch(getRdv(userID));
         }
     }, [userID])
 
-    useEffect(async () => {
+    useEffect( async () => {
         if(mesRdv)
         {
             console.log("Mes rdv not null");
-            setItems(await recuperationLieu(mesRdv));
+            let result = await recuperationLieu(mesRdv);
+            setItems(result);
         }
-    })
-
+    }, [mesRdv])
+    
     //Récupération du lieu
     async function recuperationLieu(listeRdv) {
         let rdvLocal = [];
@@ -45,7 +67,6 @@ const MesRdv = () => {
         }
         return rdvLocal;
     }
-
 
     async function accepter(id_rdv, date, longitude, latitude) {
         if (id_rdv && date && longitude && latitude) {
@@ -89,46 +110,75 @@ const MesRdv = () => {
         }
     }
 
-    function afficher() {
-        return (
+
+    function afficher()
+    {
+        return(
             <div>
-                <table style={tableStyle}>
-                    <thead>
-                    <tr style={trHoverStyle}>
-                        <th style={thStyle}>{i18n.t('chercherObjet.date')}</th>
-                        <th style={thStyle}>{i18n.t('mesObjets.place')}</th>
-                        <th style={thStyle}>{i18n.t('mesObjets.status')}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                <Item>
+                    <List sx={{ width: '100%' }}>
                         {items ? items.map(item => {
-                            console.log("item:", item);
-                            return (
-                                <tr style={trChildStyle} key={item.id_rdv}>
-                                    <td style={tdStyle}>{moment(item.date_rdv).format("L")}</td>
-                                    <td style={tdStyle}>{item.place}</td>
-                                    <td style={tdStyle}>{_.capitalize(item.etat)}</td>
-                                    {item.etat === "en cours" ? <td style={tdStyle}>
-                                        <button
-                                            onClick={() => accepter(item.id_rdv, item.date_rdv, item.longitude, item.latitude)}>{i18n.t('mesObjets.accept')}</button>
-                                        <button value={item.id_rdv}
-                                                onClick={() => refuser(item.id_rdv, item.date_rdv, item.longitude, item.latitude)}>{i18n.t('mesObjets.decline')}</button>
-                                    </td> : null}
-                                </tr>
-                            );
-                        }) : null}
-                    </tbody>
-                </table>
+                                console.log("item:", item);
+                                return (
+                                    <div id={item.id_rdv}>
+                                        <ListItem
+                                            key={item.id_rdv}
+                                        >
+                                            <ListItemAvatar>
+                                                <TodayRoundedIcon fontSize="large"/>
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                disableTypography={true}
+                                                primary={
+                                                    <Typography style={{ fontWeight:"bold" }}>
+                                                        {moment(item.date_rdv).format("LL")}
+                                                    </Typography>
+                                                }
+                                                secondary={
+                                                    <div>
+                                                        <Typography>
+                                                            {item.place}
+                                                        </Typography>
+                                                        <Link to={{ pathname:'/UserProfile/'+ item.id_utilisateur.toString() }}>
+                                                            <Typography>
+                                                                {i18n.t('mesObjets.foundBy')} {item.username}
+                                                            </Typography>
+                                                        </Link>
+                                                        {item.etat === "en cours" ?
+                                                            <div>
+                                                                <Button variant="contained" style={{backgroundColor:'#689f38', color:"white"}} onClick={() => accepter(item.id_rdv, item.date_rdv, item.longitude, item.latitude)}>{i18n.t('mesObjets.accept')}</Button>
+                                                                <Button variant="contained" style={{backgroundColor:'#d32f2f', color:"white"}} onClick={() => refuser(item.id_rdv, item.date_rdv, item.longitude, item.latitude)}>{i18n.t('mesObjets.decline')}</Button>
+                                                            </div>
+                                                        : null}
+                                                    </div>
+                                                }
+                                            />
+
+                                        </ListItem>
+                                        <Divider variant="inset" component="li" />
+                                    </div>)
+                            })
+                            :
+                            <h5 style = {{marginTop: '4vh', marginLeft: '5vh'}}>{i18n.t('mesRdv.rdvNotFound')}</h5>
+                        }
+                    </List>
+                </Item>
             </div>
-        );
+        )
     }
 
     return (
-        <div>
-            <h1>{i18n.t('mesRdv.title')}</h1>
-            {items != null ? afficher() : console.log("mesRdv null")}
+
+        <Grid style={{alignSelf:"center"}} container columns={1}>
+            {/*Historique des points*/}
+            <Grid item xs={12}>
+                <Item>
+                    <h2 style={{marginLeft: '5vh'}}> {i18n.t('mesRdv.title')} </h2>
+                    {items != null ? afficher() : console.log("mesRdv null")}
+                </Item>
+            </Grid>
             {accepted ? window.alert("Votre RDV est confirmé !") : console.log("pas de redirection")}
-        </div>
+        </Grid>
     )
 }
 

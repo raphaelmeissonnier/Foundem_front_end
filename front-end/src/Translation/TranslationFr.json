@@ -79,6 +79,7 @@
     "myFoundItems": "Mes objets trouvés",
     "myMatchItems": "Mes objets matchés",
     "place": "Lieu",
+    "foundBy": "Trouvé par ",
     "share": "Partager"
   },
 
@@ -122,7 +123,8 @@
   },
 
   "mesRdv": {
-    "title": "Mes rendez-vous"
+    "title": "Mes rendez-vous",
+    "rdvNotFound": "Aucun rendez-vous"
   },
 
   "errorMessage": {
