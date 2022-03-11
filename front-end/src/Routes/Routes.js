@@ -13,6 +13,8 @@ import {UserContext} from "../Components/Authentification/UserContext";
 import Agenda from "../Components/Objet/ParcoursMatching/Agenda";
 import MesRdv from "../Components/UserProfile/MesRdv";
 import MonSolde from "../Components/UserProfile/MonSolde";
+import UserProfile from "../Components/UserProfile";
+
 
 const Routes = () =>{
 
@@ -32,6 +34,7 @@ const Routes = () =>{
                     <Route exact path="/Agenda/:idObjetmatche/:firstUser/:secondUser" component={Agenda} />
                     <Route exact path="/MesRdv" component={MesRdv} />
                     <Route exact path="/MonSolde" component={MonSolde} />
+                    <Route exact path="/UserProfile/:id_utilisateur" component={UserProfile} />
                 </Switch> :
                 <Switch>
                     <Route exact path="/" component={App} />

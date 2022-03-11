@@ -2,15 +2,17 @@ import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {UserContext} from "../Authentification/UserContext";
 import {getFoundItems, getLostItems, getMatchItems} from "../../Actions/ObjetsAction";
-import _, { random } from "lodash";
 import * as moment from "moment";
-import {tableStyle, tdStyle, thStyle, trHoverStyle, trChildStyle} from "../Objet/AjoutObjet/styles";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
 import {Redirect} from "react-router-dom";
 import i18n from "../../Translation/i18n";
-
+import {Button, List, ListItem, ListItemAvatar, ListItemText, Paper, Typography} from "@material-ui/core";
+import TodayRoundedIcon from "@mui/icons-material/TodayRounded";
+import {styled} from "@material-ui/core/styles";
+import _ from "lodash";
+import CategoryIcon from '@mui/icons-material/Category';
 
 const MesObjets  = () => {
 
@@ -36,6 +38,14 @@ const MesObjets  = () => {
             dispatch(getMatchItems(userID));
         }
     }, [userID, showFoundItems])
+
+    const Item = styled(Paper)(({ theme }) => ({
+        ...theme.typography.body2,
+        padding: theme.spacing(5),
+        textAlign: 'center',
+        backgroundColor: 'transparent',
+        border: 'none',
+    }));
 
     function handleClickFound()
     {
@@ -100,9 +110,7 @@ const MesObjets  = () => {
         setsecondUser(idSecondUser);
 
         //On redirige l'utilisateur vers l'agenda (en passant dans la route l'id de l'objet matché
-
         setAccepted(true);
-
     }
 
     async function refuser(idObjetTrouve)
@@ -139,6 +147,67 @@ const MesObjets  = () => {
     //J'affiche ces objets trouvés selon leur état
     function afficher(items)
     {
+        return(
+            <div>
+                <Item>
+                    <List sx={{ width: '100%' }}>
+                        {items ? items.map(item => {
+                                console.log("item:", item);
+                                return (
+                                    <div>
+                                        <ListItem
+                                            key={item.id_rdv}
+                                        >
+                                            <ListItemAvatar>
+                                                <CategoryIcon fontSize="large"/>
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                disableTypography={true}
+                                                primary={
+                                                    <Typography style={{ fontWeight:"bold" }}>
+                                                        {_.capitalize(item.intitule)}
+                                                    </Typography>
+                                                }
+                                                secondary={
+                                                    <div>
+                                                        <Typography >
+                                                            {_.capitalize(item.description)}
+                                                        </Typography>
+                                                        <Typography>
+                                                            {_.capitalize(item.intitule_categorie)}
+                                                        </Typography>
+                                                        <Typography>
+                                                            {moment(item.date).format("L")}
+                                                        </Typography>
+                                                        <Typography>
+                                                            {_.capitalize(item.etat)}
+                                                        </Typography>
+
+                                                        {showMatchItems && item.etat=="en cours" ?
+                                                            <div>
+                                                                <Button variant="contained" style={{backgroundColor:'#689f38', color:"white"}} onClick={() => accepter(item.id_objet)}>{i18n.t('mesObjets.accept')}</Button>
+                                                                <Button variant="contained" style={{backgroundColor:'#d32f2f', color:"white"}} value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t('mesObjets.decline')}</Button>
+                                                            </div>
+                                                        : null }
+                                                    </div>
+                                                }
+                                            />
+
+                                        </ListItem>
+                                        <Divider variant="inset" component="li" />
+                                    </div>)
+                            })
+                            :
+                            <h5 style = {{marginTop: '4vh', marginLeft: '5vh'}}>{i18n.t('mesObjets.itemsNotFound')}</h5>
+                        }
+                    </List>
+                </Item>
+            </div>
+        )
+    }
+
+    /*function afficher(items)
+    {
         if(items != null )
         {
             return(
@@ -171,7 +240,7 @@ const MesObjets  = () => {
                 </div>
             );
         }
-    }
+    }*/
 
     return(
         <div>

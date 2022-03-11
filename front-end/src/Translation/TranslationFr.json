@@ -78,7 +78,8 @@
     "myLostItems": "Mes objets perdus",
     "myFoundItems": "Mes objets trouvés",
     "myMatchItems": "Mes objets matchés",
-    "place": "Lieu"
+    "place": "Lieu",
+    "foundBy": "Trouvé par "
   },
 
   "monSolde": {
@@ -121,7 +122,8 @@
   },
 
   "mesRdv": {
-    "title": "Mes rendez-vous"
+    "title": "Mes rendez-vous",
+    "rdvNotFound": "Aucun rendez-vous"
   },
 
   "errorMessage": {

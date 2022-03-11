@@ -81,6 +81,8 @@ const MonSolde = () => {
             await fetch('/listeRecompense', requestOptions)
                 .then(response => response.json()
                     .then(data => window.alert(data.message + "https://www.mavieencouleurs.fr/")));
+            
+            window.location.reload(); 
         }
     }
 
@@ -167,9 +169,7 @@ const MonSolde = () => {
             </div>
         );
     }
-
-
-
+    
     const Item = styled(Paper)(({ theme }) => ({
         ...theme.typography.body2,
         padding: theme.spacing(5),
