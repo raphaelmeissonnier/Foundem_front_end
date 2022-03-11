@@ -24,6 +24,7 @@ const AjouterObjet =({objet}) =>{
     const [latitude, setLatitude] = useState(null);
     const [openError, setOpenError] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(false);
+    const [image, setImage] = useState(null);
     const userId = useContext(UserContext);
     const viewport2 = { width: 400, height: 400 };
     const [state, setState] = useState({
@@ -70,8 +71,11 @@ const AjouterObjet =({objet}) =>{
                         const requestOptions = {
                             port: 3001,
                             method: 'POST',
-                            headers: { 'Content-Type': 'application/json'},
-                            body: JSON.stringify( {intitule: values.intitule, description: values.description, date: values.date, longitude: longitude, latitude: latitude, user_id: userId, categorie: values.categorie, rayon: values.rayon })
+                            headers: { 
+                                'Content-Type': 'application/json',
+                                'Accept': 'multipart/form-data'
+                            },
+                            body: JSON.stringify( {intitule: values.intitule, description: values.description, date: values.date, img: image, longitude: longitude, latitude: latitude, user_id: userId, categorie: values.categorie, rayon: values.rayon })
                         };
                         fetch('/objetsperdus', requestOptions)
                             //Je récupère la réponse émise par le back
@@ -95,7 +99,7 @@ const AjouterObjet =({objet}) =>{
                         port: 3001,
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json'},
-                        body: JSON.stringify( {intitule: values.intitule, description: values.description, date: values.date, longitude: longitude, latitude: latitude, user_id: userId, categorie: values.categorie })
+                        body: JSON.stringify( {intitule: values.intitule, description: values.description, date: values.date, img: image, longitude: longitude, latitude: latitude, user_id: userId, categorie: values.categorie })
                     };
                     fetch('/objetstrouves', requestOptions)
                         //Je récupère la réponse émise par le back
@@ -125,7 +129,31 @@ const AjouterObjet =({objet}) =>{
         setLatitude(item.center[1])
     }
 
+    function handleFileUpload(event){
+        let reader = new FileReader();
+        let file = event.target.files[0];
+        console.log("EVENT",event.target.files[0].size)
+        //On limite la taille des images choisis
+        if(event.target.files[0].size>100000){
+            alert("Veuillez choisir une image moins lourde !");
+            document.getElementById("img").value ="" ;
+            return ;
+        }
+        reader.onloadend = () => {
+            var nameImg = file.name
+            console.log("NOM IMG", nameImg)
+            setImage({
+                img: reader.result,
+                name: nameImg
+            });
+        };
+        reader.readAsDataURL(file);
+    }
 
+    if (image){
+        console.log("VALEUR IMG",image);
+
+    }
     return (
         <div>
             <Formik
@@ -148,6 +176,10 @@ const AjouterObjet =({objet}) =>{
                                 placeholder={i18n.t('ajoutObjet.name')}
                                 className="form-control item"
                             />
+                        </div>
+
+                        <div className="form-group">
+                            <input id="img" name="img" type="file" accept="image/*" onChange={handleFileUpload} className="form-control item" />
                         </div>
 
                         <div className="form-group">

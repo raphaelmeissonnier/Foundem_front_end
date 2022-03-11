@@ -1,12 +1,13 @@
 import React, { useState,useEffect,useContext } from "react";
 import {UserContext} from "../Authentification/UserContext";
 import {styled} from "@material-ui/core/styles";
-import {Card, Paper} from "@material-ui/core";
+import {Card, Paper, CardMedia} from "@material-ui/core";
 import {CardContent, FormLabel, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 import _ from "lodash";
 import {Link} from "react-router-dom";
 import i18 from "../../Translation/i18n";
+import { PNG } from 'pngjs/browser';
 
 const moment = require('moment')
 const {config} = require('../../config');
@@ -18,7 +19,9 @@ const SuggestionObjetPerdu = (props) => {
     const [items2, setItems2] = useState([]);
     const [itemsSuggeres, setItemsSuggeres] = useState(null); //SOURCE DE PB ??
     const userId = useContext(UserContext);
-
+    const cheminImg = "/"
+    
+ //"D:/MIAGE NANTERRE/M1/projetDevOps/Foundem_back_end/perdupn_back_end/public/"
     let longitude = props.longitude;
     let latitude = props.latitude;
 
@@ -59,7 +62,15 @@ const SuggestionObjetPerdu = (props) => {
             {items2 !=null ? items2.map(item =>{
                 return(
                     <div style={{marginLeft:'auto', marginRight:'auto', width:'90%'}}>
-                        <Card style={{boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px", marginTop:'10px', marginBottom:'10px'}}>
+                        <Card sx={{ maxWidth: 345 }} style={{boxShadow:"rgba(0, 0, 0, 0.35) 0px 5px 15px", marginTop:'10px', marginBottom:'10px'}}>
+                            {item[0].img ?
+                                <CardMedia
+                                    component="img"
+                                    height="140"
+                                    image= {cheminImg+item[0].img}
+                                    alt="img"
+                                /> : null
+                            }
                             <CardContent>
                                 <Typography paragraph={true} component="h6" style={{ textAlign:'justify', color:'black', fontFamily:'Trebuchet MS', fontSize:'16px', fontWeight:"bold"}}>{_.capitalize(item[0].intitule)}</Typography>
                                 <Typography style={{ textAlign:'justify', color:'black', fontFamily:'Trebuchet MS', fontSize:'14px'}}>{_.capitalize(item[0].description) }</Typography>
