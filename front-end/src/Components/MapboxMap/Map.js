@@ -223,7 +223,7 @@ const Map = (props) => {
     return (
         <div>
             <Stack direction="row" spacing={2} style={{width:'95%', marginLeft:'10px', marginRight:'10px', marginBottom:'10px', marginTop:'10px', textAlign:'center'}}>
-            <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
+            <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
                 <div style={{flexDirection:"column", alignItems:'center', justifyItems:'center', display:'flex', width:'100%', marginTop:"10px", marginLeft:"10px"}} className="card">
                     <FormLabel style={{color:'black', fontFamily:'Trebuchet MS', fontSize:'18px', marginTop:'10px'}}>{i18n.t('map.results')} <b>{items.length}</b> {i18n.t('map.foundNearYou')}</FormLabel>
                     <Card style={{height:'500px', width:'90%', marginTop:'10px'}} ref={mapContainer}>
