@@ -81,8 +81,9 @@ const MonSolde = () => {
             await fetch('/listeRecompense', requestOptions)
                 .then(response => response.json()
                     .then(data => window.alert(data.message + "https://www.mavieencouleurs.fr/")));
-            
-            window.location.reload(); 
+
+            dispatch(getUser(userID));
+            dispatch(getHistorique(userID));
         }
     }
 
