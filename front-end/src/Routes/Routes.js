@@ -37,7 +37,7 @@ const Routes = () =>{
                     <Route exact path="/Agenda/:idObjetmatche/:firstUser/:secondUser" component={Agenda} />
                     <Route exact path="/MesRdv" component={MesRdv} />
                     <Route exact path="/MonSolde" component={MonSolde} />
-                    <Route exact path="/MonObjet/:idObjet" component={MonObjet} />
+                    <Route exact path="/MonObjet/:idObjet/:statusObjet" component={MonObjet} />
                     <Route exact path="/Profil" component={Profil} />
                     <Route exact path="/UserProfile/:id_utilisateur" component={UserProfile} />
                 </Switch> :

@@ -15,6 +15,9 @@ import TodayRoundedIcon from "@mui/icons-material/TodayRounded";
 import {styled} from "@material-ui/core/styles";
 import _ from "lodash";
 import CategoryIcon from '@mui/icons-material/Category';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 const MesObjets  = () => {
 
@@ -154,6 +157,30 @@ const MesObjets  = () => {
         window.location.reload(true);
     }
 
+    //Suppression d'un objet
+    async function deleteObjet(id_objet, id_status)
+    {
+        console.log("id_status", id_status)
+        const requestOptions = {
+            port: 3001,
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json'},
+        };
+        if(id_status == "perdu")
+        {
+            await fetch('/objetsperdus/' + id_objet, requestOptions)
+                .then(response => response.json()
+                    .then(data => console.log("Delete match: ", data.message)))
+        }
+        else
+        {
+            await fetch('/objetstrouves/' + id_objet, requestOptions)
+                .then(response => response.json()
+                    .then(data => console.log("Delete match: ", data.message)))
+        }
+        window.location.reload();
+    }
+
     //J'affiche ces objets trouvés selon leur état
     function afficher(items)
     {
@@ -175,7 +202,13 @@ const MesObjets  = () => {
                                                 disableTypography={true}
                                                 primary={
                                                     <Typography style={{ fontWeight:"bold" }}>
-                                                        <Link to={{pathname: '/MonObjet/'+item.id_objet }}>{_.capitalize(item.intitule)} </Link>
+                                                        {_.capitalize(item.intitule)}
+                                                        <Link to={{pathname: '/MonObjet/'+ item.id_objet + '/' + item.status_objet}}>
+                                                            <EditIcon fontSize="small" color="action" style={{marginLeft:"20px"}}/>
+                                                        </Link>
+                                                        <Button onClick={() => deleteObjet(item.id_objet, item.status_objet)}>
+                                                            <DeleteIcon fontSize="small" color="error"/>
+                                                        </Button>
                                                     </Typography>
                                                 }
                                                 secondary={
@@ -235,43 +268,7 @@ const MesObjets  = () => {
             </div>
         )
     }
-
-    /*function afficher(items)
-    {
-        if(items != null )
-        {
-            return(
-                <div>
-                    <table style={tableStyle}>
-                        <thead>
-                        <tr style={trHoverStyle}>
-                            <th style={thStyle}>{i18n.t('chercherObjet.name')}</th>
-                            <th style={thStyle}>{i18n.t('chercherObjet.description')}</th>
-                            <th style={thStyle}>{i18n.t('chercherObjet.category')}</th>
-                            <th style={thStyle}>{i18n.t('chercherObjet.date')}</th>
-                            <th style={thStyle}>{i18n.t('mesObjets.status')}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {items.map(item => {
-                            return(
-                                <tr style={trChildStyle} key={random(999999999)}>
-                                    <td style={tdStyle}>{_.capitalize(item.intitule)}</td>
-                                    <td style={tdStyle}>{_.capitalize(item.description)}</td>
-                                    <td style={tdStyle}>{_.capitalize(item.intitule_categorie)}</td>
-                                    <td style={tdStyle}>{moment(item.date).format("L")}</td>
-                                    <td style={tdStyle}>{_.capitalize(item.etat)}</td>
-                                    {showMatchItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>{i18n.t('mesObjets.accept')}</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t('mesObjets.decline')}</button></td> : null }
-                                </tr>
-                            );
-                        })}
-                        </tbody>
-                    </table>
-                </div>
-            );
-        }
-    }*/
-
+    
     return(
         <div>
             <br></br><br></br><br></br><br></br><br></br>
