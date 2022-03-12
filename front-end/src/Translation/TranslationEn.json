@@ -133,7 +133,10 @@
     "firstNameRequired" : "Please enter your first name",
     "usernameRequired" : "Please enter your username",
     "emailRequired" : "Please enter your email",
-    "passwordRequired" : "Please enter your password"
+    "passwordRequired" : "Please enter your password",
+    "intituleRequired" : "Please enter a title",
+    "dateRequired" : "Please enter a date",
+    "categorieRequired" : "Please enter a category"
   },
 
   "footer": {
@@ -152,7 +155,14 @@
     "update": "Update",
     "errorRegistration": "Email or username already used !",
     "successRegistration": "Your account has been updated !"
+  },
+
+  "monObjet": {
+    "title": "Update your item",
+    "errorUpdate": "Error while updating !",
+    "successUpdate": "Your item has been updated !"
   }
+
 
 
 }

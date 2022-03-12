@@ -154,7 +154,7 @@ const MesObjets  = () => {
                 .then(data => console.log("Delete match: ", data.message)))
 
         window.alert("Vous avez supprimé le match !");
-        window.location.reload(true);
+        dispatch(getMatchItems(userID));
     }
 
     //Suppression d'un objet
@@ -178,7 +178,8 @@ const MesObjets  = () => {
                 .then(response => response.json()
                     .then(data => console.log("Delete match: ", data.message)))
         }
-        window.location.reload();
+        dispatch(getFoundItems(userID));
+        dispatch(getLostItems(userID));
     }
 
     //J'affiche ces objets trouvés selon leur état
@@ -203,12 +204,16 @@ const MesObjets  = () => {
                                                 primary={
                                                     <Typography style={{ fontWeight:"bold" }}>
                                                         {_.capitalize(item.intitule)}
-                                                        <Link to={{pathname: '/MonObjet/'+ item.id_objet + '/' + item.status_objet}}>
-                                                            <EditIcon fontSize="small" color="action" style={{marginLeft:"20px"}}/>
-                                                        </Link>
-                                                        <Button onClick={() => deleteObjet(item.id_objet, item.status_objet)}>
-                                                            <DeleteIcon fontSize="small" color="error"/>
-                                                        </Button>
+                                                        {showLostItems || showFoundItems ?
+                                                            <div>
+                                                                <Link to={{pathname: '/MonObjet/'+ item.id_objet + '/' + item.status_objet}}>
+                                                                    <EditIcon fontSize="small" color="action" style={{marginLeft:"20px"}}/>
+                                                                </Link>
+                                                                <Button onClick={() => deleteObjet(item.id_objet, item.status_objet)}>
+                                                                    <DeleteIcon fontSize="small" color="error"/>
+                                                                </Button>
+                                                            </div>
+                                                        : null }
                                                     </Typography>
                                                 }
                                                 secondary={

@@ -132,7 +132,10 @@
     "firstNameRequired" : "Veuillez entrer votre prénom",
     "usernameRequired" : "Veuillez entrer votre pseudo",
     "emailRequired" : "Veuillez entrer votre email",
-    "passwordRequired" : "Veuillez entrer votre mot de passe"
+    "passwordRequired" : "Veuillez entrer votre mot de passe",
+    "intituleRequired" : "Veuillez entrer un intitule",
+    "dateRequired" : "Veuillez entrer une date",
+    "categorieRequired" : "Veuillez entrer uen categorie"
   },
 
   "footer": {
@@ -151,5 +154,11 @@
     "update": "Modifiez",
     "errorRegistration": "L'email ou username existant !",
     "successRegistration": "Votre compte a bien été modifié !"
+  },
+
+  "monObjet": {
+    "title": "Modifier votre objet",
+    "errorUpdate": "L'email ou username existant !",
+    "successUpdate": "Votre compte a bien été modifié !"
   }
 }
