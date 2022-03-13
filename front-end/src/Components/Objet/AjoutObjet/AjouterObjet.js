@@ -27,7 +27,7 @@ const AjouterObjet =({objet}) =>{
     const [image, setImage] = useState(null);
     const userId = useContext(UserContext);
     const viewport2 = { width: 400, height: 400 };
-    const [state, setState] = useState({
+    const [state] = useState({
         vertical: 'top',
         horizontal: 'center',
     });

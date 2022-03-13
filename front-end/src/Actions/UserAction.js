@@ -65,8 +65,3 @@ export const getAllRdv = (uid) => {
         }
     };
 }
-
-export const updateProfile = (user) => async(dispatch,getState) => {
-
-
-}

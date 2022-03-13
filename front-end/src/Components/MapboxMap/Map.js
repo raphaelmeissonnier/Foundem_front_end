@@ -28,7 +28,6 @@ const Map = (props) => {
     const [rayon, setRayon] = useState(100);
     const [items, setItems] = useState([]);
     const [changed, setChanged] = useState(1);
-    const [clickedTrajet, setClickedTrajet] = useState(false);
     const marks = [
         {
             value: 5,
@@ -177,7 +176,6 @@ const Map = (props) => {
 
     //Calcul de l'itinéraire vers un point de la map
     async function getTrajet(objet,laMap, type){
-        setClickedTrajet(true);
         console.log("getTrajet");
         const rep = await fetch('https://api.mapbox.com/directions/v5/mapbox/'+ type + '/' +longUser+','+latUser+';'+objet.localisation.position.longitude+','+objet.localisation.position.latitude+'?steps=true&geometries=geojson&access_token='+config.MY_API_TOKEN);
         const json = await rep.json();
@@ -233,7 +231,6 @@ const Map = (props) => {
         setRayon(newValue);
         console.log("Map.js - rayon:", newValue);
     }
-    const Item = styled(Paper)(({ theme }) => ({}));
 
     return (
         <div>

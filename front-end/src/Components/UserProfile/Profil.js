@@ -8,7 +8,6 @@ import {Avatar, Snackbar} from "@material-ui/core";
 import {Alert} from "@mui/material";
 import '../Authentification/style.css';
 import "bootstrap/dist/css/bootstrap.css";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 
 const Profil = () => {
@@ -24,11 +23,11 @@ const Profil = () => {
 
     const [openError, setOpenError] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(false);
-    const [state, setState] = useState({
+    const [stateSnack] = useState({
         vertical: 'top',
         horizontal: 'center',
     });
-    const { vertical, horizontal} = state;
+    const { vertical, horizontal} = stateSnack;
 
 
 //Récupération des informations de l'utilisateur

@@ -12,7 +12,7 @@ const Login =() =>{
 
     const [iscreated, setcreated] = useState(false);
     const [openError, setOpenError] = useState(false);
-    const [state, setState] = useState({
+    const [state] = useState({
         vertical: 'top',
         horizontal: 'center',
     });

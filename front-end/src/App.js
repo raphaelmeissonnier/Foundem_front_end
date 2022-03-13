@@ -1,5 +1,5 @@
 import React from "react";
-import {CircularProgress, Button} from '@material-ui/core';
+import {CircularProgress} from '@material-ui/core';
 import { Alert } from "@mui/material";
 import Map from "./Components/MapboxMap/Map";
 import i18n from "./Translation/i18n";
