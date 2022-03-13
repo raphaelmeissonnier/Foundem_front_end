@@ -1,20 +1,21 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Link, NavLink} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {UserContext} from "../Authentification/UserContext";
 import {getFoundItems, getLostItems, getMatchItems} from "../../Actions/ObjetsAction";
 import * as moment from "moment";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
-import {Redirect} from "react-router-dom";
 import i18n from "../../Translation/i18n";
-import { EmailShareButton, FacebookShareButton, TwitterShareButton, EmailIcon, FacebookIcon, TwitterIcon} from "react-share";
-import { List, ListItem, ListItemAvatar, ListItemText, Paper, Card, CardActions, CardContent, CardMedia, Button, Typography} from '@mui/material';
-import TodayRoundedIcon from "@mui/icons-material/TodayRounded";
+import { FacebookShareButton, TwitterShareButton, FacebookIcon, TwitterIcon} from "react-share";
+import { List, ListItem, ListItemAvatar, ListItemText, Paper, Button, Typography} from '@mui/material';
 import {styled} from "@material-ui/core/styles";
 import _ from "lodash";
 import CategoryIcon from '@mui/icons-material/Category';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
 
 const MesObjets  = () => {
 
@@ -27,18 +28,11 @@ const MesObjets  = () => {
     const [showLostItems, setShowLostItems] = useState(true);
     const [showMatchItems, setShowMatchItems] = useState(false);
     const [alignment,setAlignment]=useState('1');
-    const [value, setValue] = useState('1');
+    //const [value, setValue] = useState('1');
     const [accepted, setAccepted] = useState(false);
     const [ObjetMatche, setObjetMatche] = useState(null);
     const [secondUser, setsecondUser] = useState(null);
 
-    const shareButtonProps = {
-        url: "https://github.com/greglobinski/react-custom-share",
-        network: "Facebook",
-        text: "Give it a try - react-custom-share component",
-        longtext:
-          "Social sharing buttons for React. Use one of the build-in themes or create a custom one from the scratch."
-      };
 
     useEffect(async () => {
         if(userID)
@@ -82,17 +76,17 @@ const MesObjets  = () => {
         if(parValue=='1'){
             handleClickLost();
             setAlignment('1');
-            setValue('1')
+            //setValue('1')
         }
         else if (parValue=='2'){
             handleClickFound();
             setAlignment('2');
-            setValue('2')
+            //setValue('2')
         }
         else if (parValue=='3'){
             handleClickMatch();
             setAlignment('3');
-            setValue('3')
+            //setValue('3')
         }
       };
 
@@ -151,7 +145,32 @@ const MesObjets  = () => {
                 .then(data => console.log("Delete match: ", data.message)))
 
         window.alert("Vous avez supprimé le match !");
-        window.location.reload(true);
+        dispatch(getMatchItems(userID));
+    }
+
+    //Suppression d'un objet
+    async function deleteObjet(id_objet, id_status)
+    {
+        console.log("id_status", id_status)
+        const requestOptions = {
+            port: 3001,
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json'},
+        };
+        if(id_status == "perdu")
+        {
+            await fetch('/objetsperdus/' + id_objet, requestOptions)
+                .then(response => response.json()
+                    .then(data => console.log("Delete match: ", data.message)))
+        }
+        else
+        {
+            await fetch('/objetstrouves/' + id_objet, requestOptions)
+                .then(response => response.json()
+                    .then(data => console.log("Delete match: ", data.message)))
+        }
+        dispatch(getFoundItems(userID));
+        dispatch(getLostItems(userID));
     }
 
     //J'affiche ces objets trouvés selon leur état
@@ -169,13 +188,23 @@ const MesObjets  = () => {
                                             key={item.id_rdv}
                                         >
                                             <ListItemAvatar>
-                                                <CategoryIcon fontSize="large"/>
+                                                <img  id="img" width="200" height="100" src={"/"+item.img} />
                                             </ListItemAvatar>
                                             <ListItemText
                                                 disableTypography={true}
                                                 primary={
                                                     <Typography style={{ fontWeight:"bold" }}>
-                                                        <Link to={{pathname: '/MonObjet/'+item.id_objet }}>{_.capitalize(item.intitule)} </Link>
+                                                        {_.capitalize(item.intitule)}
+                                                        {showLostItems || showFoundItems ?
+                                                            <div>
+                                                                <Link to={{pathname: '/MonObjet/'+ item.id_objet + '/' + item.status_objet}}>
+                                                                    <EditIcon fontSize="small" color="action" style={{marginLeft:"20px"}}/>
+                                                                </Link>
+                                                                <Button onClick={() => deleteObjet(item.id_objet, item.status_objet)}>
+                                                                    <DeleteIcon fontSize="small" color="error"/>
+                                                                </Button>
+                                                            </div>
+                                                        : null }
                                                     </Typography>
                                                 }
                                                 secondary={
@@ -235,43 +264,7 @@ const MesObjets  = () => {
             </div>
         )
     }
-
-    /*function afficher(items)
-    {
-        if(items != null )
-        {
-            return(
-                <div>
-                    <table style={tableStyle}>
-                        <thead>
-                        <tr style={trHoverStyle}>
-                            <th style={thStyle}>{i18n.t('chercherObjet.name')}</th>
-                            <th style={thStyle}>{i18n.t('chercherObjet.description')}</th>
-                            <th style={thStyle}>{i18n.t('chercherObjet.category')}</th>
-                            <th style={thStyle}>{i18n.t('chercherObjet.date')}</th>
-                            <th style={thStyle}>{i18n.t('mesObjets.status')}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {items.map(item => {
-                            return(
-                                <tr style={trChildStyle} key={random(999999999)}>
-                                    <td style={tdStyle}>{_.capitalize(item.intitule)}</td>
-                                    <td style={tdStyle}>{_.capitalize(item.description)}</td>
-                                    <td style={tdStyle}>{_.capitalize(item.intitule_categorie)}</td>
-                                    <td style={tdStyle}>{moment(item.date).format("L")}</td>
-                                    <td style={tdStyle}>{_.capitalize(item.etat)}</td>
-                                    {showMatchItems && item.etat=="en cours" ? <td style={tdStyle}><button onClick={() => accepter(item.id_objet)}>{i18n.t('mesObjets.accept')}</button> <button value={item.id_objet} onClick={() => refuser(item.id_objet)}>{i18n.t('mesObjets.decline')}</button></td> : null }
-                                </tr>
-                            );
-                        })}
-                        </tbody>
-                    </table>
-                </div>
-            );
-        }
-    }*/
-
+    
     return(
         <div>
             <br></br><br></br><br></br><br></br><br></br>

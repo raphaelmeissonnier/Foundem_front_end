@@ -28,7 +28,6 @@ const Map = (props) => {
     const [rayon, setRayon] = useState(100);
     const [items, setItems] = useState([]);
     const [changed, setChanged] = useState(1);
-    const [clickedTrajet, setClickedTrajet] = useState(false);
     const marks = [
         {
             value: 5,
@@ -112,14 +111,29 @@ const Map = (props) => {
                     <p style="font-size: 15px">${i18n.t('suggestionObjetPerdu.lostOn')}${moment(tabValue[0].date).format("DD/MM/YYYY")}</p>
                 </div>`;
             const divElement = document.createElement('div');
-            const assignBtn = document.createElement('div');
-            assignBtn.innerHTML = `<button class="btn btn-success btn-simple text-white" style="font-size: 15px; font-family: Trebuchet MS;">${i18n.t('map.goThere')}</button>`;
+            const drivingBtn = document.createElement('div');
+            const cyclingBtn = document.createElement('div');
+            const walkingBtn = document.createElement('div');
+            drivingBtn.innerHTML = `<button class="btn btn-success btn-simple text-white" style="font-size: 15px; font-family: Trebuchet MS;"> 🚗 ${i18n.t('map.goThere')}</button>`;
+            cyclingBtn.innerHTML = `<button class="btn btn-success btn-simple text-white" style="font-size: 15px; font-family: Trebuchet MS;"> 🚴 ${i18n.t('map.goThere')}</button>`;
+            walkingBtn.innerHTML = `<button class="btn btn-success btn-simple text-white" style="font-size: 15px; font-family: Trebuchet MS;"> 🚶‍ ${i18n.t('map.goThere')}</button>`;
             divElement.innerHTML = innerHtmlContent;
-            divElement.appendChild(assignBtn);
-            assignBtn.addEventListener('click', (e) => {
+            divElement.appendChild(drivingBtn);
+            divElement.appendChild(cyclingBtn);
+            divElement.appendChild(walkingBtn);
+            drivingBtn.addEventListener('click', (e) => {
                 console.log('Button clicked: ', tab);
-                getTrajet(tab, laMap);
+                getTrajet(tab, laMap, "driving");
             });
+            cyclingBtn.addEventListener('click', (e) => {
+                console.log('Button clicked: ', tab);
+                getTrajet(tab, laMap, "cycling");
+            });
+            walkingBtn.addEventListener('click', (e) => {
+                console.log('Button clicked: ', tab);
+                getTrajet(tab, laMap, "walking");
+            });
+
 
             //Création du marker
             const el = document.createElement("div");
@@ -161,10 +175,9 @@ const Map = (props) => {
 
 
     //Calcul de l'itinéraire vers un point de la map
-    async function getTrajet(objet,laMap){
-        setClickedTrajet(true);
+    async function getTrajet(objet,laMap, type){
         console.log("getTrajet");
-        const rep = await fetch('https://api.mapbox.com/directions/v5/mapbox/driving/'+longUser+','+latUser+';'+objet.localisation.position.longitude+','+objet.localisation.position.latitude+'?steps=true&geometries=geojson&access_token='+config.MY_API_TOKEN);
+        const rep = await fetch('https://api.mapbox.com/directions/v5/mapbox/'+ type + '/' +longUser+','+latUser+';'+objet.localisation.position.longitude+','+objet.localisation.position.latitude+'?steps=true&geometries=geojson&access_token='+config.MY_API_TOKEN);
         const json = await rep.json();
         const data = json.routes[0];
         const steps = data.legs[0].steps;
@@ -207,7 +220,7 @@ const Map = (props) => {
         }
         instructions.innerHTML = `<p style="align-self: center;"><strong>Trip duration: ${Math.floor(
             data.duration / 60
-            )} min 🚴 </strong></p><ol style="text-align: justify">${tripInstructions}</ol>`;
+            )} min </strong></p><ol style="text-align: justify">${tripInstructions}</ol>`;
 
         console.log("Markers crées",tripInstructions)
     }
@@ -218,7 +231,6 @@ const Map = (props) => {
         setRayon(newValue);
         console.log("Map.js - rayon:", newValue);
     }
-    const Item = styled(Paper)(({ theme }) => ({}));
 
     return (
         <div>

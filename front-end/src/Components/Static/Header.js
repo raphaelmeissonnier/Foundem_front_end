@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, IconButton, Avatar, Snackbar} from '@material-ui/core';
+import {AppBar, Box, Toolbar, Typography, Menu, MenuItem, IconButton, Avatar} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';

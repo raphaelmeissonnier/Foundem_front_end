@@ -8,7 +8,6 @@ import {Avatar, Snackbar} from "@material-ui/core";
 import {Alert} from "@mui/material";
 import '../Authentification/style.css';
 import "bootstrap/dist/css/bootstrap.css";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 
 const Profil = () => {
@@ -24,11 +23,11 @@ const Profil = () => {
 
     const [openError, setOpenError] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(false);
-    const [state, setState] = useState({
+    const [stateSnack] = useState({
         vertical: 'top',
         horizontal: 'center',
     });
-    const { vertical, horizontal} = state;
+    const { vertical, horizontal} = stateSnack;
 
 
 //Récupération des informations de l'utilisateur
@@ -83,22 +82,24 @@ const validationSchema = Yup.object().shape({
 function handleFileUpload(event){
     let reader = new FileReader();
     let file = event.target.files[0];
-    console.log("EVENT",event.target.files[0].size)
-    //On limite la taille des images choisis
-    if(event.target.files[0].size>90000){
-        alert("Veuillez choisir une image moins lourde !");
-        document.getElementById("img").value ="" ;
-        return ;
+    if(file){
+        console.log("EVENT",event.target.files[0].size)
+        //On limite la taille des images choisis
+        if(event.target.files[0].size>90000){
+            alert("Veuillez choisir une image moins lourde !");
+            document.getElementById("img").value ="" ;
+            return ;
+        }
+        reader.onloadend = () => {
+            var nameImg = file.name
+            console.log("NOM IMG", nameImg)
+            setImage({
+                img: reader.result,
+                name: nameImg
+            });
+        };
+        reader.readAsDataURL(file);
     }
-    reader.onloadend = () => {
-        var nameImg = file.name
-        console.log("NOM IMG", nameImg)
-        setImage({
-            img: reader.result,
-            name: nameImg
-        });
-    };
-    reader.readAsDataURL(file);
 }
 
 if (image){

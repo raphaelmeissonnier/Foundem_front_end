@@ -7,7 +7,6 @@ import Button from "@mui/material/Button";
 import _ from "lodash";
 import {Link} from "react-router-dom";
 import i18 from "../../Translation/i18n";
-import { PNG } from 'pngjs/browser';
 
 const moment = require('moment')
 const {config} = require('../../config');

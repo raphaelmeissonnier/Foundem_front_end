@@ -27,7 +27,7 @@ const AjouterObjet =({objet}) =>{
     const [image, setImage] = useState(null);
     const userId = useContext(UserContext);
     const viewport2 = { width: 400, height: 400 };
-    const [state, setState] = useState({
+    const [state] = useState({
         vertical: 'top',
         horizontal: 'center',
     });
@@ -132,22 +132,29 @@ const AjouterObjet =({objet}) =>{
     function handleFileUpload(event){
         let reader = new FileReader();
         let file = event.target.files[0];
-        console.log("EVENT",event.target.files[0].size)
-        //On limite la taille des images choisis
-        if(event.target.files[0].size>90000){
-            alert("Veuillez choisir une image moins lourde !");
-            document.getElementById("img").value ="" ;
-            return ;
+        if(file){
+            console.log("EVENT",event.target.files[0].size)
+            //On limite la taille des images choisis
+            if(event.target.files[0].size>100000){
+                alert("Veuillez choisir une image moins lourde !");
+                document.getElementById("img").value ="" ;
+                return ;
+            }
+            reader.onloadend = () => {
+                var nameImg = file.name
+                console.log("NOM IMG", nameImg)
+                var output = document.getElementById("output");
+                output.src = reader.result
+                setImage({
+                    img: reader.result,
+                    name: nameImg
+                });
+            };
+            reader.readAsDataURL(file);
         }
-        reader.onloadend = () => {
-            var nameImg = file.name
-            console.log("NOM IMG", nameImg)
-            setImage({
-                img: reader.result,
-                name: nameImg
-            });
-        };
-        reader.readAsDataURL(file);
+        else{
+            return ;
+        }    
     }
 
     if (image){
@@ -180,6 +187,7 @@ const AjouterObjet =({objet}) =>{
 
                         <div className="form-group">
                             <input id="img" name="img" type="file" accept="image/*" onChange={handleFileUpload} className="form-control item" />
+                            <img  id="output" width="500" height="300" />
                         </div>
 
                         <div className="form-group">

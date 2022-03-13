@@ -14,7 +14,7 @@ const Inscription = () => {
     const [iscreated, setcreated] = useState(null);
     const [openError, setOpenError] = useState(false);
     const [openSuccess, setOpenSuccess] = useState(false);
-    const [state, setState] = useState({
+    const [state] = useState({
         vertical: 'top',
         horizontal: 'center',
     });
