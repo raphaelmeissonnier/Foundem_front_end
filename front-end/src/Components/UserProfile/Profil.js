@@ -84,7 +84,7 @@ function handleFileUpload(event){
     let file = event.target.files[0];
     console.log("EVENT",event.target.files[0].size)
     //On limite la taille des images choisis
-    if(event.target.files[0].size>100000){
+    if(event.target.files[0].size>90000){
         alert("Veuillez choisir une image moins lourde !");
         document.getElementById("img").value ="" ;
         return ;

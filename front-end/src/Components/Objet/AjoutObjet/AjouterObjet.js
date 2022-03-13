@@ -142,6 +142,8 @@ const AjouterObjet =({objet}) =>{
         reader.onloadend = () => {
             var nameImg = file.name
             console.log("NOM IMG", nameImg)
+            var output = document.getElementById("output");
+            output.src = reader.result
             setImage({
                 img: reader.result,
                 name: nameImg
@@ -180,6 +182,7 @@ const AjouterObjet =({objet}) =>{
 
                         <div className="form-group">
                             <input id="img" name="img" type="file" accept="image/*" onChange={handleFileUpload} className="form-control item" />
+                            <img  id="output" width="500" height="300" />
                         </div>
 
                         <div className="form-group">
