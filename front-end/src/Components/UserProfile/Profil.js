@@ -82,22 +82,24 @@ const validationSchema = Yup.object().shape({
 function handleFileUpload(event){
     let reader = new FileReader();
     let file = event.target.files[0];
-    console.log("EVENT",event.target.files[0].size)
-    //On limite la taille des images choisis
-    if(event.target.files[0].size>90000){
-        alert("Veuillez choisir une image moins lourde !");
-        document.getElementById("img").value ="" ;
-        return ;
+    if(file){
+        console.log("EVENT",event.target.files[0].size)
+        //On limite la taille des images choisis
+        if(event.target.files[0].size>90000){
+            alert("Veuillez choisir une image moins lourde !");
+            document.getElementById("img").value ="" ;
+            return ;
+        }
+        reader.onloadend = () => {
+            var nameImg = file.name
+            console.log("NOM IMG", nameImg)
+            setImage({
+                img: reader.result,
+                name: nameImg
+            });
+        };
+        reader.readAsDataURL(file);
     }
-    reader.onloadend = () => {
-        var nameImg = file.name
-        console.log("NOM IMG", nameImg)
-        setImage({
-            img: reader.result,
-            name: nameImg
-        });
-    };
-    reader.readAsDataURL(file);
 }
 
 if (image){

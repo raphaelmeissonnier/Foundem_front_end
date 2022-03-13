@@ -188,7 +188,7 @@ const MesObjets  = () => {
                                             key={item.id_rdv}
                                         >
                                             <ListItemAvatar>
-                                                <CategoryIcon fontSize="large"/>
+                                                <img  id="img" width="200" height="100" src={"/"+item.img} />
                                             </ListItemAvatar>
                                             <ListItemText
                                                 disableTypography={true}
@@ -284,8 +284,7 @@ const MesObjets  = () => {
             <br></br>
             <Divider></Divider>
             <br></br>
-            {showFoundItems ? afficher(objetsTrouvesResponse) :  null }
-            {showMatchItems ? afficher(objetsMatchesResponse) : afficher(objetsPerdusResponse)}
+            {showFoundItems ? afficher(objetsTrouvesResponse) :  showMatchItems ? afficher(objetsMatchesResponse) : afficher(objetsPerdusResponse) }
             <br></br>
             <Divider></Divider>
             <br></br>
