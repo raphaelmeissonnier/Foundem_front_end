@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import i18n from "../Translation/i18n";
 import {Avatar} from "@material-ui/core";
 import '../Components/Authentification/style.css';
 import "bootstrap/dist/css/bootstrap.css";

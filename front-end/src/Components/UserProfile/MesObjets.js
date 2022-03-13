@@ -1,17 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Link, NavLink} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import {UserContext} from "../Authentification/UserContext";
 import {getFoundItems, getLostItems, getMatchItems} from "../../Actions/ObjetsAction";
 import * as moment from "moment";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Divider from '@mui/material/Divider';
-import {Redirect} from "react-router-dom";
 import i18n from "../../Translation/i18n";
-import { EmailShareButton, FacebookShareButton, TwitterShareButton, EmailIcon, FacebookIcon, TwitterIcon} from "react-share";
-import { List, ListItem, ListItemAvatar, ListItemText, Paper, Card, CardActions, CardContent, CardMedia, Button, Typography} from '@mui/material';
-import TodayRoundedIcon from "@mui/icons-material/TodayRounded";
+import { FacebookShareButton, TwitterShareButton, FacebookIcon, TwitterIcon} from "react-share";
+import { List, ListItem, ListItemAvatar, ListItemText, Paper, Button, Typography} from '@mui/material';
 import {styled} from "@material-ui/core/styles";
 import _ from "lodash";
 import CategoryIcon from '@mui/icons-material/Category';
@@ -30,18 +28,11 @@ const MesObjets  = () => {
     const [showLostItems, setShowLostItems] = useState(true);
     const [showMatchItems, setShowMatchItems] = useState(false);
     const [alignment,setAlignment]=useState('1');
-    const [value, setValue] = useState('1');
+    //const [value, setValue] = useState('1');
     const [accepted, setAccepted] = useState(false);
     const [ObjetMatche, setObjetMatche] = useState(null);
     const [secondUser, setsecondUser] = useState(null);
 
-    const shareButtonProps = {
-        url: "https://github.com/greglobinski/react-custom-share",
-        network: "Facebook",
-        text: "Give it a try - react-custom-share component",
-        longtext:
-          "Social sharing buttons for React. Use one of the build-in themes or create a custom one from the scratch."
-      };
 
     useEffect(async () => {
         if(userID)
@@ -85,17 +76,17 @@ const MesObjets  = () => {
         if(parValue=='1'){
             handleClickLost();
             setAlignment('1');
-            setValue('1')
+            //setValue('1')
         }
         else if (parValue=='2'){
             handleClickFound();
             setAlignment('2');
-            setValue('2')
+            //setValue('2')
         }
         else if (parValue=='3'){
             handleClickMatch();
             setAlignment('3');
-            setValue('3')
+            //setValue('3')
         }
       };
 
@@ -293,7 +284,8 @@ const MesObjets  = () => {
             <br></br>
             <Divider></Divider>
             <br></br>
-            {showFoundItems ? afficher(objetsTrouvesResponse) :  showMatchItems ? afficher(objetsMatchesResponse) : afficher(objetsPerdusResponse) }
+            {showFoundItems ? afficher(objetsTrouvesResponse) :  null }
+            {showMatchItems ? afficher(objetsMatchesResponse) : afficher(objetsPerdusResponse)}
             <br></br>
             <Divider></Divider>
             <br></br>

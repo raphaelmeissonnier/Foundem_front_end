@@ -103,7 +103,14 @@ const ChercherObjetPerdu =() =>{
                     /*Je regarde l'attribut 'result' de la variable 'response'(qui contient la réponse émise par le back)
                       Si l'attribut 'result'==0 alors j'affiche un message rien sinon j'enregistre la réponse du back
                     */
-                    .then(data => (setItems(data), data.result >=0 ? window.alert(data.message) : null )));
+                    .then( (data) => {
+                        setItems(data);
+                        }, (data) => {
+                            if(data.result >=0)
+                                window.alert(data.message)
+                        }
+                    )
+                );
         }
         else
         {
@@ -134,7 +141,6 @@ const ChercherObjetPerdu =() =>{
             textAlign: 'center',
         },
     }));
-    const classes = useStyles();
 
     return (
         <div>

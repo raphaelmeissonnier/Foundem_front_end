@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {UserContext} from "../Authentification/UserContext";
-import _ from "lodash";
 import * as moment from "moment";
 import {config} from "../../config";
 import i18n from "../../Translation/i18n";
@@ -28,7 +27,6 @@ const MesRdv = () => {
     const userID = useContext(UserContext);
     const dispatch = useDispatch();
     const mapboxApiKey = config.MY_API_TOKEN;
-    const [accepted, setAccepted] = useState(false);
     const [items, setItems] = useState(null);
 
     const Item = styled(Paper)(({ theme }) => ({
@@ -177,7 +175,6 @@ const MesRdv = () => {
                     {items != null ? afficher() : console.log("mesRdv null")}
                 </Item>
             </Grid>
-            {accepted ? window.alert("Votre RDV est confirmé !") : console.log("pas de redirection")}
         </Grid>
     )
 }
