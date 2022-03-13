@@ -18,7 +18,7 @@ const MonObjet = (props) => {
     const [intitule, setIntitule] = useState(null)
     const [description, setDescription] = useState(null)
     const [date, setDate] = useState(null)
-    const [img, setImg] = useState(null)
+    const [image, setImage] = useState(null);
     const [categorie, setCategorie] = useState(null)
     const [state, setState] = useState({
         vertical: 'top',
@@ -53,7 +53,7 @@ const MonObjet = (props) => {
             setIntitule(objet[0].intitule);
             setDescription(objet[0].description);
             setDate(moment(objet[0].dates).format('yyyy-MM-DD'));
-            setImg(objet[0].img);
+            setImage(objet[0].img);
             setCategorie(objet[0].intitule_categorie);
         }
     }, [objet])
@@ -70,7 +70,7 @@ const MonObjet = (props) => {
                 port: 3001,
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({intitule: values.intitule, description: values.description, dates: values.dates, /*img: img,*/ })
+                body: JSON.stringify({intitule: values.intitule, description: values.description, dates: values.dates, img: image })
             }
             
             //API Call selon le type de l'objet
@@ -94,6 +94,39 @@ const MonObjet = (props) => {
         }
     }
 
+    function handleFileUpload(event){
+        let reader = new FileReader();
+        let file = event.target.files[0];
+        if(file){
+            console.log("EVENT",event.target.files[0].size)
+            //On limite la taille des images choisis
+            if(event.target.files[0].size>100000){
+                alert("Veuillez choisir une image moins lourde !");
+                document.getElementById("img").value ="" ;
+                return ;
+            }
+            reader.onloadend = () => {
+                var nameImg = file.name
+                console.log("NOM IMG", nameImg)
+                var output = document.getElementById("output");
+                setImage({
+                    img: reader.result,
+                    name: nameImg
+                });
+                output.src = reader.result
+            };
+            reader.readAsDataURL(file);
+        }
+        else{
+            return ;
+        }  
+    }
+
+    if (image){
+        console.log("VALEUR IMG",image);
+
+    }
+
     const validationSchema = Yup.object().shape({
         intitule: Yup.string().min(3).max(20).required(i18n.t('errorMessage.intituleRequired')),
         dates: Yup.date().required(i18n.t('errorMessage.dateRequired')).min(moment().subtract(365, 'days').calendar()).max(moment(new Date()).format('yyyy-MM-DD')),
@@ -105,7 +138,7 @@ const MonObjet = (props) => {
             <Formik
                 onSubmit={onSubmit}
                 validationSchema={validationSchema}
-                initialValues={{intitule: intitule, description: description, dates: date, img: img, categorie: categorie}}
+                initialValues={{intitule: intitule, description: description, dates: date, img: image, categorie: categorie}}
                 enableReinitialize={true}
             >
                 <div className="registration-form">
@@ -115,16 +148,11 @@ const MonObjet = (props) => {
                         </div>
 
                         <div className="form-group row">
-                            {/*<div className="form-icon">
-                                {user ?
-                                    <Avatar src={"/"+user.id_utilisateur+"_user_"+user.img} />:
-                                    null
-                                }
-                            </div>
-
                             <div className="form-group">
-                                <input id="img" name="img" type="file" accept="image/*" onChange={handleFileUpload} className="form-control item" />
-                            </div>*/}
+                                <input id="img" name="img" type="file" accept="image/*" onChange={handleFileUpload} className="form-control item" placeholder="Votre image de l'objet " />
+                                <h3><u>Image Associé </u>: </h3><br></br>
+                                <img  id="output" width="500" height="300" src={"/"+image} /> 
+                            </div>
 
                             <div className="form-group">
                                 <ErrorMessage name="intitule" component="span" className="text-danger"/>
@@ -160,6 +188,7 @@ const MonObjet = (props) => {
                                 name="dates"
                                 type="date"
                                 //placeholder={i18n.t('profil.yourUsername')}
+                                disabled={true}
                             />
                         </div>
 
