@@ -231,7 +231,7 @@ const MesObjets  = () => {
                                                         {showLostItems ?
                                                             <div>
                                                                 <FacebookShareButton
-                                                                    url={"https://raphaelmeissonnier.github.io/Foundem_back_end/"}
+                                                                    url={"https://maps.google.com/?ll="+item.latitude+','+item.longitude}
                                                                     quote={"J'ai perdu cet objet : "+_.capitalize(item.description)+" le "+moment(item.date).format("L")+ ", l'avez-vous vu ?"}
                                                                     hashtag={"#Foundem"}
                                                                     description={"objet perdu"}
