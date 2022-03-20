@@ -268,23 +268,7 @@ const Header = () =>{
               }
 
             </Box>
-            <div style={{ marginLeft: '20%', marginTop: '30px' }}>
-      <Autocomplete
-        style={{ width: 300 }}
-        freeSolo
-        autoComplete
-        autoHighlight
-        options={myOptions}
-        renderInput={(params) => (
-          <TextField {...params}
-            onChange={getDataFromAPI}
-            variant="outlined"
-            label="Chercher..."
-          />
-        )}
-      />
-    </div>
-    <h4>{username}</h4>
+            <h4>{username}</h4>
         
           </Toolbar>
         </Container>

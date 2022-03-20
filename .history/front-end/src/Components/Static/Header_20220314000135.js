@@ -13,8 +13,6 @@ import i18 from "../../Translation/i18n";
 import {UserContext} from "../Authentification/UserContext";
 import {getUser, getAllRdv} from "../../Actions/UserAction";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import './styles.css';
 
 var _ = require('lodash');
@@ -70,22 +68,6 @@ const Header = () =>{
 
   const handleCloseNotificationsMenu = () => {
     setAnchorElNotif(null);
-  }
-
-  const [myOptions, setMyOptions] = useState([])
-  
-  const getDataFromAPI = () => {
-    console.log("Options Fetched from API")
-  
-    fetch('http://dummy.restapiexample.com/api/v1/employees').then((response) => {
-      return response.json()
-    }).then((res) => {
-      console.log(res.data)
-      for (var i = 0; i < res.data.length; i++) {
-        myOptions.push(res.data[i].employee_name)
-      }
-      setMyOptions(myOptions)
-    })
   }
 
   return(
@@ -145,7 +127,6 @@ const Header = () =>{
                       </MenuItem>
                     </Menu>
                   </Box>
-
                   <Box sx={{ paddingLeft:20, flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                     <Button className="textPolice" href="/AjouterObjetPerdu" onClick={handleCloseNavMenu} sx={{ my: 2, color: 'white', display: 'block' }}>
                       {i18.t('header.lostItem')}
@@ -201,10 +182,7 @@ const Header = () =>{
               }
               <Tooltip className="textPolice" title={i18.t('header.profil')}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  {userData ?
-                    <Avatar alt={userData.username} src={"/"+userData.id_utilisateur+"_user_"+userData.img} />:
                     <AccountCircleIcon fontSize="large" color="primary" style={{color:"white"}}/>
-                  }
                 </IconButton>
               </Tooltip>
 
@@ -268,24 +246,9 @@ const Header = () =>{
               }
 
             </Box>
-            <div style={{ marginLeft: '20%', marginTop: '30px' }}>
-      <Autocomplete
-        style={{ width: 300 }}
-        freeSolo
-        autoComplete
-        autoHighlight
-        options={myOptions}
-        renderInput={(params) => (
-          <TextField {...params}
-            onChange={getDataFromAPI}
-            variant="outlined"
-            label="Chercher..."
-          />
-        )}
-      />
-    </div>
-    <h4>{username}</h4>
-        
+
+            
+            <h4>{username}</h4>
           </Toolbar>
         </Container>
       </AppBar>

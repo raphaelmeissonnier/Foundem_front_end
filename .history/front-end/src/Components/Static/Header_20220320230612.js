@@ -284,7 +284,6 @@ const Header = () =>{
         )}
       />
     </div>
-    <h4>{username}</h4>
         
           </Toolbar>
         </Container>

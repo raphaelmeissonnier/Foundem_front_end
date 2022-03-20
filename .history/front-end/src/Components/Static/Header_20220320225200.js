@@ -268,9 +268,11 @@ const Header = () =>{
               }
 
             </Box>
-            <div style={{ marginLeft: '20%', marginTop: '30px' }}>
+            <h4>{username}</h4>
+            <div style={{ marginLeft: '40%', marginTop: '60px' }}>
+      <h3>Greetings from GeeksforGeeks!</h3>
       <Autocomplete
-        style={{ width: 300 }}
+        style={{ width: 500 }}
         freeSolo
         autoComplete
         autoHighlight
@@ -279,13 +281,13 @@ const Header = () =>{
           <TextField {...params}
             onChange={getDataFromAPI}
             variant="outlined"
-            label="Chercher..."
+            label="Search Box"
           />
         )}
       />
     </div>
-    <h4>{username}</h4>
-        
+  );
+            
           </Toolbar>
         </Container>
       </AppBar>

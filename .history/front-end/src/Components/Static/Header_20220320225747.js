@@ -268,6 +268,7 @@ const Header = () =>{
               }
 
             </Box>
+            <h4>{username}</h4>
             <div style={{ marginLeft: '20%', marginTop: '30px' }}>
       <Autocomplete
         style={{ width: 300 }}
@@ -284,7 +285,6 @@ const Header = () =>{
         )}
       />
     </div>
-    <h4>{username}</h4>
         
           </Toolbar>
         </Container>
